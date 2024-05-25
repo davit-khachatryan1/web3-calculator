@@ -14,7 +14,11 @@ import {
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { calculateFormula, calculationResults, callAll, data } from "../helpers/calculationUtils";
+import {
+  calculationResults,
+  callAll,
+  data,
+} from "../helpers/calculationUtils";
 import axios from "axios";
 import "./table.css";
 
@@ -84,15 +88,15 @@ export default function Row(props: { data?: any; onDelete?: () => void }) {
   };
 
   useEffect(() => {
-    const handleKeyDown = (event: { key: string; }) => {
-      if (event.key === 'Enter') {
+    const handleKeyDown = (event: { key: string }) => {
+      if (event.key === "Enter") {
         callAll(inputValues);
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [data]);
 
@@ -116,8 +120,7 @@ export default function Row(props: { data?: any; onDelete?: () => void }) {
         ...prev,
         [name]: parseFloat(event.target.value) || 0,
       }));
-      console.log(inputValues, 'ssssssssss');
-      
+      console.log(inputValues, "ssssssssss");
     };
 
   const handleChangeCoinName = (e: any) => {
@@ -126,7 +129,7 @@ export default function Row(props: { data?: any; onDelete?: () => void }) {
 
   return (
     <>
-   {loading && <div>Loading</div>}
+      {loading && <div>Loading</div>}
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell sx={{ width: "5%" }}>
           <IconButton
@@ -298,11 +301,7 @@ export default function Row(props: { data?: any; onDelete?: () => void }) {
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      <TextField
-                        id="P4"
-                        defaultValue="0"
-                        size="small"
-                      />
+                      <TextField id="P4" defaultValue="0" size="small" />
                     </TableCell>
                     <TableCell>
                       <TextField
@@ -312,18 +311,10 @@ export default function Row(props: { data?: any; onDelete?: () => void }) {
                       />
                     </TableCell>
                     <TableCell>
-                      <TextField
-                        id="N4"
-                        defaultValue="0"
-                        size="small"
-                      />
+                      <TextField id="N4" defaultValue="0" size="small" />
                     </TableCell>
                     <TableCell>
-                      <TextField
-                        id="O4"
-                        defaultValue="0"
-                        size="small"
-                      />
+                      <TextField id="O4" defaultValue="0" size="small" />
                     </TableCell>
                   </TableRow>
                   <Typography
@@ -358,34 +349,34 @@ export default function Row(props: { data?: any; onDelete?: () => void }) {
                     <TableCell>Closing coefficient for short</TableCell>
                   </TableRow>
                   <TableRow>
-                  <TableCell component="th" scope="row">
+                    <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                      {calculationResults.result_B5}
+                        {calculationResults.result_B5}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {calculationResults.result_C5}
+                        {calculationResults.result_C5}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {calculationResults.result_D5}
+                        {calculationResults.result_D5}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {calculationResults.result_E5}
+                        {calculationResults.result_E5}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        0
+                        546
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                     {calculationResults.result_H3}
+                        {calculationResults.result_H3}
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -448,7 +439,7 @@ export default function Row(props: { data?: any; onDelete?: () => void }) {
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        20
+                        {data["Y4"]}
                       </Typography>
                     </TableCell>
                   </TableRow>
