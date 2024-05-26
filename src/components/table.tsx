@@ -34,9 +34,12 @@ const Calculator = () => {
           display: "flex",
           backgroundColor: "#282c34",
           flexDirection: "column",
+          backgroundImage: "url(https://as1.ftcdn.net/v2/jpg/05/74/79/80/1000_F_574798026_iEIdURVR3yieUYcn2tQYakrSYB999s5k.jpg)",
+          backgroundSize: "cover", 
+          backgroundPosition: "center", 
         }}
       >
-        <Box sx={{ color: "white", height: "100px" }}>
+        <Box sx={{ color: "white", height: "100px",backgroundColor: "#0e0a0aac", }}>
           <Typography gutterBottom component="div">
             Balance: 10000
           </Typography>
