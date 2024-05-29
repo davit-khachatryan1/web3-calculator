@@ -2,3 +2,33 @@
 .buttons > button {
    margin-left: 15px;
 }
+
+/* TextFieldStyles.css */
+.balance .MuiOutlinedInput-root {
+   color: white;
+ }
+ 
+ .balance .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+   border-color: white;
+ }
+ 
+ .balance .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+   border-color: white;
+ }
+ 
+ .balance .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+   border-color: white;
+ }
+ 
+ .balance .MuiInputLabel-root {
+   color: white;
+ }
+ 
+ .balance .MuiInputLabel-root.Mui-focused {
+   color: white;
+ }
+ 
+ .balance .MuiInputBase-input {
+   color: white;
+ }
+ 

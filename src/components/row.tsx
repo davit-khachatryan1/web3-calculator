@@ -14,18 +14,13 @@ import {
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import {
-  calculationResults,
-  callAll,
-  data,
-} from "../helpers/calculationUtils";
+import { calculationResults, callAll, data } from "../helpers/calculationUtils";
 import axios from "axios";
 import "./table.css";
 
 // Assuming calculateFormula and data structure is already defined elsewhere
 
 export default function Row(props: { data?: any; onDelete?: () => void }) {
-  console.log(props.data, ">>>>>>>>>>>>>>");
 
   const { onDelete } = props;
   const [open, setOpen] = useState(false);
@@ -402,14 +397,13 @@ export default function Row(props: { data?: any; onDelete?: () => void }) {
                     <TableCell>
                       Price according to accumulated balance
                     </TableCell>
-                    <TableCell>Quantity to open after burn</TableCell>
                     <TableCell>Margin diference</TableCell>
                     <TableCell>Leverage</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                        0
+                        {calculationResults.result_F4}
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -418,9 +412,7 @@ export default function Row(props: { data?: any; onDelete?: () => void }) {
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography gutterBottom component="div">
-                        0
-                      </Typography>
+                      <Typography gutterBottom component="div"></Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
@@ -429,12 +421,7 @@ export default function Row(props: { data?: any; onDelete?: () => void }) {
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        0
-                      </Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Typography gutterBottom component="div">
-                        0
+                        {calculationResults.result_T4}
                       </Typography>
                     </TableCell>
                     <TableCell>
