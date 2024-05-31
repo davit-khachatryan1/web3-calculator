@@ -1,11 +1,12 @@
 import './App.css';
 import Calculator from './components/table';
+import { DataProvider } from './context/DataContext';
 
 function App() {
   return (
-    <div className="App">
-    <Calculator />
-    </div>
+    <DataProvider>
+      <Calculator />
+    </DataProvider>
   );
 }
 

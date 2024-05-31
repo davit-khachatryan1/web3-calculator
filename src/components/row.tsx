@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -14,39 +14,19 @@ import {
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { calculationResults, callAll, data } from "../helpers/calculationUtils";
 import axios from "axios";
 import "./table.css";
 
-// Assuming calculateFormula and data structure is already defined elsewhere
-
-export default function Row(props: { data?: any; onDelete?: () => void }) {
-
-  const { onDelete } = props;
+export default function Row(props: {
+  data?: any;
+  results?: any;
+  onDelete?: () => void;
+  onUpdate?: (data: any) => void;
+}) {
+  const { onDelete, data: initialData, results, onUpdate } = props;
   const [open, setOpen] = useState(false);
   const [coinName, setCoinName] = useState("");
-  const [inputValues, setInputValues] = useState(data);
-
-  const [results, setResults] = useState({
-    balancingOpen: 0,
-    balancingClose: 0,
-    longEntryPricePAC: 0,
-    shortEntryPricePAC: 0,
-    longSizePAC: 0,
-    shortSizePAC: 0,
-    burn: 0,
-    openingLongCoefficient: 1,
-    openingShortCoefficient: 1,
-    closingLongCoefficient: 1,
-    closingShortCoefficient: 1,
-    rationalTradingMargin: 0,
-    averagedRationalTradingMargin: 0,
-    accumulatedBalanceForPosition: 0,
-    priceAccordingToAccumulatedBalance: 0,
-    quantityToOpenAfterBurn: 0,
-    marginDifference: 0,
-    leverage: 20, // Assuming leverage does not change often
-  });
+  const [inputValues, setInputValues] = useState(initialData);
 
   const [coinData, setCoinData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -82,40 +62,14 @@ export default function Row(props: { data?: any; onDelete?: () => void }) {
     }
   };
 
-  useEffect(() => {
-    const handleKeyDown = (event: { key: string }) => {
-      if (event.key === "Enter") {
-        callAll(inputValues);
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [data]);
-
-  useEffect(() => {
-    const newData = {
-      ...props.data, // assuming initial data is passed as props
-      ...inputValues,
-    };
-    const newResults = {
-      ...results,
-      // balancingOpen: calculateFormula("Formula for Balancing Open", newData),
-      // balancingClose: calculateFormula("Formula for Balancing Close", newData),
-      // Add more calculations as needed
-    };
-    setResults(newResults);
-  }, [inputValues]);
-
   const handleChange =
     (name: string) => (event: { target: { value: string } }) => {
-      setInputValues((prev) => ({
-        ...prev,
+      const updatedData = {
+        ...inputValues,
         [name]: parseFloat(event.target.value) || 0,
-      }));
-      console.log(inputValues, "ssssssssss");
+      };
+      setInputValues(updatedData);
+      onUpdate && onUpdate(updatedData);
     };
 
   const handleChangeCoinName = (e: any) => {
@@ -272,27 +226,27 @@ export default function Row(props: { data?: any; onDelete?: () => void }) {
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                        {calculationResults.result_B6}
+                        {results.result_B6}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {calculationResults.result_C6}
+                        {results.result_C6}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {calculationResults.result_D6}
+                        {results.result_D6}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {calculationResults.result_E6}
+                        {results.result_E6}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {calculationResults.result_M4}
+                        {results.result_M4}
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -346,22 +300,22 @@ export default function Row(props: { data?: any; onDelete?: () => void }) {
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                        {calculationResults.result_B5}
+                        {results.result_B5}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {calculationResults.result_C5}
+                        {results.result_C5}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {calculationResults.result_D5}
+                        {results.result_D5}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {calculationResults.result_E5}
+                        {results.result_E5}
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -371,22 +325,22 @@ export default function Row(props: { data?: any; onDelete?: () => void }) {
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {calculationResults.result_H3}
+                        {results.result_H3}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {calculationResults.result_I3}
+                        {results.result_I3}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {calculationResults.result_J3}
+                        {results.result_J3}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {calculationResults.result_K3}
+                        {results.result_K3}
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -403,7 +357,7 @@ export default function Row(props: { data?: any; onDelete?: () => void }) {
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                        {calculationResults.result_F4}
+                        {results.result_F4}
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -421,12 +375,12 @@ export default function Row(props: { data?: any; onDelete?: () => void }) {
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {calculationResults.result_T4}
+                        {results.result_T4}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {data["Y4"]}
+                        {inputValues["Y4"]}
                       </Typography>
                     </TableCell>
                   </TableRow>
