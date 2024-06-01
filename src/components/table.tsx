@@ -68,7 +68,7 @@ const Calculator = () => {
           <TextField
             id="C4"
             label="Balance"
-            value={"52525"}
+            // value={"52525"}
             size="small"
             className="balance"
           />

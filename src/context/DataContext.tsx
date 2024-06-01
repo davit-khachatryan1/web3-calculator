@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
-import { data, callAll } from "../helpers/calculationUtils";
-import { calculationResult } from "../helpers/clearing";
+import { data } from "../helpers/calculationUtils";
+import { calculationResult, callAll, generalDatas } from "../helpers/clearing";
 
 type RowData = {
   id: number;
@@ -8,8 +8,13 @@ type RowData = {
   results: typeof calculationResult;
 };
 
+type GeneralData = {
+  accumulatedBalance: number;
+};
+
 type DataContextType = {
   rows: RowData[];
+  generalData: GeneralData;
   addRow: () => void;
   deleteRow: (id: number) => void;
   updateRow: (id: number, updatedData: any) => void;
@@ -22,6 +27,27 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [rows, setRows] = useState<RowData[]>([
     { id: 1, data: data, results: { ...calculationResult } },
   ]);
+  console.log(rows, "+-+-+-+-+-+-+--++-");
+  const [generalData, setGeneralData] = useState<GeneralData>({
+    ...generalDatas,
+  });
+
+  const calculateAveragedRationalTradingMargin = (results: any) => {
+    const total = results.reduce(
+      (sum: any, result: { result_F4: any }) => sum + result.result_F4,
+      0
+    );
+    return results.length > 0 ? total / results.length : 0;
+  };
+
+  const calculateAccumulatedBalanceForPosition = (results: any) => {
+    const total = results.reduce(
+      (sum: any, result: { accumulatedBalance: any }) =>
+        sum + result.accumulatedBalance,
+      0
+    );
+    return results.length > 0 ? total / results.length : 0;
+  };
 
   const addRow = () => {
     const newRow = {
@@ -45,17 +71,39 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const triggerCalculations = () => {
-    setRows((prevRows) =>
-      prevRows.map((row) => ({
-        ...row,
-        results: callAll(row.data),
-      }))
-    );
+    let updatedRows = rows.map((row) => ({
+      ...row,
+      results: callAll(row.results, generalData, row.data),
+    }));
+    const averagedRationalTradingMargin =
+      calculateAveragedRationalTradingMargin(
+        updatedRows.map((row) => row.results)
+      );
+    const accumulatedBalanceForPosition =
+      calculateAccumulatedBalanceForPosition(
+        updatedRows.map((row) => row.results)
+      );
+    updatedRows = rows.map((row) => ({
+      ...row,
+      results: {
+        ...row.results,
+        accumulatedBalanceForPosition,
+        averagedRationalTradingMargin,
+      },
+    }));
+    setRows(updatedRows);
   };
 
   return (
     <DataContext.Provider
-      value={{ rows, addRow, deleteRow, updateRow, triggerCalculations }}
+      value={{
+        rows,
+        generalData,
+        addRow,
+        deleteRow,
+        updateRow,
+        triggerCalculations,
+      }}
     >
       {children}
     </DataContext.Provider>

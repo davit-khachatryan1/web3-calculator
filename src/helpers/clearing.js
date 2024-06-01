@@ -119,7 +119,7 @@ console.log(variables, 'OOOOOOOOOOOOOOOOOOO');
 }
 
 
-export function callAll(data) {
+export function callAll(calculationResults, generalDatas, data) {
     calculationResults.result_BE4 = calculateFormula("BE4", data);
     calculationResults.result_B5 = calculateFormula("B4", data);
     calculationResults.result_C5 = calculateFormula("C4", data);
@@ -143,60 +143,68 @@ export function callAll(data) {
     calculationResults.result_M4 = calculateFormula("IF(D4 > E4, IF(G4 > B4, AY4, IF(G4 < C4, AU4, 0)), IF(G4 < C4, IF(D4 < E4, BA4, 0), IF(G4 > B4, AW4, 0)))", data);
     calculationResults.result_Q4 = calculateFormula("IF(D4 > E4, IF(G4 > B4, AZ4, IF(G4 < C4, AV4, 0)), IF(G4 < C4, IF(D4 < E4, BB4, 0), IF(G4 > B4, AX4, 0)))", data);
     calculationResults.accumulatedBalance = calculateFormula("IF(B242>D244,A242-B242,A242-D244)", data);
-
-    console.log("All calculationResults:", calculationResults);
+    calculationResults.priceAccordingAccumulatedBalance = generalDatas.accumulatedBalanceForPosition / (calculationResults.result_D5 + calculationResults.result_E5);
+   
+   console.log("All calculationResults:", calculationResults);
     return calculationResults;
 }
 
+export const generalDatas = {
+    accumulatedBalance: 0,
+}
 
-export const calculationResults = {
-    result_BE4: 0,
-    result_B5: 0,
-    result_C5: 0,
-    result_D5: 0,
-    result_E5: 0,
-    result_B6: 0,
-    result_C6: 0,
-    result_D6: 0,
-    result_E6: 0,
-    result_F4: 0,
-    result_C244: 0,
-    result_L6: 0,
-    result_G6: 0,
-    result_T4: 0,
-    result_L2: 0,
-    result_L4: 0,
-    result_H3: 0,
-    result_I3: 0,
-    result_J3: 0,
-    result_K3: 0,
-    result_M4: 0,
-    result_Q4: 0,
-    accumulatedBalance: 0
-};
+export function calculatePriceAccordingAccumulatedBalance(accumulatedBalanceForPosition, result_D5, result_E5) {
+    return accumulatedBalanceForPosition / (result_D5 + result_E5);
+}
+
+// export const calculationResults = {
+//     result_BE4: 0,
+//     result_B5: 0,
+//     result_C5: 0,
+//     result_D5: 0,
+//     result_E5: 0,
+//     result_B6: 0,
+//     result_C6: 0,
+//     result_D6: 0,
+//     result_E6: 0,
+//     result_F4: 0,
+//     result_C244: 0,
+//     result_L6: 0,
+//     result_G6: 0,
+//     result_T4: 0,
+//     result_L2: 0,
+//     result_L4: 0,
+//     result_H3: 0,
+//     result_I3: 0,
+//     result_J3: 0,
+//     result_K3: 0,
+//     result_M4: 0,
+//     result_Q4: 0,
+// };
 
 export const calculationResult = {
-    result_BE4: 0,
-    result_B5: 0,
-    result_C5: 0,
-    result_D5: 0,
-    result_E5: 0,
-    result_B6: 0,
-    result_C6: 0,
-    result_D6: 0,
-    result_E6: 0,
-    result_F4: 0,
-    result_C244: 0,
-    result_L6: 0,
-    result_G6: 0,
-    result_T4: 0,
-    result_L2: 0,
-    result_L4: 0,
-    result_H3: 0,
-    result_I3: 0,
-    result_J3: 0,
-    result_K3: 0,
-    result_M4: 0,
-    result_Q4: 0,
-    accumulatedBalance: 0
+  result_BE4: 0,
+  result_B5: 0,
+  result_C5: 0,
+  result_D5: 0,
+  result_E5: 0,
+  result_B6: 0,
+  result_C6: 0,
+  result_D6: 0,
+  result_E6: 0,
+  result_F4: 0,
+  result_C244: 0,
+  result_L6: 0,
+  result_G6: 0,
+  result_T4: 0,
+  result_L2: 0,
+  result_L4: 0,
+  result_H3: 0,
+  result_I3: 0,
+  result_J3: 0,
+  result_K3: 0,
+  result_M4: 0,
+  result_Q4: 0,
+  priceAccordingAccumulatedBalance: 0, 
+  accumulatedBalance: 0,
 };
