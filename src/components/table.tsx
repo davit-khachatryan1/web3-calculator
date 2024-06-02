@@ -13,8 +13,15 @@ import { useDataContext } from "../context/DataContext";
 import Row from "./row";
 
 const Calculator = () => {
-  const { rows, addRow, deleteRow, updateRow, triggerCalculations } =
-    useDataContext();
+  const {
+    rows,
+    generalData,
+    addRow,
+    deleteRow,
+    updateRow,
+    triggerCalculations,
+    handleChangeBalanceData,
+  } = useDataContext();
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -68,13 +75,16 @@ const Calculator = () => {
           <TextField
             id="C4"
             label="Balance"
-            // value={"52525"}
+            value={generalData["A242"]}
+            onChange={(e) => handleChangeBalanceData("A242", Number(e.target.value))}
             size="small"
             className="balance"
           />
           <TextField
             id="C4"
             label="Initial Balance"
+            value={generalData["D244"]}
+            onChange={(e) => handleChangeBalanceData("D244", Number(e.target.value))}
             className="balance"
             size="small"
           />

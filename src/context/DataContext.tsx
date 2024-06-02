@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
 import { data } from "../helpers/calculationUtils";
-import { calculationResult, callAll, generalDatas } from "../helpers/clearing";
+import { calculationResult, callAll } from "../helpers/clearing";
 
 type RowData = {
   id: number;
@@ -9,7 +9,7 @@ type RowData = {
 };
 
 type GeneralData = {
-  accumulatedBalance: number;
+  [key: string]: number;
 };
 
 type DataContextType = {
@@ -19,6 +19,7 @@ type DataContextType = {
   deleteRow: (id: number) => void;
   updateRow: (id: number, updatedData: any) => void;
   triggerCalculations: () => void;
+  handleChangeBalanceData: (item: string, value: number) => void;
 };
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -27,10 +28,13 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [rows, setRows] = useState<RowData[]>([
     { id: 1, data: data, results: { ...calculationResult } },
   ]);
-  console.log(rows, "+-+-+-+-+-+-+--++-");
   const [generalData, setGeneralData] = useState<GeneralData>({
-    ...generalDatas,
+    ...data,
   });
+
+  const handleChangeBalanceData = (item: string, value: number) => {
+    setGeneralData({ ...generalData, [`${item}`]: value });
+  };
 
   const calculateAveragedRationalTradingMargin = (results: any) => {
     const total = results.reduce(
@@ -71,10 +75,18 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const triggerCalculations = () => {
-    let updatedRows = rows.map((row) => ({
-      ...row,
-      results: callAll(row.results, generalData, row.data),
-    }));
+    let updatedRows = rows.map((row) => {
+      const { calculationResults, data } = callAll(
+        row.results,
+        row.data
+      );
+
+      return {
+        ...row,
+        results: calculationResults,
+        data: { ...data, 'A242': generalData["A242"], 'D244': generalData["D244"] },
+      };
+    });    
     const averagedRationalTradingMargin =
       calculateAveragedRationalTradingMargin(
         updatedRows.map((row) => row.results)
@@ -103,6 +115,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         deleteRow,
         updateRow,
         triggerCalculations,
+        handleChangeBalanceData,
       }}
     >
       {children}
