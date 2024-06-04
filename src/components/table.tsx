@@ -20,7 +20,7 @@ const Calculator = () => {
     deleteRow,
     updateRow,
     triggerCalculations,
-    handleChangeBalanceData,
+    changeGeneralData,
   } = useDataContext();
 
   useEffect(() => {
@@ -76,7 +76,7 @@ const Calculator = () => {
             id="C4"
             label="Balance"
             value={generalData["A242"]}
-            onChange={(e) => handleChangeBalanceData("A242", Number(e.target.value))}
+            onChange={(e) => changeGeneralData("A242", Number(e.target.value))}
             size="small"
             className="balance"
           />
@@ -84,12 +84,12 @@ const Calculator = () => {
             id="C4"
             label="Initial Balance"
             value={generalData["D244"]}
-            onChange={(e) => handleChangeBalanceData("D244", Number(e.target.value))}
+            onChange={(e) => changeGeneralData("D244", Number(e.target.value))}
             className="balance"
             size="small"
           />
           <Typography gutterBottom component="div">
-            Accumulated Balance <Button size="small">o</Button>
+            Accumulated Balance <Button size="small">{generalData.accumulatedBalance || 0}</Button>
           </Typography>
           <Typography gutterBottom component="div" style={{ color: "green" }}>
             Number of Longs{" "}
@@ -125,6 +125,7 @@ const Calculator = () => {
                 results={row.results}
                 onDelete={() => deleteRow(row.id)}
                 onUpdate={(updatedData) => updateRow(row.id, updatedData)}
+                genData={generalData}
               />
             ))}
           </TableBody>

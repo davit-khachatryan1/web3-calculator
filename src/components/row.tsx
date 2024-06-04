@@ -4,6 +4,8 @@ import {
   Button,
   Collapse,
   IconButton,
+  MenuItem,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -16,14 +18,17 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import axios from "axios";
 import "./table.css";
+import { GeneralData, useDataContext } from "../context/DataContext";
 
 export default function Row(props: {
   data?: any;
   results?: any;
   onDelete?: () => void;
   onUpdate?: (data: any) => void;
+  genData: GeneralData;
 }) {
-  const { onDelete, data: initialData, results, onUpdate } = props;
+  const { onDelete, data: initialData, results, onUpdate, genData } = props;
+  const { changeGeneralData } = useDataContext();
   const [open, setOpen] = useState(false);
   const [coinName, setCoinName] = useState("");
   const [inputValues, setInputValues] = useState(initialData);
@@ -320,7 +325,7 @@ export default function Row(props: {
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        546
+                        0
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -330,17 +335,17 @@ export default function Row(props: {
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_I3}
+                        {results.result_I3 || 1}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_J3}
+                        {results.result_J3 || 1}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_K3}
+                        {results.result_K3 || 1}
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -362,15 +367,15 @@ export default function Row(props: {
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        0
+                        {results.averagedRationalTradingMargin}
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography gutterBottom component="div"></Typography>
+                      <Typography gutterBottom component="div">{results.accumulatedBalanceForPosition}</Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        0
+                        {results.priceAccordingAccumulatedBalance}
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -379,9 +384,16 @@ export default function Row(props: {
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography gutterBottom component="div">
-                        {inputValues["Y4"]}
-                      </Typography>
+                      <Select
+                        value={genData["Y4"]}
+                        onChange={(e) =>
+                          changeGeneralData("Y4", Number(e.target.value))
+                        }
+                      >
+                        <MenuItem value={10}>10</MenuItem>
+                        <MenuItem value={20}>20</MenuItem>
+                        <MenuItem value={30}>30</MenuItem>
+                      </Select>
                     </TableCell>
                   </TableRow>
                 </TableBody>

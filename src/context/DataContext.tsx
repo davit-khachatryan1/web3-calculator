@@ -8,7 +8,7 @@ type RowData = {
   results: typeof calculationResult;
 };
 
-type GeneralData = {
+export type GeneralData = {
   [key: string]: number;
 };
 
@@ -19,7 +19,7 @@ type DataContextType = {
   deleteRow: (id: number) => void;
   updateRow: (id: number, updatedData: any) => void;
   triggerCalculations: () => void;
-  handleChangeBalanceData: (item: string, value: number) => void;
+  changeGeneralData: (item: string, value: number) => void;
 };
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -32,7 +32,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     ...data,
   });
 
-  const handleChangeBalanceData = (item: string, value: number) => {
+  const changeGeneralData = (item: string, value: number) => {
     setGeneralData({ ...generalData, [`${item}`]: value });
   };
 
@@ -76,17 +76,14 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
   const triggerCalculations = () => {
     let updatedRows = rows.map((row) => {
-      const { calculationResults, data } = callAll(
-        row.results,
-        row.data
-      );
+      const { calculationResults, data } = callAll(row.results, row.data, rows);
 
       return {
         ...row,
         results: calculationResults,
-        data: { ...data, 'A242': generalData["A242"], 'D244': generalData["D244"] },
+        data: { ...data, A242: generalData["A242"], D244: generalData["D244"] },
       };
-    });    
+    });
     const averagedRationalTradingMargin =
       calculateAveragedRationalTradingMargin(
         updatedRows.map((row) => row.results)
@@ -94,7 +91,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     const accumulatedBalanceForPosition =
       calculateAccumulatedBalanceForPosition(
         updatedRows.map((row) => row.results)
-      );
+      );      
+      setGeneralData({ ...generalData, accumulatedBalance: accumulatedBalanceForPosition });
     updatedRows = rows.map((row) => ({
       ...row,
       results: {
@@ -115,7 +113,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         deleteRow,
         updateRow,
         triggerCalculations,
-        handleChangeBalanceData,
+        changeGeneralData,
       }}
     >
       {children}
