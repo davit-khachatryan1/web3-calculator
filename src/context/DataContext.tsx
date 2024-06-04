@@ -59,11 +59,17 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       data: data,
       results: { ...calculationResult },
     };
-    setRows((prevRows) => [...prevRows, newRow]);
+    setRows((prevRows) => [...prevRows, newRow]);    
+    setGeneralData((prevGeneralData) => {
+      return { ...prevGeneralData, 'E242': rows.length + 1 };
+    });
   };
 
   const deleteRow = (id: number) => {
     setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+    setGeneralData((prevGeneralData) => {
+      return { ...prevGeneralData, 'E242': rows.length - 1 };
+    });
   };
 
   const updateRow = (id: number, updatedData: any) => {
@@ -77,7 +83,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const triggerCalculations = () => {
     let genDataitems:GeneralData ={} as GeneralData;
     let updatedRows = rows.map((row) => {
-      const { calculationResults, data } = callAll(row.results, row.data, rows);
+      const { calculationResults, data } = callAll(row.results, {...row.data, ...generalData}, rows);
       genDataitems = data
 
       return {
@@ -95,7 +101,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         updatedRows.map((row) => row.results)
       );      
       
-      setGeneralData({ ...generalData,'CG4': genDataitems["CG4"], 'CH4': genDataitems["CH4"], accumulatedBalance: accumulatedBalanceForPosition });
+    setGeneralData({ ...generalData,"E242": updatedRows.length,'CG4': genDataitems["CG4"], 'CH4': genDataitems["CH4"], accumulatedBalance: accumulatedBalanceForPosition });
     updatedRows = rows.map((row) => ({
       ...row,
       results: {
