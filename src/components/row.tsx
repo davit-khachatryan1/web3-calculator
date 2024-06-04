@@ -325,7 +325,7 @@ export default function Row(props: {
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        0.
+                        {results.result_Q4}
                       </Typography>
                     </TableCell>
                     <TableCell>
