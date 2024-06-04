@@ -54,18 +54,17 @@ export function calculateFormula(formula, data, allData) {
     variables["X4"] = safeAssign((data["E4"] * data["G4"] / data["Y4"]) * variables["W4"] * data["Y4"] / 100); // Shorti Pnl
     variables["BE4"] = safeAssign(variables["V4"] + variables["X4"]); // Unreailzed Pnl
     variables["BE242"] = allData.reduce((sum, item) => sum + (item.data['BE4'] || 0), 0);
-    console.log(variables["BE242"], 'LLLLLLLLL');
     // variables["BE242"] = safeAssign(variables["BE4"]); // added by me == acumulated balance 
     variables["C244"] = safeAssign((variables["BE242"] > data["D244"]) ? (data["A242"] - variables["BE242"]) : (data["A242"] - data["D244"])); // avelcuk
     variables["L6"] = safeAssign(variables["C244"] / data["E242"]);
     variables["AF4"] = safeAssign((data["G4"] * data["D4"]) / data["Y4"]);
     variables["AG4"] = safeAssign((data["G4"] * data["E4"]) / data["Y4"]);
     variables["AH4"] = safeAssign(variables["AF4"] + variables["AG4"]);
-    // variables["CG4"] = variables["CG4"] = 0 ? variables["CG4"] = 0 : 0;
-    // variables["CH4"] = variables["CH4"] ? variables["CH4"] : 0;
+    variables["CG4"] = variables["CG4"] ? variables["CG4"] : 0;
+    variables["CH4"] = variables["CH4"] ? variables["CH4"] : 0;
     variables["CG4"] += (data["D4"] > data["E4"]) ? 1 : 0; //position is long
     variables["CH4"] += (data["D4"] < data["E4"]) ? 1 : 0;
-    /// Calculating IF open Long Coefficient
+       /// Calculating IF open Long Coefficient
     variables["AD4"] = safeAssign((data["C4"] - variables["B6"]) * 100 / data["C4"]);
     variables["BG4"] = safeAssign(variables["D6"] * data["C4"] / data["Y4"] * variables["AD4"] * data["Y4"] / 100);
     variables["AA4"] = safeAssign((data["C4"] - variables["B6"]) * 100 / variables["B6"]);

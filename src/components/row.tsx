@@ -325,12 +325,12 @@ export default function Row(props: {
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        0
+                        0.
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_H3}
+                        {results.result_H3 || 1}
                       </Typography>
                     </TableCell>
                     <TableCell>

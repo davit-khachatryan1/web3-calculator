@@ -94,13 +94,13 @@ const Calculator = () => {
           <Typography gutterBottom component="div" style={{ color: "green" }}>
             Number of Longs{" "}
             <Button variant="contained" color="success" size="small">
-              0
+              {generalData['CG4']}
             </Button>
           </Typography>
           <Typography gutterBottom component="div" style={{ color: "red" }}>
             Number of Shorts{" "}
             <Button variant="contained" color="error" size="small">
-              0
+              {generalData['CH4']}
             </Button>
           </Typography>
           <Typography gutterBottom component="div">

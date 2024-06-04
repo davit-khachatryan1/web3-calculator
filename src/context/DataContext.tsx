@@ -75,13 +75,15 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const triggerCalculations = () => {
+    let genDataitems:GeneralData ={} as GeneralData;
     let updatedRows = rows.map((row) => {
       const { calculationResults, data } = callAll(row.results, row.data, rows);
+      genDataitems = data
 
       return {
         ...row,
         results: calculationResults,
-        data: { ...data, A242: generalData["A242"], D244: generalData["D244"] },
+        data: { ...data, 'A242': generalData["A242"], 'D244': generalData["D244"] },
       };
     });
     const averagedRationalTradingMargin =
@@ -92,7 +94,9 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       calculateAccumulatedBalanceForPosition(
         updatedRows.map((row) => row.results)
       );      
-      setGeneralData({ ...generalData, accumulatedBalance: accumulatedBalanceForPosition });
+      console.log(updatedRows, '<>??????????');
+      
+      setGeneralData({ ...generalData,'CG4': genDataitems["CG4"], 'CH4': genDataitems["CH4"], accumulatedBalance: accumulatedBalanceForPosition });
     updatedRows = rows.map((row) => ({
       ...row,
       results: {
