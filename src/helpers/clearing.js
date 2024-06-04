@@ -149,7 +149,7 @@ export function callAll(calculationResults, data, allData) {
     let myData = calculateFormula("IF(B242>D244,A242-B242,A242-D244)", data, allData);
     calculationResults.accumulatedBalance = myData.result;   
     calculationResults.priceAccordingAccumulatedBalance = calculationResults.accumulatedBalanceForPosition / (calculationResults.result_D5 + calculationResults.result_E5);
-   console.log("All calculationResults:", calculationResults);
+//    console.log("All calculationResults:", calculationResults);
     return { calculationResults, data: myData.data };
 }
 

@@ -94,7 +94,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       calculateAccumulatedBalanceForPosition(
         updatedRows.map((row) => row.results)
       );      
-      console.log(updatedRows, '<>??????????');
       
       setGeneralData({ ...generalData,'CG4': genDataitems["CG4"], 'CH4': genDataitems["CH4"], accumulatedBalance: accumulatedBalanceForPosition });
     updatedRows = rows.map((row) => ({
@@ -105,7 +104,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         averagedRationalTradingMargin,
       },
     }));
-    console.log(updatedRows, 'kkkkkkkkkkkkkk');
     
     setRows(updatedRows);
   };
