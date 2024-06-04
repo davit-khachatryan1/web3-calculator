@@ -153,36 +153,6 @@ export function callAll(calculationResults, data, allData) {
     return { calculationResults, data: myData.data };
 }
 
-
-export function calculatePriceAccordingAccumulatedBalance(accumulatedBalanceForPosition, result_D5, result_E5) {
-    return accumulatedBalanceForPosition / (result_D5 + result_E5);
-}
-
-// export const calculationResults = {
-//     result_BE4: 0,
-//     result_B5: 0,
-//     result_C5: 0,
-//     result_D5: 0,
-//     result_E5: 0,
-//     result_B6: 0,
-//     result_C6: 0,
-//     result_D6: 0,
-//     result_E6: 0,
-//     result_F4: 0,
-//     result_C244: 0,
-//     result_L6: 0,
-//     result_G6: 0,
-//     result_T4: 0,
-//     result_L2: 0,
-//     result_L4: 0,
-//     result_H3: 0,
-//     result_I3: 0,
-//     result_J3: 0,
-//     result_K3: 0,
-//     result_M4: 0,
-//     result_Q4: 0,
-// };
-
 export const calculationResult = {
   result_BE4: 0,
   result_B5: 0,
