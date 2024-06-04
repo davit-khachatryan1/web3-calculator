@@ -179,4 +179,5 @@ export const calculationResult = {
   priceAccordingAccumulatedBalance: 0,
   accumulatedBalance: 0,
   accumulatedBalanceForPosition: 0,
+  averagedRationalTradingMargin: 0,
 };

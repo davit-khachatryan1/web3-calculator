@@ -105,6 +105,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         averagedRationalTradingMargin,
       },
     }));
+    console.log(updatedRows, 'kkkkkkkkkkkkkk');
+    
     setRows(updatedRows);
   };
 
