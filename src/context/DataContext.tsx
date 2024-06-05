@@ -1,6 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
-import { data } from "../helpers/calculationUtils";
-import { calculationResult, callAll } from "../helpers/clearing";
+import { calculationResult, callAll, data } from "../helpers/clearing";
 
 type RowData = {
   id: number;
@@ -82,10 +81,17 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
   const triggerCalculations = () => {
     let genDataitems:GeneralData ={} as GeneralData;
+    let longShorts= {
+      "CG4":0,
+      "CH4":0
+    }
     let updatedRows = rows.map((row) => {
-      const { calculationResults, data } = callAll(row.results, {...row.data, ...generalData}, rows);
+      const { calculationResults, data } = callAll(row.results, {...row.data, 'A242': generalData["A242"], 'D244': generalData["D244"] }, rows);
       genDataitems = data
-
+      
+      longShorts["CG4"] += data["CG4"];
+      longShorts["CH4"] += data["CH4"];
+      debugger
       return {
         ...row,
         results: calculationResults,
@@ -101,15 +107,16 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         updatedRows.map((row) => row.results)
       );      
       
-    setGeneralData({ ...generalData,"E242": updatedRows.length,'CG4': genDataitems["CG4"], 'CH4': genDataitems["CH4"], accumulatedBalance: accumulatedBalanceForPosition });
-    updatedRows = rows.map((row) => ({
-      ...row,
-      results: {
-        ...row.results,
-        accumulatedBalanceForPosition,
-        averagedRationalTradingMargin,
-      },
-    }));
+      updatedRows = rows.map((row) => ({
+        ...row,
+        results: {
+          ...row.results,
+          accumulatedBalanceForPosition,
+          averagedRationalTradingMargin,
+        },
+      }));
+      
+      setGeneralData({ ...generalData,"E242": updatedRows.length,'CG4':longShorts["CG4"], 'CH4':longShorts["CH4"], accumulatedBalance: accumulatedBalanceForPosition });
     
     setRows(updatedRows);
   };

@@ -13,6 +13,8 @@ export const data = {
     "O4": 0, // closeShortInCorridor 
     "P4": 0, // openLongInCorridor 
     "P5": 0, // openShortInCorridor
+    'CG4': 0,
+    'CH4': 0,
 };
 
 
