@@ -52,6 +52,10 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     return results.length > 0 ? total / results.length : 0;
   };
 
+  const calculatePriceAccordingAccumulatedBalance = () => {
+    
+  }
+
   const addRow = () => {
     const newRow = {
       id: rows.length + 1,
@@ -80,7 +84,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const triggerCalculations = () => {
-    let genDataitems:GeneralData ={} as GeneralData;
+    let genDataitems: GeneralData = {} as GeneralData;
     let longShorts= {
       "CG4":0,
       "CH4":0
@@ -91,7 +95,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       
       longShorts["CG4"] += data["CG4"];
       longShorts["CH4"] += data["CH4"];
-      debugger
       return {
         ...row,
         results: calculationResults,
@@ -106,7 +109,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       calculateAccumulatedBalanceForPosition(
         updatedRows.map((row) => row.results)
       );      
-      
       updatedRows = rows.map((row) => ({
         ...row,
         results: {

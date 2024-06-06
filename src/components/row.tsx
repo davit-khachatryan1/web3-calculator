@@ -27,11 +27,11 @@ export default function Row(props: {
   onUpdate?: (data: any) => void;
   genData: GeneralData;
 }) {
-  const { onDelete, data: initialData, results, onUpdate, genData } = props;
+  const { onDelete, data, results, onUpdate, genData } = props;
   const { changeGeneralData } = useDataContext();
   const [open, setOpen] = useState(false);
   const [coinName, setCoinName] = useState("");
-  const [inputValues, setInputValues] = useState(initialData);
+  const [inputValues, setInputValues] = useState(data);
 
   const [coinData, setCoinData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -255,20 +255,40 @@ export default function Row(props: {
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      <TextField id="P4" defaultValue="0" size="small" />
+                      <TextField
+                        id="P4"
+                        defaultValue="0"
+                        value={inputValues.P4}
+                        onChange={handleChange("P4")}
+                        size="small"
+                      />
                     </TableCell>
                     <TableCell>
                       <TextField
                         id="openShortInCorridor"
                         defaultValue="0"
+                        value={inputValues.P5}
+                        onChange={handleChange("P5")}
                         size="small"
                       />
                     </TableCell>
                     <TableCell>
-                      <TextField id="N4" defaultValue="0" size="small" />
+                      <TextField
+                        id="N4"
+                        defaultValue="0"
+                        value={inputValues.N4}
+                        onChange={handleChange("N4")}
+                        size="small"
+                      />
                     </TableCell>
                     <TableCell>
-                      <TextField id="O4" defaultValue="0" size="small" />
+                      <TextField
+                        id="O4"
+                        defaultValue="0"
+                        value={inputValues.O4}
+                        onChange={handleChange("O4")}
+                        size="small"
+                      />
                     </TableCell>
                   </TableRow>
                   <Typography
@@ -371,7 +391,9 @@ export default function Row(props: {
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography gutterBottom component="div">{results.accumulatedBalanceForPosition}</Typography>
+                      <Typography gutterBottom component="div">
+                        {results.accumulatedBalanceForPosition}
+                      </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
