@@ -184,12 +184,12 @@ export default function Row(props: {
                     </TableCell>
                     <TableCell colSpan={2}>
                       <Typography gutterBottom component="div">
-                        {results.balancingOpen}
+                        {results.result_L4}
                       </Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
                       <Typography gutterBottom component="div">
-                        {results.balancingClose}
+                        {results.result_L2}
                       </Typography>
                     </TableCell>
                   </TableRow>
