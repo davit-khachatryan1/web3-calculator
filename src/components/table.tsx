@@ -52,69 +52,85 @@ const Calculator = () => {
       }}
     >
       <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          color: "white",
-          alignItems: "center",
-          padding: "10px",
-          height: "max-content",
-          backgroundColor: "#000000ac",
-        }}
-      >
+      sx={{
+        display: "flex",
+        flexWrap: "nowrap",
+        color: "white",
+        alignItems: "center",
+        gap: '10px',
+        padding: "10px",
+        height: "max-content",
+        backgroundColor: "#000000ac",
+      }}>
         <Box
           sx={{
-            color: "white",
             display: "flex",
             flexWrap: "wrap",
+            color: "white",
             alignItems: "center",
-            gap: "20px",
-            padding: "20px",
           }}
         >
-          <TextField
-            id="C4"
-            label="Balance"
-            value={generalData["A242"]}
-            onChange={(e) => changeGeneralData("A242", Number(e.target.value))}
-            size="small"
-            className="balance"
-          />
-          <TextField
-            id="C4"
-            label="Initial Balance"
-            value={generalData["D244"]}
-            onChange={(e) => changeGeneralData("D244", Number(e.target.value))}
-            className="balance"
-            size="small"
-          />
-          <Typography gutterBottom component="div">
-            Accumulated Balance{" "}
-            <Button size="small">{(generalData.accumulatedBalance || 0).toFixed(3)}</Button>
-          </Typography>
-          <Typography gutterBottom component="div" style={{ color: "green" }}>
-            Number of Longs{" "}
-            <Button variant="contained" color="success" size="small">
-              {generalData["CG4"] || 0}
-            </Button>
-          </Typography>
-          <Typography gutterBottom component="div" style={{ color: "red" }}>
-            Number of Shorts{" "}
-            <Button variant="contained" color="error" size="small">
-              {generalData["CH4"] || 0}
-            </Button>
-          </Typography>
-          <Typography gutterBottom component="div">
-            Coin Quantity <Button size="small">{generalData["E242"]}</Button>
-          </Typography>
-        </Box>
-        <Button
-          variant="contained"
-          onClick={addRow}
-          style={{ maxHeight: "50px" }}
-        >
-          Add Row
-        </Button>
+          <Box
+            sx={{
+              color: "white",
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              gap: "20px",
+              padding: "20px",
+            }}
+          >
+            <TextField
+              id="C4"
+              label="Balance"
+              value={generalData["A242"]}
+              onChange={(e) =>
+                changeGeneralData("A242", Number(e.target.value))
+              }
+              size="small"
+              className="balance"
+            />
+            <TextField
+              id="C4"
+              label="Initial Balance"
+              value={generalData["D244"]}
+              onChange={(e) =>
+                changeGeneralData("D244", Number(e.target.value))
+              }
+              className="balance"
+              size="small"
+            />
+            <Typography gutterBottom component="div">
+              Accumulated Balance{" "}
+              <Button size="small">
+                {(generalData.accumulatedBalance || 0).toFixed(3)}
+              </Button>
+            </Typography>
+            <Typography gutterBottom component="div" style={{ color: "green" }}>
+              Number of Longs{" "}
+              <Button variant="contained" color="success" size="small">
+                {generalData["CG4"] || 0}
+              </Button>
+            </Typography>
+            <Typography gutterBottom component="div" style={{ color: "red" }}>
+              Number of Shorts{" "}
+              <Button variant="contained" color="error" size="small">
+                {generalData["CH4"] || 0}
+              </Button>
+            </Typography>
+            <Typography gutterBottom component="div">
+              Coin Quantity <Button size="small">{generalData["E242"]}</Button>
+            </Typography>
+          </Box>
+          <Button
+            variant="contained"
+            onClick={addRow}
+            style={{ maxHeight: "50px" }}
+          >
+            Add Row
+          </Button>
+        </Box>{" "}
+        <Box>NIckName</Box>{" "}
       </Box>
       <TableContainer component={Paper} sx={{ marginTop: "10px" }}>
         <Table aria-label="collapsible table">
