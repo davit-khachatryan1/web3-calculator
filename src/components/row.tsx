@@ -184,12 +184,12 @@ export default function Row(props: {
                     </TableCell>
                     <TableCell colSpan={2}>
                       <Typography gutterBottom component="div">
-                        {results.result_L4}
+                        {(results.result_L4).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
                       <Typography gutterBottom component="div">
-                        {results.result_L2}
+                        {(results.result_L2).toFixed(3)}
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -231,27 +231,27 @@ export default function Row(props: {
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                        {results.result_B6}
+                        {(results.result_B6).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_C6}
+                        {(results.result_C6).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_D6}
+                        {(results.result_D6).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_E6}
+                        {(results.result_E6).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_M4}
+                        {(results.result_M4).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -325,47 +325,47 @@ export default function Row(props: {
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                        {results.result_B5}
+                        {(results.result_B5).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_C5}
+                        {(results.result_C5).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_D5}
+                        {(results.result_D5).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_E5}
+                        {(results.result_E5).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_Q4}
+                        {(results.result_Q4).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_H3 || 1}
+                        {(results.result_H3 || 1).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_I3 || 1}
+                        {(results.result_I3 || 1).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_J3 || 1}
+                        {(results.result_J3 || 1).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_K3 || 1}
+                        {(results.result_K3 || 1).toFixed(3)}
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -382,27 +382,27 @@ export default function Row(props: {
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                        {results.result_F4}
+                        {(results.result_F4).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.averagedRationalTradingMargin}
+                        {(results.averagedRationalTradingMargin).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.accumulatedBalanceForPosition}
+                        {(results.accumulatedBalanceForPosition).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.priceAccordingAccumulatedBalance}
+                        {(results.priceAccordingAccumulatedBalance).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_T4}
+                        {(results.result_T4).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>

@@ -90,7 +90,7 @@ const Calculator = () => {
           />
           <Typography gutterBottom component="div">
             Accumulated Balance{" "}
-            <Button size="small">{generalData.accumulatedBalance || 0}</Button>
+            <Button size="small">{(generalData.accumulatedBalance || 0).toFixed(3)}</Button>
           </Typography>
           <Typography gutterBottom component="div" style={{ color: "green" }}>
             Number of Longs{" "}
