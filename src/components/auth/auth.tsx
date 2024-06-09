@@ -20,15 +20,19 @@ const Container = styled(Box)(({ theme }) => ({
   alignItems: "center",
   minHeight: "100vh",
   fontFamily: '"Jost", sans-serif',
-  background: "linear-gradient(to bottom, #0f0c29, #302b63, #24243e)",
+  backgroundSize: '100% 100%', /* This ensures the image covers the entire div */
+  backgroundPosition: 'center', /* This centers the image */
+  backgroundRepeat: 'no-repeat', /* This prevents the image from repeating */
+  // background: "linear-gradient(to bottom, #0f0c29, #302b63, #24243e)",
+  backgroundImage:
+    "url(https://blog.coinranking.com/blog/wp-content/uploads/2023/12/Web3-Agency.png)",
 }));
 
 const Main = styled(Box)(({ theme }) => ({
   width: 350,
   height: 550,
   overflow: "hidden",
-  background:
-    'url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/cover',
+  background: "linear-gradient(to bottom, #100477, #5c4ef0, #24243e)",
   borderRadius: 10,
   boxShadow: "5px 20px 50px #000",
 }));
