@@ -83,13 +83,13 @@ export default function Row(props: {
   const handleChange = (name: string) => (event: { target: { value: string } }) => {
     const value = event.target.value;
 
-    function includesLetters(str: string) {
+    function isValidNumberWithSingleDot(str: string) {
       const trimmedStr = str.trim();
-      const pattern = /[a-zA-Z ]/;
+      const pattern = /^[0-9]+(\.[0-9]*)?$/;
       return pattern.test(trimmedStr);
     }
     
-    const isValid = !includesLetters(value);
+    const isValid = isValidNumberWithSingleDot(value);
     let updatedData = {
       ...inputValues,
     };
