@@ -30,7 +30,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [generalData, setGeneralData] = useState<GeneralData>({
     ...data,
   });
-
+  
   const changeGeneralData = (item: string, value: number) => {
     setGeneralData({ ...generalData, [`${item}`]: value });
   };
@@ -51,10 +51,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     );
     return results.length > 0 ? total / results.length : 0;
   };
-
-  const calculatePriceAccordingAccumulatedBalance = () => {
-    
-  }
 
   const addRow = () => {
     const newRow = {

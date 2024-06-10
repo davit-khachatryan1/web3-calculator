@@ -20,6 +20,18 @@ import axios from "axios";
 import "./table.css";
 import { GeneralData, useDataContext } from "../context/DataContext";
 
+type ErrorStates = {
+  B4?: boolean;
+  C4?: boolean;
+  D4?: boolean;
+  E4?: boolean;
+  G4?: boolean;
+  P4?: boolean;
+  P5?: boolean;
+  N4?: boolean;
+  O4?: boolean;
+};
+
 export default function Row(props: {
   data?: any;
   results?: any;
@@ -32,6 +44,7 @@ export default function Row(props: {
   const [open, setOpen] = useState(false);
   const [coinName, setCoinName] = useState("");
   const [inputValues, setInputValues] = useState(data);
+  const [errorStates, setErrorStates] = useState<ErrorStates>({});
 
   const [coinData, setCoinData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -67,15 +80,37 @@ export default function Row(props: {
     }
   };
 
-  const handleChange =
-    (name: string) => (event: { target: { value: string } }) => {
-      const updatedData = {
-        ...inputValues,
-        [name]: parseFloat(event.target.value) || 0,
-      };
-      setInputValues(updatedData);
-      onUpdate && onUpdate(updatedData);
+  const handleChange = (name: string) => (event: { target: { value: string } }) => {
+    const value = event.target.value;
+
+    function includesLetters(str: string) {
+      const trimmedStr = str.trim();
+      const pattern = /[a-zA-Z ]/;
+      return pattern.test(trimmedStr);
+    }
+    
+    const isValid = !includesLetters(value);
+    let updatedData = {
+      ...inputValues,
     };
+
+    if(isValid){
+      updatedData = {
+        ...inputValues,
+        [name]: Number(value)
+      };
+    }
+    setInputValues(updatedData);
+
+    setErrorStates({
+      ...errorStates,
+      [name]: !isValid,
+    });
+
+    if (isValid) {
+      onUpdate && onUpdate(updatedData);
+    }
+  };
 
   const handleChangeCoinName = (e: any) => {
     setCoinName(e.target.value.toLowerCase().trim());
@@ -145,41 +180,46 @@ export default function Row(props: {
                     <TableCell>
                       <TextField
                         id="B4"
-                        value={inputValues.B4}
                         onChange={handleChange("B4")}
                         size="small"
+                        error={errorStates.B4}
+                        helperText={errorStates.B4 ? "Invalid input" : ""}
                       />
                     </TableCell>
                     <TableCell>
                       <TextField
                         id="C4"
-                        value={inputValues.C4}
                         onChange={handleChange("C4")}
                         size="small"
+                        error={errorStates.C4}
+                        helperText={errorStates.C4 ? "Invalid input" : ""}
                       />
                     </TableCell>
                     <TableCell>
                       <TextField
                         id="D4"
-                        value={inputValues.D4}
                         onChange={handleChange("D4")}
                         size="small"
+                        error={errorStates.D4}
+                        helperText={errorStates.D4 ? "Invalid input" : ""}
                       />
                     </TableCell>
                     <TableCell>
                       <TextField
                         id="E4"
-                        value={inputValues.E4}
                         onChange={handleChange("E4")}
                         size="small"
+                        error={errorStates.E4}
+                        helperText={errorStates.E4 ? "Invalid input" : ""}
                       />
                     </TableCell>
                     <TableCell>
                       <TextField
                         id="G4"
-                        value={inputValues.G4}
                         onChange={handleChange("G4")}
                         size="small"
+                        error={errorStates.G4}
+                        helperText={errorStates.G4 ? "Invalid input" : ""}
                       />
                     </TableCell>
                     <TableCell colSpan={2}>
@@ -229,7 +269,7 @@ export default function Row(props: {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell component="th" scope="row">
+                  <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
                         {(results.result_B6).toFixed(3)}
                       </Typography>
@@ -258,36 +298,40 @@ export default function Row(props: {
                       <TextField
                         id="P4"
                         defaultValue="0"
-                        value={inputValues.P4}
                         onChange={handleChange("P4")}
                         size="small"
+                        error={errorStates.P4}
+                        helperText={errorStates.P4 ? "Invalid input" : ""}
                       />
                     </TableCell>
                     <TableCell>
                       <TextField
                         id="openShortInCorridor"
                         defaultValue="0"
-                        value={inputValues.P5}
                         onChange={handleChange("P5")}
                         size="small"
+                        error={errorStates.P5}
+                        helperText={errorStates.P5 ? "Invalid input" : ""}
                       />
                     </TableCell>
                     <TableCell>
                       <TextField
                         id="N4"
                         defaultValue="0"
-                        value={inputValues.N4}
                         onChange={handleChange("N4")}
                         size="small"
+                        error={errorStates.N4}
+                        helperText={errorStates.N4 ? "Invalid input" : ""}
                       />
                     </TableCell>
                     <TableCell>
                       <TextField
                         id="O4"
                         defaultValue="0"
-                        value={inputValues.O4}
                         onChange={handleChange("O4")}
                         size="small"
+                        error={errorStates.O4}
+                        helperText={errorStates.O4 ? "Invalid input" : ""}
                       />
                     </TableCell>
                   </TableRow>
@@ -325,27 +369,27 @@ export default function Row(props: {
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                        {(results.result_B5).toFixed(3)}
+                      {(results.result_B5).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {(results.result_C5).toFixed(3)}
+                      {(results.result_C5).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {(results.result_D5).toFixed(3)}
+                      {(results.result_D5).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {(results.result_E5).toFixed(3)}
+                      {(results.result_E5).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {(results.result_Q4).toFixed(3)}
+                      {(results.result_Q4).toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
