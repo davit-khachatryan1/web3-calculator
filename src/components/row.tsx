@@ -122,7 +122,7 @@ console.log(inputValues, 'IIIIIIIIIII');
     const result: Record<string, number> = {};
     for (const key in obj) {
       if (Object.hasOwnProperty.call(obj, key)) {
-        result[key] = Number(obj[key]);
+        result[key] = Number(obj[key]) || 0;
       }
     }
     return result;
