@@ -19,22 +19,22 @@ const Calculator = () => {
     addRow,
     deleteRow,
     updateRow,
-    triggerCalculations,
+    // triggerCalculations,
     changeGeneralData,
   } = useDataContext();
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Enter") {
-        triggerCalculations();
-      }
-    };
+  // useEffect(() => {
+  //   const handleKeyDown = (event: KeyboardEvent) => {
+  //     if (event.key === "Enter") {
+  //       triggerCalculations();
+  //     }
+  //   };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [triggerCalculations]);
+  //   window.addEventListener("keydown", handleKeyDown);
+  //   return () => {
+  //     window.removeEventListener("keydown", handleKeyDown);
+  //   };
+  // }, [triggerCalculations]);
 
   return (
     <Box
@@ -143,6 +143,7 @@ const Calculator = () => {
                 onDelete={() => deleteRow(row.id)}
                 onUpdate={(updatedData) => updateRow(row.id, updatedData)}
                 genData={generalData}
+                id={row.id}
               />
             ))}
           </TableBody>

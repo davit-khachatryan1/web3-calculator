@@ -38,9 +38,10 @@ export default function Row(props: {
   onDelete?: () => void;
   onUpdate?: (data: any) => void;
   genData: GeneralData;
+  id: number;
 }) {
-  const { onDelete, data, results, onUpdate, genData } = props;
-  const { changeGeneralData } = useDataContext();
+  const { onDelete, data, results, onUpdate, genData, id } = props;
+  const { changeGeneralData, triggerCalculations, rows } = useDataContext();
   const [open, setOpen] = useState(false);
   const [coinName, setCoinName] = useState("");
   const [inputValues, setInputValues] = useState(data);
@@ -80,35 +81,66 @@ export default function Row(props: {
     }
   };
 
-  const handleChange = (name: string) => (event: { target: { value: string } }) => {
-    const value = event.target.value;
+  const handleChange =
+    (name: string) => (event: { target: { value: string } }) => {
+      const value = event.target.value;
 
-    function isValidNumberWithSingleDot(str: string) {
-      const trimmedStr = str.trim();
-      const pattern = /^[0-9]+(\.[0-9]*)?$/;
-      return pattern.test(trimmedStr);
-    }
-    
-    const isValid = isValidNumberWithSingleDot(value);
-    let updatedData = {
-      ...inputValues,
+      function isValidNumberWithSingleDot(str: string) {
+        const trimmedStr = str.trim();
+        const pattern = /^[0-9]+(\.[0-9]*)?$/;
+        return pattern.test(trimmedStr);
+      }
+
+      const isValid = isValidNumberWithSingleDot(value);
+      let updatedData = {
+        ...inputValues,
+      };
+
+      if (isValid) {
+        updatedData = {
+          ...inputValues,
+          [name]: value,
+        };
+        setInputValues(updatedData);
+      }
+
+      setErrorStates({
+        ...errorStates,
+        [name]: !isValid,
+      });
+
+      // if (isValid) {
+      //   onUpdate && onUpdate(updatedData);
+      // }
     };
 
-    if(isValid){
-      updatedData = {
-        ...inputValues,
-        [name]: Number(value)
-      };
+  const convertValuesToNumbers = (
+    obj: Record<string, any>
+  ): Record<string, number> => {
+    const result: Record<string, number> = {};
+    for (const key in obj) {
+      if (Object.hasOwnProperty.call(obj, key)) {
+        result[key] = Number(obj[key]);
+      }
     }
-    setInputValues(updatedData);
+    return result;
+  };
 
-    setErrorStates({
-      ...errorStates,
-      [name]: !isValid,
-    });
+  const handleKeyPress = (event: any) => {
+    console.log(event, "OOOOOOOOOOOOOOOOO", inputValues);
 
-    if (isValid) {
-      onUpdate && onUpdate(updatedData);
+    if (event.key === "Enter") {
+      const convertedValues = convertValuesToNumbers(inputValues);
+      setInputValues(convertedValues);
+      console.log(convertedValues, "55555555555");
+
+      if (document.activeElement === event.target) {
+        const newRows = rows.map((row) =>
+          row.id === id ? { ...row, data: convertedValues } : row
+        );
+        onUpdate && onUpdate(convertedValues);
+        triggerCalculations(newRows);
+      }
     }
   };
 
@@ -145,6 +177,9 @@ export default function Row(props: {
           </Button>
           <Button variant="contained" color="secondary" onClick={handleSubmit}>
             Get Data
+          </Button>
+          <Button variant="contained" color="secondary">
+            Save
           </Button>
         </TableCell>
       </TableRow>
@@ -184,6 +219,8 @@ export default function Row(props: {
                         size="small"
                         error={errorStates.B4}
                         helperText={errorStates.B4 ? "Invalid input" : ""}
+                        value={inputValues.B4 || null}
+                        onKeyPress={(event) => handleKeyPress(event)}
                       />
                     </TableCell>
                     <TableCell>
@@ -193,6 +230,8 @@ export default function Row(props: {
                         size="small"
                         error={errorStates.C4}
                         helperText={errorStates.C4 ? "Invalid input" : ""}
+                        value={inputValues.C4 || null}
+                        onKeyPress={(event) => handleKeyPress(event)}
                       />
                     </TableCell>
                     <TableCell>
@@ -202,6 +241,8 @@ export default function Row(props: {
                         size="small"
                         error={errorStates.D4}
                         helperText={errorStates.D4 ? "Invalid input" : ""}
+                        value={inputValues.D4 || null}
+                        onKeyPress={(event) => handleKeyPress(event)}
                       />
                     </TableCell>
                     <TableCell>
@@ -211,6 +252,8 @@ export default function Row(props: {
                         size="small"
                         error={errorStates.E4}
                         helperText={errorStates.E4 ? "Invalid input" : ""}
+                        value={inputValues.E4 || null}
+                        onKeyPress={(event) => handleKeyPress(event)}
                       />
                     </TableCell>
                     <TableCell>
@@ -220,16 +263,18 @@ export default function Row(props: {
                         size="small"
                         error={errorStates.G4}
                         helperText={errorStates.G4 ? "Invalid input" : ""}
+                        value={inputValues.G4 || null}
+                        onKeyPress={(event) => handleKeyPress(event)}
                       />
                     </TableCell>
                     <TableCell colSpan={2}>
                       <Typography gutterBottom component="div">
-                        {(results.result_L4).toFixed(3)}
+                        {results.result_L4.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
                       <Typography gutterBottom component="div">
-                        {(results.result_L2).toFixed(3)}
+                        {results.result_L2.toFixed(3)}
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -269,36 +314,36 @@ export default function Row(props: {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                  <TableCell component="th" scope="row">
+                    <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                        {(results.result_B6).toFixed(3)}
+                        {results.result_B6.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {(results.result_C6).toFixed(3)}
+                        {results.result_C6.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {(results.result_D6).toFixed(3)}
+                        {results.result_D6.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {(results.result_E6).toFixed(3)}
+                        {results.result_E6.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {(results.result_M4).toFixed(3)}
+                        {results.result_M4.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <TextField
                         id="P4"
-                        defaultValue="0"
                         onChange={handleChange("P4")}
+                        value={inputValues.P4 || null}
                         size="small"
                         error={errorStates.P4}
                         helperText={errorStates.P4 ? "Invalid input" : ""}
@@ -307,8 +352,8 @@ export default function Row(props: {
                     <TableCell>
                       <TextField
                         id="openShortInCorridor"
-                        defaultValue="0"
                         onChange={handleChange("P5")}
+                        value={inputValues.P5 || null}
                         size="small"
                         error={errorStates.P5}
                         helperText={errorStates.P5 ? "Invalid input" : ""}
@@ -317,8 +362,8 @@ export default function Row(props: {
                     <TableCell>
                       <TextField
                         id="N4"
-                        defaultValue="0"
                         onChange={handleChange("N4")}
+                        value={inputValues.N4 || null}
                         size="small"
                         error={errorStates.N4}
                         helperText={errorStates.N4 ? "Invalid input" : ""}
@@ -327,8 +372,8 @@ export default function Row(props: {
                     <TableCell>
                       <TextField
                         id="O4"
-                        defaultValue="0"
                         onChange={handleChange("O4")}
+                        value={inputValues.O4 || null}
                         size="small"
                         error={errorStates.O4}
                         helperText={errorStates.O4 ? "Invalid input" : ""}
@@ -369,27 +414,27 @@ export default function Row(props: {
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                      {(results.result_B5).toFixed(3)}
+                        {results.result_B5.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {(results.result_C5).toFixed(3)}
+                        {results.result_C5.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {(results.result_D5).toFixed(3)}
+                        {results.result_D5.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {(results.result_E5).toFixed(3)}
+                        {results.result_E5.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {(results.result_Q4).toFixed(3)}
+                        {results.result_Q4.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -426,27 +471,27 @@ export default function Row(props: {
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                        {(results.result_F4).toFixed(3)}
+                        {results.result_F4.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {(results.averagedRationalTradingMargin).toFixed(3)}
+                        {results.averagedRationalTradingMargin.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {(results.accumulatedBalanceForPosition).toFixed(3)}
+                        {results.accumulatedBalanceForPosition.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {(results.priceAccordingAccumulatedBalance).toFixed(3)}
+                        {results.priceAccordingAccumulatedBalance.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {(results.result_T4).toFixed(3)}
+                        {results.result_T4.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>

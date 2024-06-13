@@ -1,9 +1,9 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
 import { calculationResult, callAll, data } from "../helpers/clearing";
 
-type RowData = {
+export type RowData = {
   id: number;
-  data: typeof data;
+  data: GeneralData;
   results: typeof calculationResult;
 };
 
@@ -17,7 +17,7 @@ type DataContextType = {
   addRow: () => void;
   deleteRow: (id: number) => void;
   updateRow: (id: number, updatedData: any) => void;
-  triggerCalculations: () => void;
+  triggerCalculations: (data: RowData[]) => void;
   changeGeneralData: (item: string, value: number) => void;
 };
 
@@ -72,6 +72,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const updateRow = (id: number, updatedData: any) => {
+    console.log(id,updatedData,'>111111111111111>');
+    
     setRows((prevRows) =>
       prevRows.map((row) =>
         row.id === id ? { ...row, data: updatedData } : row
@@ -79,12 +81,15 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
-  const triggerCalculations = () => {
+  const triggerCalculations = (rows: RowData[]): void => {
     let genDataitems: GeneralData = {} as GeneralData;
     let longShorts= {
       "CG4":0,
       "CH4":0
     }
+
+    console.log(rows, '>>>>>>>>>>>>');
+    
     let updatedRows = rows.map((row) => {
       const { calculationResults, data } = callAll(row.results, {...row.data, 'A242': generalData["A242"], 'D244': generalData["D244"] }, rows);
       genDataitems = data
