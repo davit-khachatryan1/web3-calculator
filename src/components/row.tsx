@@ -84,11 +84,12 @@ export default function Row(props: {
   const handleChange =
     (name: string) => (event: { target: { value: string } }) => {
       const value = event.target.value;
+console.log(event.target.value, 'KKKKKKKKKKKKK');
 
       function isValidNumberWithSingleDot(str: string) {
         const trimmedStr = str.trim();
         const pattern = /^[0-9]+(\.[0-9]*)?$/;
-        return pattern.test(trimmedStr);
+        return pattern.test(trimmedStr) || trimmedStr === "";
       }
 
       const isValid = isValidNumberWithSingleDot(value);
@@ -101,8 +102,9 @@ export default function Row(props: {
           ...inputValues,
           [name]: value,
         };
-        setInputValues(updatedData);
-      }
+        }
+      setInputValues(updatedData);
+console.log(inputValues, 'IIIIIIIIIII');
 
       setErrorStates({
         ...errorStates,
@@ -127,13 +129,9 @@ export default function Row(props: {
   };
 
   const handleKeyPress = (event: any) => {
-    console.log(event, "OOOOOOOOOOOOOOOOO", inputValues);
-
     if (event.key === "Enter") {
       const convertedValues = convertValuesToNumbers(inputValues);
       setInputValues(convertedValues);
-      console.log(convertedValues, "55555555555");
-
       if (document.activeElement === event.target) {
         const newRows = rows.map((row) =>
           row.id === id ? { ...row, data: convertedValues } : row

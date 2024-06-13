@@ -72,8 +72,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const updateRow = (id: number, updatedData: any) => {
-    console.log(id,updatedData,'>111111111111111>');
-    
     setRows((prevRows) =>
       prevRows.map((row) =>
         row.id === id ? { ...row, data: updatedData } : row
@@ -88,8 +86,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       "CH4":0
     }
 
-    console.log(rows, '>>>>>>>>>>>>');
-    
     let updatedRows = rows.map((row) => {
       const { calculationResults, data } = callAll(row.results, {...row.data, 'A242': generalData["A242"], 'D244': generalData["D244"] }, rows);
       genDataitems = data
