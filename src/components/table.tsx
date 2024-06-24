@@ -51,6 +51,18 @@ const Calculator = () => {
         backgroundPosition: "center",
       }}
     >
+        <Box sx={{
+        display: "flex",
+        justifyContent:'center',
+        flexWrap: "nowrap",
+        color: "white",
+        alignItems: "center",
+        gap: '10px',
+        padding: "10px",
+        height: "max-content",
+        backgroundColor: "#000000ac",
+      }}>NIckName</Box>{" "}
+
       <Box
       sx={{
         display: "flex",
@@ -122,6 +134,7 @@ const Calculator = () => {
               Coin Quantity <Button size="small">{generalData["E242"]}</Button>
             </Typography>
           </Box>
+        </Box>{" "}
           <Button
             variant="contained"
             onClick={addRow}
@@ -129,8 +142,6 @@ const Calculator = () => {
           >
             Add Row
           </Button>
-        </Box>{" "}
-        <Box>NIckName</Box>{" "}
       </Box>
       <TableContainer component={Paper} sx={{ marginTop: "10px" }}>
         <Table aria-label="collapsible table">

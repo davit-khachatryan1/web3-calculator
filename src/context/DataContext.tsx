@@ -30,6 +30,9 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [generalData, setGeneralData] = useState<GeneralData>({
     ...data,
   });
+
+  console.log(rows, generalData, '66666666');
+  
   
   const changeGeneralData = (item: string, value: number) => {
     setGeneralData({ ...generalData, [`${item}`]: value });

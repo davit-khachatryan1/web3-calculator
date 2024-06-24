@@ -19,6 +19,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import axios from "axios";
 import "./table.css";
 import { GeneralData, useDataContext } from "../context/DataContext";
+import { useCoinsCalculationsContext } from "../context/CoinsCalculationsContext";
 
 type ErrorStates = {
   B4?: boolean;
@@ -42,6 +43,7 @@ export default function Row(props: {
 }) {
   const { onDelete, data, results, onUpdate, genData, id } = props;
   const { changeGeneralData, triggerCalculations, rows } = useDataContext();
+  const { updateRowInBE } = useCoinsCalculationsContext();
   const [open, setOpen] = useState(false);
   const [coinName, setCoinName] = useState("");
   const [inputValues, setInputValues] = useState(data);
@@ -84,7 +86,7 @@ export default function Row(props: {
   const handleChange =
     (name: string) => (event: { target: { value: string } }) => {
       const value = event.target.value;
-console.log(event.target.value, 'KKKKKKKKKKKKK');
+      console.log(event.target.value, "KKKKKKKKKKKKK");
 
       function isValidNumberWithSingleDot(str: string) {
         const trimmedStr = str.trim();
@@ -102,9 +104,9 @@ console.log(event.target.value, 'KKKKKKKKKKKKK');
           ...inputValues,
           [name]: value,
         };
-        }
+      }
       setInputValues(updatedData);
-console.log(inputValues, 'IIIIIIIIIII');
+      console.log(inputValues, "IIIIIIIIIII");
 
       setErrorStates({
         ...errorStates,
@@ -176,7 +178,11 @@ console.log(inputValues, 'IIIIIIIIIII');
           <Button variant="contained" color="secondary" onClick={handleSubmit}>
             Get Data
           </Button>
-          <Button variant="contained" color="secondary">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => updateRowInBE(id, { data, results })}
+          >
             Save
           </Button>
         </TableCell>
