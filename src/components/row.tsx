@@ -86,8 +86,6 @@ export default function Row(props: {
   const handleChange =
     (name: string) => (event: { target: { value: string } }) => {
       const value = event.target.value;
-      console.log(event.target.value, "KKKKKKKKKKKKK");
-
       function isValidNumberWithSingleDot(str: string) {
         const trimmedStr = str.trim();
         const pattern = /^[0-9]+(\.[0-9]*)?$/;
@@ -106,7 +104,6 @@ export default function Row(props: {
         };
       }
       setInputValues(updatedData);
-      console.log(inputValues, "IIIIIIIIIII");
 
       setErrorStates({
         ...errorStates,

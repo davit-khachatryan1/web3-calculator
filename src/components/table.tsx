@@ -19,22 +19,17 @@ const Calculator = () => {
     addRow,
     deleteRow,
     updateRow,
-    // triggerCalculations,
+    triggerCalculations,
     changeGeneralData,
   } = useDataContext();
 
-  // useEffect(() => {
-  //   const handleKeyDown = (event: KeyboardEvent) => {
-  //     if (event.key === "Enter") {
-  //       triggerCalculations();
-  //     }
-  //   };
-
-  //   window.addEventListener("keydown", handleKeyDown);
-  //   return () => {
-  //     window.removeEventListener("keydown", handleKeyDown);
-  //   };
-  // }, [triggerCalculations]);
+  const handleKeyPress = (event: any) => {
+    console.log('ashxatescccccccc');
+    
+    if (event.key === "Enter") {
+      triggerCalculations(rows);
+    }
+  };
 
   return (
     <Box
@@ -51,29 +46,33 @@ const Calculator = () => {
         backgroundPosition: "center",
       }}
     >
-        <Box sx={{
-        display: "flex",
-        justifyContent:'center',
-        flexWrap: "nowrap",
-        color: "white",
-        alignItems: "center",
-        gap: '10px',
-        padding: "10px",
-        height: "max-content",
-        backgroundColor: "#000000ac",
-      }}>NIckName</Box>{" "}
-
       <Box
-      sx={{
-        display: "flex",
-        flexWrap: "nowrap",
-        color: "white",
-        alignItems: "center",
-        gap: '10px',
-        padding: "10px",
-        height: "max-content",
-        backgroundColor: "#000000ac",
-      }}>
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexWrap: "nowrap",
+          color: "white",
+          alignItems: "center",
+          gap: "10px",
+          padding: "10px",
+          height: "max-content",
+          backgroundColor: "#000000ac",
+        }}
+      >
+        NIckName
+      </Box>{" "}
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "nowrap",
+          color: "white",
+          alignItems: "center",
+          gap: "10px",
+          padding: "10px",
+          height: "max-content",
+          backgroundColor: "#000000ac",
+        }}
+      >
         <Box
           sx={{
             display: "flex",
@@ -99,6 +98,7 @@ const Calculator = () => {
               onChange={(e) =>
                 changeGeneralData("A242", Number(e.target.value))
               }
+              onKeyPress={(event) => handleKeyPress(event)}
               size="small"
               className="balance"
             />
@@ -109,6 +109,7 @@ const Calculator = () => {
               onChange={(e) =>
                 changeGeneralData("D244", Number(e.target.value))
               }
+              onKeyPress={(event) => handleKeyPress(event)}
               className="balance"
               size="small"
             />
@@ -135,13 +136,13 @@ const Calculator = () => {
             </Typography>
           </Box>
         </Box>{" "}
-          <Button
-            variant="contained"
-            onClick={addRow}
-            style={{ maxHeight: "50px" }}
-          >
-            Add Row
-          </Button>
+        <Button
+          variant="contained"
+          onClick={addRow}
+          style={{ maxHeight: "50px" }}
+        >
+          Add Row
+        </Button>
       </Box>
       <TableContainer component={Paper} sx={{ marginTop: "10px" }}>
         <Table aria-label="collapsible table">

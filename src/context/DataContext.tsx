@@ -31,9 +31,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     ...data,
   });
 
-  console.log(rows, generalData, '66666666');
-  
-  
   const changeGeneralData = (item: string, value: number) => {
     setGeneralData({ ...generalData, [`${item}`]: value });
   };
@@ -61,16 +58,16 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       data: data,
       results: { ...calculationResult },
     };
-    setRows((prevRows) => [...prevRows, newRow]);    
+    setRows((prevRows) => [...prevRows, newRow]);
     setGeneralData((prevGeneralData) => {
-      return { ...prevGeneralData, 'E242': rows.length + 1 };
+      return { ...prevGeneralData, E242: rows.length + 1 };
     });
   };
 
   const deleteRow = (id: number) => {
     setRows((prevRows) => prevRows.filter((row) => row.id !== id));
     setGeneralData((prevGeneralData) => {
-      return { ...prevGeneralData, 'E242': rows.length - 1 };
+      return { ...prevGeneralData, E242: rows.length - 1 };
     });
   };
 
@@ -83,22 +80,24 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const triggerCalculations = (rows: RowData[]): void => {
-    let genDataitems: GeneralData = {} as GeneralData;
-    let longShorts= {
-      "CG4":0,
-      "CH4":0
-    }
+    let longShorts = {
+      CG4: 0,
+      CH4: 0,
+    };
 
     let updatedRows = rows.map((row) => {
-      const { calculationResults, data } = callAll(row.results, {...row.data, 'A242': generalData["A242"], 'D244': generalData["D244"] }, rows);
-      genDataitems = data
-      
+      const { calculationResults, data } = callAll(
+        row.results,
+        { ...row.data, A242: generalData["A242"], D244: generalData["D244"] },
+        rows
+      );
+
       longShorts["CG4"] += data["CG4"];
       longShorts["CH4"] += data["CH4"];
       return {
         ...row,
         results: calculationResults,
-        data: { ...data, 'A242': generalData["A242"], 'D244': generalData["D244"] },
+        data: { ...data, A242: generalData["A242"], D244: generalData["D244"] },
       };
     });
     const averagedRationalTradingMargin =
@@ -108,18 +107,26 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     const accumulatedBalanceForPosition =
       calculateAccumulatedBalanceForPosition(
         updatedRows.map((row) => row.results)
-      );      
-      updatedRows = rows.map((row) => ({
-        ...row,
-        results: {
-          ...row.results,
-          accumulatedBalanceForPosition,
-          averagedRationalTradingMargin,
-        },
-      }));
-      
-      setGeneralData({ ...generalData,"E242": updatedRows.length,'CG4':longShorts["CG4"], 'CH4':longShorts["CH4"], accumulatedBalance: accumulatedBalanceForPosition });
-    
+      );
+    updatedRows = rows.map((row) => ({
+      ...row,
+      results: {
+        ...row.results,
+        accumulatedBalanceForPosition,
+        averagedRationalTradingMargin,
+      },
+    }));
+
+    setGeneralData({
+      ...generalData,
+      E242: updatedRows.length,
+      CG4: longShorts["CG4"],
+      CH4: longShorts["CH4"],
+      accumulatedBalance:
+        updatedRows[0].results.accumulatedBalance ||
+        generalData["A242"] - generalData["D244"],
+    });
+
     setRows(updatedRows);
   };
 

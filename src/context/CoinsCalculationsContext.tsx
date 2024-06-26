@@ -75,7 +75,6 @@ export const CoinsCalculationsProvider = ({
   };
 
   const updateRowInBE = async (id: number, updatedData: any) => {
-    console.log(id,updatedData, '>???????????');
     
     if (user) {
       await updateCoinsCalculation(user.userId, id, updatedData);

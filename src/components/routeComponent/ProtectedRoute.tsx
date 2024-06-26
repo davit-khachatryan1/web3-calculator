@@ -8,7 +8,6 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { user } = useAuthContext();
-console.log(user,'>>>>>>',!user);
 
   // if (!user || JSON.stringify(user) === '{}') {
   //   console.log('sssssssss');
