@@ -60,14 +60,29 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     };
     setRows((prevRows) => [...prevRows, newRow]);
     setGeneralData((prevGeneralData) => {
-      return { ...prevGeneralData, E242: rows.length + 1 };
+      return { ...prevGeneralData, 'E242': rows.length + 1 };
     });
   };
 
   const deleteRow = (id: number) => {
-    setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+    const newRows = rows.filter((row) => row.id !== id);
+    setRows(newRows);
     setGeneralData((prevGeneralData) => {
       return { ...prevGeneralData, E242: rows.length - 1 };
+    });
+    let longShorts = {
+      'CG4': 0,
+      'CH4': 0,
+    };
+
+    for (let i = 0; i < newRows.length; i++) {
+      longShorts["CG4"] += newRows[i].data["CG4"];
+      longShorts["CH4"] += newRows[i].data["CH4"];
+  }
+    setGeneralData({
+      ...generalData,
+      'CG4': longShorts["CG4"],
+      'CH4': longShorts["CH4"],
     });
   };
 
@@ -81,25 +96,48 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
   const triggerCalculations = (rows: RowData[]): void => {
     let longShorts = {
-      CG4: 0,
-      CH4: 0,
+      'CG4': 0,
+      'CH4': 0,
     };
 
-    let updatedRows = rows.map((row) => {
-      const { calculationResults, data } = callAll(
+    let updatedRows =[];
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
+      const { calculationResults, rowBigData } = callAll(
         row.results,
-        { ...row.data, A242: generalData["A242"], D244: generalData["D244"] },
+        { ...row.data, "A242": generalData["A242"], "D244": generalData["D244"] },
         rows
       );
-
-      longShorts["CG4"] += data["CG4"];
-      longShorts["CH4"] += data["CH4"];
-      return {
+      for (const key in rowBigData) {
+        if (typeof rowBigData[key] === 'function') {
+          delete rowBigData[key];
+        }
+      }
+      longShorts["CG4"] += rowBigData["CG4"];
+      longShorts["CH4"] += rowBigData["CH4"];
+      updatedRows.push({
         ...row,
         results: calculationResults,
-        data: { ...data, A242: generalData["A242"], D244: generalData["D244"] },
-      };
-    });
+        data: { ...rowBigData, "A242": generalData["A242"], "D244": generalData["D244"], },
+      });
+    }
+
+//     let updatedRows = rows.map((row) => {
+//       const { calculationResults, rowBigData } = callAll(
+//         row.results,
+//         { ...row.data, "A242": generalData["A242"], "D244": generalData["D244"] },
+//         rows
+//       );
+// console.log(data, 'LLLLLLLLLLLLLLLL');
+
+//       longShorts["CG4"] += rowBigData["CG4"];
+//       longShorts["CH4"] += rowBigData["CH4"];
+//       return {
+//         ...row,
+//         results: calculationResults,
+//         data: { ...rowBigData, "A242": generalData["A242"], "D244": generalData["D244"], },
+//       };
+//     });
     const averagedRationalTradingMargin =
       calculateAveragedRationalTradingMargin(
         updatedRows.map((row) => row.results)
@@ -108,26 +146,29 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       calculateAccumulatedBalanceForPosition(
         updatedRows.map((row) => row.results)
       );
-    updatedRows = rows.map((row) => ({
-      ...row,
-      results: {
-        ...row.results,
-        accumulatedBalanceForPosition,
-        averagedRationalTradingMargin,
-      },
-    }));
+      let newUpdatedRows = []
+      for (const row of updatedRows) {
+        newUpdatedRows.push({
+          ...row,
+          results: {
+            ...row.results,
+            accumulatedBalanceForPosition,
+            averagedRationalTradingMargin,
+          },
+        });
+      }
 
     setGeneralData({
       ...generalData,
-      E242: updatedRows.length,
-      CG4: longShorts["CG4"],
-      CH4: longShorts["CH4"],
+      "E242": updatedRows.length,
+      "CG4": longShorts["CG4"],
+      "CH4": longShorts["CH4"],
       accumulatedBalance:
-        updatedRows[0].results.accumulatedBalance ||
+        updatedRows[updatedRows.length - 1].results.accumulatedBalance ||
         generalData["A242"] - generalData["D244"],
     });
 
-    setRows(updatedRows);
+    setRows(newUpdatedRows);
   };
 
   return (

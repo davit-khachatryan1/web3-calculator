@@ -55,7 +55,7 @@ export function calculateFormula(formula, data, allData) {
     variables["W4"] = safeAssign((data["C4"] - data["G4"]) * 100 / data["G4"]); // shorti tokos
     variables["X4"] = safeAssign((data["E4"] * data["G4"] / data["Y4"]) * variables["W4"] * data["Y4"] / 100); // Shorti Pnl
     variables["BE4"] = safeAssign(variables["V4"] + variables["X4"]); // Unreailzed Pnl
-    variables["BE242"] = (function() { let sum = 0; allData.forEach(item => { console.log(item.data['BE4'],'////////'); sum += (item.data['BE4'] || 0); }); sum+=variables['BE4']; return sum; })();
+    variables["BE242"] = (function() { let sum = 0; allData.forEach(item =>  sum += (item.data['BE4'] || 0)); sum+=variables['BE4']; return sum; })();
     variables["C244"] = safeAssign((variables["BE242"] > data["D244"]) ? (data["A242"] - variables["BE242"]) : (data["A242"] - data["D244"])); // avelcuk
     variables["L6"] = safeAssign(variables["C244"] / data["E242"]);
     variables["AF4"] = safeAssign((data["G4"] * data["D4"]) / data["Y4"]);
@@ -154,7 +154,7 @@ export function callAll(calculationResults, data, allData) {
       allData.length /
       (calculationResults.result_D5 + calculationResults.result_E5);
 //    console.log("All calculationResults:", calculationResults);
-    return { calculationResults, data: myData.data };
+    return { calculationResults, rowBigData: myData.data };
 }
 
 export const calculationResult = {

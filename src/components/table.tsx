@@ -24,8 +24,6 @@ const Calculator = () => {
   } = useDataContext();
 
   const handleKeyPress = (event: any) => {
-    console.log('ashxatescccccccc');
-    
     if (event.key === "Enter") {
       triggerCalculations(rows);
     }
