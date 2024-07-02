@@ -113,8 +113,10 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
           delete rowBigData[key];
         }
       }
-      longShorts["CG4"] += rowBigData["CG4"];
-      longShorts["CH4"] += rowBigData["CH4"];
+      console.log(rowBigData, '////////////////');
+      
+      longShorts["CG4"] = rowBigData["CG4"];
+      longShorts["CH4"] = rowBigData["CH4"];
       updatedRows.push({
         ...row,
         results: calculationResults,
@@ -157,6 +159,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
           },
         });
       }
+console.log(longShorts,'??????????');
 
     setGeneralData({
       ...generalData,
