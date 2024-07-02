@@ -61,10 +61,10 @@ export function calculateFormula(formula, data, allData) {
     variables["AF4"] = safeAssign((data["G4"] * data["D4"]) / data["Y4"]);
     variables["AG4"] = safeAssign((data["G4"] * data["E4"]) / data["Y4"]);
     variables["AH4"] = safeAssign(variables["AF4"] + variables["AG4"]);
-    variables["CG4"] = variables["CG4"] ? variables["CG4"] : 0;
-    variables["CH4"] = variables["CH4"] ? variables["CH4"] : 0;
-    variables["CG4"] += (data["D4"] > data["E4"]) ? 1 : 0; //position is long
-    variables["CH4"] += (data["D4"] < data["E4"]) ? 1 : 0;
+    // variables["CG4"] = variables["CG4"] ? variables["CG4"] : 0;
+    // variables["CH4"] = variables["CH4"] ? variables["CH4"] : 0;
+    variables["CG4"] = (data["D4"] > data["E4"]) ? 1 : 0; //position is long
+    variables["CH4"] = (data["D4"] < data["E4"]) ? 1 : 0;
        /// Calculating IF open Long Coefficient
     variables["AD4"] = safeAssign((data["C4"] - variables["B6"]) * 100 / data["C4"]);
     variables["BG4"] = safeAssign(variables["D6"] * data["C4"] / data["Y4"] * variables["AD4"] * data["Y4"] / 100);

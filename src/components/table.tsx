@@ -162,5 +162,5 @@ const Calculator = () => {
     </Box>
   );
 };
-
+ 
 export default Calculator;
