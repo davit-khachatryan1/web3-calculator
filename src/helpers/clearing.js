@@ -148,12 +148,13 @@ export function callAll(calculationResults, data, allData) {
     calculationResults.result_M4 = calculateFormula("IF(D4 > E4, IF(G4 > B4, AY4, IF(G4 < C4, AU4, 0)), IF(G4 < C4, IF(D4 < E4, BA4, 0), IF(G4 > B4, AW4, 0)))", data, allData).result;
     calculationResults.result_Q4 = calculateFormula("IF(D4 > E4, IF(G4 > B4, AZ4, IF(G4 < C4, AV4, 0)), IF(G4 < C4, IF(D4 < E4, BB4, 0), IF(G4 > B4, AX4, 0)))", data, allData).result;
     let myData = calculateFormula("IF(B242>D244,A242-B242,A242-D244)", data, allData);
-    calculationResults.accumulatedBalance = myData.result;   
-    calculationResults.priceAccordingAccumulatedBalance =
-      myData.result /
-      allData.length /
-      (calculationResults.result_D5 + calculationResults.result_E5);
-//    console.log("All calculationResults:", calculationResults);
+    calculationResults.accumulatedBalance = myData.result;
+    if (calculationResults.result_B5) {
+      calculationResults.priceAccordingAccumulatedBalance =
+        myData.result /
+        allData.length /
+        (calculationResults.result_D5 + calculationResults.result_E5);
+    }
     return { calculationResults, rowBigData: myData.data };
 }
 
