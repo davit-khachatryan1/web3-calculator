@@ -44,10 +44,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const calculateAccumulatedBalanceForPosition = (results: any) => {
-    console.log(results, '{{{{{{{{{');
     
     const total = results[results.length - 1].accumulatedBalance
-    console.log(total, results.length , '55555555');
     
     return results.length > 0 ? total / results.length : 0;
   };

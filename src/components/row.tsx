@@ -348,6 +348,7 @@ export default function Row(props: {
                         size="small"
                         error={errorStates.P4}
                         helperText={errorStates.P4 ? "Invalid input" : ""}
+                        onKeyPress={(event) => handleKeyPress(event)}
                       />
                     </TableCell>
                     <TableCell>
@@ -358,6 +359,7 @@ export default function Row(props: {
                         size="small"
                         error={errorStates.P5}
                         helperText={errorStates.P5 ? "Invalid input" : ""}
+                        onKeyPress={(event) => handleKeyPress(event)}
                       />
                     </TableCell>
                     <TableCell>
@@ -368,6 +370,7 @@ export default function Row(props: {
                         size="small"
                         error={errorStates.N4}
                         helperText={errorStates.N4 ? "Invalid input" : ""}
+                        onKeyPress={(event) => handleKeyPress(event)}
                       />
                     </TableCell>
                     <TableCell>
@@ -378,6 +381,7 @@ export default function Row(props: {
                         size="small"
                         error={errorStates.O4}
                         helperText={errorStates.O4 ? "Invalid input" : ""}
+                        onKeyPress={(event) => handleKeyPress(event)}
                       />
                     </TableCell>
                   </TableRow>
