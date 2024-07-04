@@ -44,13 +44,14 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const calculateAccumulatedBalanceForPosition = (results: any) => {
-    const total = results.reduce(
-      (sum: any, result: { accumulatedBalance: any }) =>
-        sum + result.accumulatedBalance,
-      0
-    );
+    console.log(results, '{{{{{{{{{');
+    
+    const total = results[results.length - 1].accumulatedBalance
+    console.log(total, results.length , '55555555');
+    
     return results.length > 0 ? total / results.length : 0;
   };
+
 
   const addRow = () => {
     const newRow = {
@@ -148,6 +149,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       calculateAccumulatedBalanceForPosition(
         updatedRows.map((row) => row.results)
       );
+      console.log(accumulatedBalanceForPosition, '>>>>>>>');
+      
       let newUpdatedRows = []
       for (const row of updatedRows) {
         newUpdatedRows.push({
