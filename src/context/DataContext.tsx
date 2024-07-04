@@ -146,7 +146,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       calculateAccumulatedBalanceForPosition(
         updatedRows.map((row) => row.results)
       );
-      console.log(accumulatedBalanceForPosition, '>>>>>>>');
       
       let newUpdatedRows = []
       for (const row of updatedRows) {
