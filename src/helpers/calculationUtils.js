@@ -26,13 +26,11 @@ export function calculateFormula(formula, data) {
 
     // Implement IF function logic
     const evaluateIfFunction = (condition, valueIfTrue, valueIfFalse,) => {
-        // console.log(condition, valueIfTrue, valueIfFalse,'>>>>>>>>>>>>>>>>>>>>>>');
         return condition ? valueIfTrue : valueIfFalse;
     };
 
     // Add IF function to the variables
     variables["IF"] = evaluateIfFunction;
-console.log(variables["IF"], 'OOOOOOOOOkkkkkkkkkkkkkkkkkk');
     // Calculate additional variables needed for the formula
     variables["B5"] = data["B4"]; // Long entry price (pac)
     variables["C5"] = data["C4"]; // Short entry price (pac)
