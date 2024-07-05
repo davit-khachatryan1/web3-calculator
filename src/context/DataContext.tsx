@@ -123,23 +123,15 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       });
     }
 
-//     let updatedRows = rows.map((row) => {
-//       const { calculationResults, rowBigData } = callAll(
-//         row.results,
-//         { ...row.data, "A242": generalData["A242"], "D244": generalData["D244"] },
-//         rows
-//       );
+    if (updatedRows.length > 1) {
+      for (let i = 0; i < updatedRows.length; i++) {
+        const row = updatedRows[i];
+        // console.log(row, '????????',row.data["B242"]);
+        
+        row.data["B242"] = updatedRows[updatedRows.length - 1].data["B242"];
+      }
+    }
 
-// console.log(data, 'LLLLLLLLLLLLLLLL');
-
-//       longShorts["CG4"] += rowBigData["CG4"];
-//       longShorts["CH4"] += rowBigData["CH4"];
-//       return {
-//         ...row,
-//         results: calculationResults,
-//         data: { ...rowBigData, "A242": generalData["A242"], "D244": generalData["D244"], },
-//       };
-//     });
     const averagedRationalTradingMargin =
       calculateAveragedRationalTradingMargin(
         updatedRows.map((row) => row.results)
@@ -159,7 +151,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
           },
         });
       }
-console.log(longShorts,'??????????');
 
     setGeneralData({
       ...generalData,
