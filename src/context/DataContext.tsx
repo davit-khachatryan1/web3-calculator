@@ -43,10 +43,24 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     return results.length > 0 ? total / results.length : 0;
   };
 
-  const calculateAccumulatedBalanceForPosition = (results: any) => {
-    const total = results[results.length - 1].accumulatedBalance;
+  const calculatePriceAccordingAccumulatedBalance = (
+    results: any,
+    accumulatedBalance: any
+  ) => {
+    const data = accumulatedBalance / results.length;
 
-    return results.length > 0 ? total / results.length : 0;
+    const price =
+      data /
+      (results[results.length - 1].results.result_D5 -
+        results[results.length - 1].results.result_E5);
+    return price;
+  };
+
+  const calculateAccumulatedBalanceForPosition = (
+    results: any,
+    accumulatedBalance: any
+  ) => {
+    return results.length > 0 ? accumulatedBalance / results.length : 0;
   };
 
 
@@ -124,20 +138,30 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     if (updatedRows.length > 1) {
       for (let i = 0; i < updatedRows.length; i++) {
         const row = updatedRows[i];
-        // console.log(row, '????????',row.data["B242"]);
-        
         row.data["B242"] = updatedRows[updatedRows.length - 1].data["B242"];
       }
     }
+
+    const calculateAccumulatedBalance = () => {
+      console.log(generalData, "generalDatageneralData");
+
+      return generalData["B242"] > generalData["D244"]
+        ? generalData["A242"] - generalData["B242"]
+        : generalData["A242"] - generalData["D244"];
+    };
+    const accumulatedBalance = calculateAccumulatedBalance();
+    const priceAccordingAccumulatedBalance =
+      calculatePriceAccordingAccumulatedBalance(
+        updatedRows,
+        accumulatedBalance
+      );
 
     const averagedRationalTradingMargin =
       calculateAveragedRationalTradingMargin(
         updatedRows.map((row) => row.results)
       );
     const accumulatedBalanceForPosition =
-      calculateAccumulatedBalanceForPosition(
-        updatedRows.map((row) => row.results)
-      );
+      calculateAccumulatedBalanceForPosition(updatedRows, accumulatedBalance);
       
       let newUpdatedRows = []
       for (const row of updatedRows) {
@@ -145,21 +169,24 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
           ...row,
           results: {
             ...row.results,
+            accumulatedBalance,
+            priceAccordingAccumulatedBalance,
             accumulatedBalanceForPosition,
             averagedRationalTradingMargin,
           },
         });
       }
+console.log(accumulatedBalance, '++++++++++++++');
 
     setGeneralData({
       ...generalData,
-      "E242": updatedRows.length,
-      "CG4": longShorts["CG4"],
-      "CH4": longShorts["CH4"],
+      E242: updatedRows.length,
+      CG4: longShorts["CG4"],
+      CH4: longShorts["CH4"],
       accumulatedBalance:
-        updatedRows[updatedRows.length - 1].results.accumulatedBalance ||
-        generalData["A242"] - generalData["D244"],
+        accumulatedBalance || generalData["A242"] - generalData["D244"],
     });
+console.log(newUpdatedRows, '>>>>>>');
 
     setRows(newUpdatedRows);
   };

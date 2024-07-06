@@ -55,20 +55,14 @@ export function calculateFormula(formula, data, allData) {
     variables["W4"] = safeAssign((data["C4"] - data["G4"]) * 100 / data["G4"]); // shorti tokos
     variables["X4"] = safeAssign((data["E4"] * data["G4"] / data["Y4"]) * variables["W4"] * data["Y4"] / 100); // Shorti Pnl
     variables["BE4"] = safeAssign(variables["V4"] + variables["X4"]); // Unreailzed Pnl
-    // console.log(allData,'}}}}}}}}');
     variables["BE242"] = (function() { let sum = 0; allData.forEach(item => { sum += (item.data['BE4'] || 0); }); sum+=variables['BE4'];  return sum; })();
-    // console.log(variables['BE242'], 'KKKKKKKKKKKK');
-    debugger
     variables["C244"] = safeAssign((variables["BE242"] > data["D244"]) ? (data["A242"] - variables["BE242"]) : (data["A242"] - data["D244"])); // avelcuk
     variables["L6"] = safeAssign(variables["C244"] / data["E242"]);
     variables["AF4"] = safeAssign((data["G4"] * data["D4"]) / data["Y4"]);
     variables["AG4"] = safeAssign((data["G4"] * data["E4"]) / data["Y4"]);
     variables["AH4"] = safeAssign(variables["AF4"] + variables["AG4"]);
-    // variables["CG4"] = variables["CG4"] ? variables["CG4"] : 0;
-    // variables["CH4"] = variables["CH4"] ? variables["CH4"] : 0;
     variables["CG4"] = (data["D4"] > data["E4"]) ? 1 : 0; //position is long
     variables["CH4"] = (data["D4"] < data["E4"]) ? 1 : 0;
-       /// Calculating IF open Long Coefficient
     variables["AD4"] = safeAssign((data["C4"] - variables["B6"]) * 100 / data["C4"]);
     variables["BG4"] = safeAssign(variables["D6"] * data["C4"] / data["Y4"] * variables["AD4"] * data["Y4"] / 100);
     variables["AA4"] = safeAssign((data["C4"] - variables["B6"]) * 100 / variables["B6"]);
@@ -149,15 +143,9 @@ export function callAll(calculationResults, data, allData) {
     calculationResults.result_J3 = calculateFormula("I9/E9", data, allData).result;
     calculationResults.result_K3 = calculateFormula("J9/F9", data, allData).result;
     calculationResults.result_M4 = calculateFormula("IF(D4 > E4, IF(G4 > B4, AY4, IF(G4 < C4, AU4, 0)), IF(G4 < C4, IF(D4 < E4, BA4, 0), IF(G4 > B4, AW4, 0)))", data, allData).result;
-    calculationResults.result_Q4 = calculateFormula("IF(D4 > E4, IF(G4 > B4, AZ4, IF(G4 < C4, AV4, 0)), IF(G4 < C4, IF(D4 < E4, BB4, 0), IF(G4 > B4, AX4, 0)))", data, allData).result;
-    let myData = calculateFormula("IF(B242>D244,A242-B242,A242-D244)", data, allData);
-    calculationResults.accumulatedBalance = myData.result;
-    if (calculationResults.result_B5) {
-      calculationResults.priceAccordingAccumulatedBalance =
-        myData.result /
-        allData.length /
-        (calculationResults.result_D5 + calculationResults.result_E5);
-    }
+    let myData = calculateFormula("IF(D4 > E4, IF(G4 > B4, AZ4, IF(G4 < C4, AV4, 0)), IF(G4 < C4, IF(D4 < E4, BB4, 0), IF(G4 > B4, AX4, 0)))", data, allData);
+    calculationResults.result_Q4 = myData.result
+    
     return { calculationResults, rowBigData: myData.data };
 }
 
