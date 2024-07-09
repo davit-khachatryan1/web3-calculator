@@ -58,5 +58,6 @@ function App() {
     </ThemeProvider>
   );
 }
+///acumulated balacne hashvel@ hanel mi hat verev layer u hashvel priceacordin eli mi layer verev
 
 export default App;

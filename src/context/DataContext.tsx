@@ -112,13 +112,14 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       'CH4': 0,
     };
 
-    let updatedRows =[];
+    let updatedRows:RowData[] =[];
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i];
       const { calculationResults, rowBigData } = callAll(
         row.results,
         { ...row.data, "A242": generalData["A242"], "D244": generalData["D244"] },
-        rows
+        rows,
+        i
       );
       for (const key in rowBigData) {
         if (typeof rowBigData[key] === 'function') {
@@ -143,11 +144,13 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const calculateAccumulatedBalance = () => {
-      console.log(generalData, "generalDatageneralData");
+      // console.log(generalData, 'KKKKKKKKK',updatedRows);
 
-      return generalData["B242"] > generalData["D244"]
-        ? generalData["A242"] - generalData["B242"]
-        : generalData["A242"] - generalData["D244"];
+      const aa =  updatedRows[updatedRows.length - 1].data["B242"] >= generalData["D244"]
+      ? generalData["A242"] - updatedRows[updatedRows.length - 1].data["B242"]
+      : generalData["A242"] - generalData["D244"];
+      // console.log(aa);
+      return aa
     };
     const accumulatedBalance = calculateAccumulatedBalance();
     const priceAccordingAccumulatedBalance =
@@ -176,7 +179,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
           },
         });
       }
-console.log(accumulatedBalance, '++++++++++++++');
+// console.log(accumulatedBalance, '++++++++++++++');
 
     setGeneralData({
       ...generalData,
@@ -186,7 +189,7 @@ console.log(accumulatedBalance, '++++++++++++++');
       accumulatedBalance:
         accumulatedBalance || generalData["A242"] - generalData["D244"],
     });
-console.log(newUpdatedRows, '>>>>>>');
+// console.log(newUpdatedRows, '>>>>>>');
 
     setRows(newUpdatedRows);
   };

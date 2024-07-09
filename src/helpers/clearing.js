@@ -18,7 +18,7 @@ export const data = {
 };
 
 
-export function calculateFormula(formula, data, allData) {
+export function calculateFormula(formula, data, allData,id) {
     // Define variables based on the data object
     const variables = { ...data };
 
@@ -55,7 +55,8 @@ export function calculateFormula(formula, data, allData) {
     variables["W4"] = safeAssign((data["C4"] - data["G4"]) * 100 / data["G4"]); // shorti tokos
     variables["X4"] = safeAssign((data["E4"] * data["G4"] / data["Y4"]) * variables["W4"] * data["Y4"] / 100); // Shorti Pnl
     variables["BE4"] = safeAssign(variables["V4"] + variables["X4"]); // Unreailzed Pnl
-    variables["BE242"] = (function() { let sum = 0; allData.forEach(item => { sum += (item.data['BE4'] || 0); }); sum+=variables['BE4'];  return sum; })();
+    console.log(allData, '?????????');
+    variables["BE242"] = (function() { let sum = 0; allData.length > 1 && allData.forEach((item, i) => { if(i !== id) {sum += (item.data['BE4'] || 0) }}); console.log(sum, '||||||||||',variables['BE4']);sum+=variables['BE4'];  return sum; })();
     variables["C244"] = safeAssign((variables["BE242"] > data["D244"]) ? (data["A242"] - variables["BE242"]) : (data["A242"] - data["D244"])); // avelcuk
     variables["L6"] = safeAssign(variables["C244"] / data["E242"]);
     variables["AF4"] = safeAssign((data["G4"] * data["D4"]) / data["Y4"]);
@@ -121,28 +122,28 @@ export function calculateFormula(formula, data, allData) {
 }
 
 
-export function callAll(calculationResults, data, allData) {
-    calculationResults.result_BE4 = calculateFormula("BE4", data, allData).result;
-    calculationResults.result_B5 = calculateFormula("B4", data, allData).result;
-    calculationResults.result_C5 = calculateFormula("C4", data, allData).result;
-    calculationResults.result_D5 = calculateFormula("D4 - N4", data, allData).result;
-    calculationResults.result_E5 = calculateFormula("E4 - O4", data, allData).result;
-    calculationResults.result_B6 = calculateFormula("(P4*G4+D4*B4)/(D4+P4)", data, allData).result;
-    calculationResults.result_C6 = calculateFormula("(P5*G4+E4*C4)/(E4+P5)", data, allData).result;
-    calculationResults.result_D6 = calculateFormula("D4+P4", data, allData).result;
-    calculationResults.result_E6 = calculateFormula("E4+P5", data, allData).result;
-    calculationResults.result_F4 = calculateFormula("IF(G4>C4+(B4-C4)/2,AI4-BO4,AJ4-BF4)", data, allData).result;
-    calculationResults.result_C244 = calculateFormula("IF(BE242>D244,A242-BE242,A242-D244)", data, allData).result;
-    calculationResults.result_L6 = calculateFormula("C244/E242", data, allData).result;
-    calculationResults.result_G6 = calculateFormula("L6 / (D4 + E4)", data, allData).result;
-    calculationResults.result_T4 = calculateFormula("AF4-AG4", data, allData).result;
-    calculationResults.result_L2 = calculateFormula("IF(D4>E4,(0.9*D5-0.6*D5)*(1-(B5-G4)/(B5-C5))+0.6*D5-E5,(0.9*E5-0.65*E5)*((B5-G4)/(B5-C5))+0.65*E5-D5)", data, allData).result;
-    calculationResults.result_L4 = calculateFormula("IF(D4>E4,(0.9*D6-0.6*D6)*(1-(B6-G4)/(B6-C6))+0.6*D6-E6,(0.9*E6-0.65*E6)*((B6-G4)/(B6-C6))+0.65*E6-D6)", data, allData).result;
-    calculationResults.result_H3 = calculateFormula("K9/G9", data, allData).result;
-    calculationResults.result_I3 = calculateFormula("L9/G9", data, allData).result;
-    calculationResults.result_J3 = calculateFormula("I9/E9", data, allData).result;
-    calculationResults.result_K3 = calculateFormula("J9/F9", data, allData).result;
-    calculationResults.result_M4 = calculateFormula("IF(D4 > E4, IF(G4 > B4, AY4, IF(G4 < C4, AU4, 0)), IF(G4 < C4, IF(D4 < E4, BA4, 0), IF(G4 > B4, AW4, 0)))", data, allData).result;
+export function callAll(calculationResults, data, allData, id) {
+    calculationResults.result_BE4 = calculateFormula("BE4", data, allData, id).result;
+    calculationResults.result_B5 = calculateFormula("B4", data, allData, id).result;
+    calculationResults.result_C5 = calculateFormula("C4", data, allData, id).result;
+    calculationResults.result_D5 = calculateFormula("D4 - N4", data, allData, id).result;
+    calculationResults.result_E5 = calculateFormula("E4 - O4", data, allData, id).result;
+    calculationResults.result_B6 = calculateFormula("(P4*G4+D4*B4)/(D4+P4)", data, allData, id).result;
+    calculationResults.result_C6 = calculateFormula("(P5*G4+E4*C4)/(E4+P5)", data, allData, id).result;
+    calculationResults.result_D6 = calculateFormula("D4+P4", data, allData, id).result;
+    calculationResults.result_E6 = calculateFormula("E4+P5", data, allData, id).result;
+    calculationResults.result_F4 = calculateFormula("IF(G4>C4+(B4-C4)/2,AI4-BO4,AJ4-BF4)", data, allData, id).result;
+    calculationResults.result_C244 = calculateFormula("IF(BE242>D244,A242-BE242,A242-D244)", data, allData, id).result;
+    calculationResults.result_L6 = calculateFormula("C244/E242", data, allData, id).result;
+    calculationResults.result_G6 = calculateFormula("L6 / (D4 + E4)", data, allData, id).result;
+    calculationResults.result_T4 = calculateFormula("AF4-AG4", data, allData, id).result;
+    calculationResults.result_L2 = calculateFormula("IF(D4>E4,(0.9*D5-0.6*D5)*(1-(B5-G4)/(B5-C5))+0.6*D5-E5,(0.9*E5-0.65*E5)*((B5-G4)/(B5-C5))+0.65*E5-D5)", data, allData, id).result;
+    calculationResults.result_L4 = calculateFormula("IF(D4>E4,(0.9*D6-0.6*D6)*(1-(B6-G4)/(B6-C6))+0.6*D6-E6,(0.9*E6-0.65*E6)*((B6-G4)/(B6-C6))+0.65*E6-D6)", data, allData, id).result;
+    calculationResults.result_H3 = calculateFormula("K9/G9", data, allData, id).result;
+    calculationResults.result_I3 = calculateFormula("L9/G9", data, allData, id).result;
+    calculationResults.result_J3 = calculateFormula("I9/E9", data, allData, id).result;
+    calculationResults.result_K3 = calculateFormula("J9/F9", data, allData, id).result;
+    calculationResults.result_M4 = calculateFormula("IF(D4 > E4, IF(G4 > B4, AY4, IF(G4 < C4, AU4, 0)), IF(G4 < C4, IF(D4 < E4, BA4, 0), IF(G4 > B4, AW4, 0)))", data, allData, id).result;
     let myData = calculateFormula("IF(D4 > E4, IF(G4 > B4, AZ4, IF(G4 < C4, AV4, 0)), IF(G4 < C4, IF(D4 < E4, BB4, 0), IF(G4 > B4, AX4, 0)))", data, allData);
     calculationResults.result_Q4 = myData.result
     
