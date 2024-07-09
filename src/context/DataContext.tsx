@@ -48,8 +48,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     accumulatedBalance: any
   ) => {
     const data = accumulatedBalance / results.length;
-    console.log((results[results.length - 1].results.result_D5 -
-      results[results.length - 1].results.result_E5), 'result 1');
     const price =
       data /
       (results[results.length - 1].results.result_D5 +
