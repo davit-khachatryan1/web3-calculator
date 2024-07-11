@@ -33,7 +33,6 @@ const Calculator = () => {
     <Box
       sx={{
         padding: "10px",
-        width: "100vw",
         height: "100vh",
         display: "flex",
         backgroundColor: "#282c34",
