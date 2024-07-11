@@ -99,6 +99,7 @@ const Calculator = () => {
               onKeyPress={(event) => handleKeyPress(event)}
               size="small"
               className="balance"
+              autoComplete="off"
             />
             <TextField
               id="C4"
@@ -110,6 +111,7 @@ const Calculator = () => {
               onKeyPress={(event) => handleKeyPress(event)}
               className="balance"
               size="small"
+              autoComplete="off"
             />
             <Typography gutterBottom component="div">
               Accumulated Balance{" "}

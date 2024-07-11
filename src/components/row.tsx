@@ -167,6 +167,7 @@ export default function Row(props: {
             size="small"
             value={coinName}
             onChange={handleChangeCoinName}
+            autoComplete="off"
           />
         </TableCell>
         <TableCell className="buttons">
@@ -223,6 +224,7 @@ export default function Row(props: {
                         helperText={errorStates.B4 ? "Invalid input" : ""}
                         value={inputValues.B4 || null}
                         onKeyPress={(event) => handleKeyPress(event)}
+                        autoComplete="off"
                       />
                     </TableCell>
                     <TableCell>
@@ -234,6 +236,7 @@ export default function Row(props: {
                         helperText={errorStates.C4 ? "Invalid input" : ""}
                         value={inputValues.C4 || null}
                         onKeyPress={(event) => handleKeyPress(event)}
+                        autoComplete="off"
                       />
                     </TableCell>
                     <TableCell>
@@ -245,6 +248,7 @@ export default function Row(props: {
                         helperText={errorStates.D4 ? "Invalid input" : ""}
                         value={inputValues.D4 || null}
                         onKeyPress={(event) => handleKeyPress(event)}
+                        autoComplete="off"
                       />
                     </TableCell>
                     <TableCell>
@@ -256,6 +260,7 @@ export default function Row(props: {
                         helperText={errorStates.E4 ? "Invalid input" : ""}
                         value={inputValues.E4 || null}
                         onKeyPress={(event) => handleKeyPress(event)}
+                        autoComplete="off"
                       />
                     </TableCell>
                     <TableCell>
@@ -267,16 +272,17 @@ export default function Row(props: {
                         helperText={errorStates.G4 ? "Invalid input" : ""}
                         value={inputValues.G4 || null}
                         onKeyPress={(event) => handleKeyPress(event)}
+                        autoComplete="off"
                       />
                     </TableCell>
                     <TableCell colSpan={2}>
                       <Typography gutterBottom component="div">
-                        {results.result_L4.toFixed(3)}
+                      {isNaN(results.result_L4) ? 0 : results.result_L4.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
                       <Typography gutterBottom component="div">
-                        {results.result_L2.toFixed(3)}
+                      {isNaN(results.result_L2) ? 0 : results.result_L2.toFixed(3)}
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -318,27 +324,27 @@ export default function Row(props: {
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                        {results.result_B6.toFixed(3)}
+                      {isNaN(results.result_B6) ? 0 : results.result_B6.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_C6.toFixed(3)}
+                      {isNaN(results.result_C6) ? 0 : results.result_C6.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_D6.toFixed(3)}
+                      {isNaN(results.result_D6) ? 0 : results.result_D6.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_E6.toFixed(3)}
+                      {isNaN(results.result_E6) ? 0 : results.result_E6.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_M4.toFixed(3)}
+                      {isNaN(results.result_M4) ? 0 : results.result_M4.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -350,6 +356,7 @@ export default function Row(props: {
                         error={errorStates.P4}
                         helperText={errorStates.P4 ? "Invalid input" : ""}
                         onKeyPress={(event) => handleKeyPress(event)}
+                        autoComplete="off"
                       />
                     </TableCell>
                     <TableCell>
@@ -361,6 +368,7 @@ export default function Row(props: {
                         error={errorStates.P5}
                         helperText={errorStates.P5 ? "Invalid input" : ""}
                         onKeyPress={(event) => handleKeyPress(event)}
+                        autoComplete="off"
                       />
                     </TableCell>
                     <TableCell>
@@ -372,6 +380,7 @@ export default function Row(props: {
                         error={errorStates.N4}
                         helperText={errorStates.N4 ? "Invalid input" : ""}
                         onKeyPress={(event) => handleKeyPress(event)}
+                        autoComplete="off"
                       />
                     </TableCell>
                     <TableCell>
@@ -383,6 +392,7 @@ export default function Row(props: {
                         error={errorStates.O4}
                         helperText={errorStates.O4 ? "Invalid input" : ""}
                         onKeyPress={(event) => handleKeyPress(event)}
+                        autoComplete="off"
                       />
                     </TableCell>
                   </TableRow>
@@ -420,47 +430,47 @@ export default function Row(props: {
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                        {results.result_B5.toFixed(3)}
+                      {isNaN(results.result_B5) ? 0 : results.result_B5.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_C5.toFixed(3)}
+                      {isNaN(results.result_C5) ? 0 : results.result_C5.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_D5.toFixed(3)}
+                      {isNaN(results.result_D5) ? 0 : results.result_D5.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_E5.toFixed(3)}
+                      {isNaN(results.result_E5) ? 0 : results.result_E5.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_Q4.toFixed(3)}
+                      {isNaN(results.result_Q4) ? 0 : results.result_Q4.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {(results.result_H3 || 1).toFixed(3)}
+                      {isNaN(results.result_H3) ? 0 : results.result_H3.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {(results.result_I3 || 1).toFixed(3)}
+                      {isNaN(results.result_I3) ? 0 : results.result_I3.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {(results.result_J3 || 1).toFixed(3)}
+                      {isNaN(results.result_J3) ? 0 : results.result_J3.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {(results.result_K3 || 1).toFixed(3)}
+                      {isNaN(results.result_K3) ? 0 : results.result_K3.toFixed(3)}
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -477,27 +487,27 @@ export default function Row(props: {
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                        {results.result_F4.toFixed(3)}
+                      {isNaN(results.result_F4) ? 0 : results.result_F4.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.averagedRationalTradingMargin.toFixed(3)}
+                      {isNaN(results.averagedRationalTradingMargin) ? 0 : results.averagedRationalTradingMargin.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.accumulatedBalanceForPosition.toFixed(3)}
+                      {isNaN(results.accumulatedBalanceForPosition) ? 0 : results.accumulatedBalanceForPosition.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.priceAccordingAccumulatedBalance.toFixed(3)}
+                      {isNaN(results.priceAccordingAccumulatedBalance) ? 0 : results.priceAccordingAccumulatedBalance.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                        {results.result_T4.toFixed(3)}
+                      {isNaN(results.result_T4) ? 0 : results.result_T4.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
