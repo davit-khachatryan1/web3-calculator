@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, { createContext, useState, useContext, ReactNode, useEffect } from "react";
 import { calculationResult, callAll, data } from "../helpers/clearing";
 
 export type RowData = {
@@ -30,6 +30,10 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [generalData, setGeneralData] = useState<GeneralData>({
     ...data,
   });
+
+  useEffect(() => {
+    triggerCalculations(rows);
+  }, [generalData]);
 
   const changeGeneralData = (item: string, value: number) => {
     setGeneralData({ ...generalData, [`${item}`]: value });
