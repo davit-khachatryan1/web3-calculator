@@ -136,8 +136,7 @@ export default function Row(props: {
           row.id === id ? { ...row, data: convertedValues } : row
         );
         onUpdate && onUpdate(convertedValues);
-        // console.log(newRows, '>>>>>>>>');
-        
+        // console.log(newRows, '>>>>>>>>');        
         triggerCalculations(newRows);
       }
     }

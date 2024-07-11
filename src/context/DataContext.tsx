@@ -45,13 +45,15 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
   const calculatePriceAccordingAccumulatedBalance = (
     results: any,
-    accumulatedBalance: any
+    accumulatedBalance: any,
+    length: any
   ) => {
-    const data = accumulatedBalance / results.length;
+    
+    const data = accumulatedBalance /length;
     const price =
       data /
-      (results[results.length - 1].results.result_D5 +
-        results[results.length - 1].results.result_E5);
+      (results.data.D4 +
+        results.data.E4);
     return price;
   };
 
@@ -143,21 +145,12 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const calculateAccumulatedBalance = () => {
-      // console.log(generalData, 'KKKKKKKKK',updatedRows);
-
       const aa =  updatedRows[updatedRows.length - 1].data["B242"] >= generalData["D244"]
       ? generalData["A242"] - updatedRows[updatedRows.length - 1].data["B242"]
       : generalData["A242"] - generalData["D244"];
-      // console.log(aa);
       return aa
     };
     const accumulatedBalance = calculateAccumulatedBalance();
-    const priceAccordingAccumulatedBalance =
-      calculatePriceAccordingAccumulatedBalance(
-        updatedRows,
-        accumulatedBalance
-      );
-
     const averagedRationalTradingMargin =
       calculateAveragedRationalTradingMargin(
         updatedRows.map((row) => row.results)
@@ -167,6 +160,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       
       let newUpdatedRows = []
       for (const row of updatedRows) {
+        const priceAccordingAccumulatedBalance = calculatePriceAccordingAccumulatedBalance(row,accumulatedBalance,updatedRows.length)
         newUpdatedRows.push({
           ...row,
           results: {
@@ -178,7 +172,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
           },
         });
       }
-// console.log(accumulatedBalance, '++++++++++++++');
 
     setGeneralData({
       ...generalData,
@@ -188,7 +181,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       accumulatedBalance:
         accumulatedBalance || generalData["A242"] - generalData["D244"],
     });
-// console.log(newUpdatedRows, '>>>>>>');
 
     setRows(newUpdatedRows);
   };
