@@ -324,12 +324,12 @@ export default function Row(props: {
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_B6) ? 0 : results.result_B6.toFixed(3)}
+                      {isNaN(results.result_B6) ? '0.000' : results.result_B6.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_C6) ? 0 : results.result_C6.toFixed(3)}
+                      {isNaN(results.result_C6) ? '0.000' : results.result_C6.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -502,7 +502,7 @@ export default function Row(props: {
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.priceAccordingAccumulatedBalance) ? 0 : results.priceAccordingAccumulatedBalance.toFixed(3)}
+                      {isNaN(results.priceAccordingAccumulatedBalance) ? '0.000' : results.priceAccordingAccumulatedBalance.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
