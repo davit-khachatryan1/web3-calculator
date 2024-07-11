@@ -57,7 +57,7 @@ export function calculateFormula(formula, data, allData,id) {
     variables["BE4"] = safeAssign(variables["V4"] + variables["X4"]); // Unreailzed Pnl
     console.log(allData, '?????????');
     variables["BE242"] = (function() { let sum = 0; allData.length > 1 && allData.forEach((item, i) => { if(i !== id) {sum += (item.data['BE4'] || 0) }}); console.log(sum, '||||||||||',variables['BE4']);sum+=variables['BE4'];  return sum; })();
-    variables["C244"] = safeAssign((variables["BE242"] > data["D244"]) ? (data["A242"] - variables["BE242"]) : (data["A242"] - data["D244"])); // avelcuk
+    variables["C244"] = safeAssign((variables["B242"] > data["D244"]) ? (data["A242"] - variables["B242"]) : (data["A242"] - data["D244"])); // avelcuk
     variables["L6"] = safeAssign(variables["C244"] / data["E242"]);
     variables["AF4"] = safeAssign((data["G4"] * data["D4"]) / data["Y4"]);
     variables["AG4"] = safeAssign((data["G4"] * data["E4"]) / data["Y4"]);
@@ -133,7 +133,7 @@ export function callAll(calculationResults, data, allData, id) {
     calculationResults.result_D6 = calculateFormula("D4+P4", data, allData, id).result;
     calculationResults.result_E6 = calculateFormula("E4+P5", data, allData, id).result;
     calculationResults.result_F4 = calculateFormula("IF(G4>C4+(B4-C4)/2,AI4-BO4,AJ4-BF4)", data, allData, id).result;
-    calculationResults.result_C244 = calculateFormula("IF(BE242>D244,A242-BE242,A242-D244)", data, allData, id).result;
+    calculationResults.result_C244 = calculateFormula("IF(B242>D244,A242-B242,A242-D244)", data, allData, id).result;
     calculationResults.result_L6 = calculateFormula("C244/E242", data, allData, id).result;
     calculationResults.result_G6 = calculateFormula("L6 / (D4 + E4)", data, allData, id).result;
     calculationResults.result_T4 = calculateFormula("AF4-AG4", data, allData, id).result;
