@@ -31,9 +31,9 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     ...data,
   });
 
-  useEffect(() => {
-    triggerCalculations(rows);
-  }, [generalData]);
+  // useEffect(() => {
+  //   triggerCalculations(rows);
+  // }, [generalData]);
 
   const changeGeneralData = (item: string, value: number) => {
     setGeneralData({ ...generalData, [`${item}`]: value });
