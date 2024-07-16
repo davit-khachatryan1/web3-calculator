@@ -35,9 +35,16 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     ...data,
   });
 
-  // useEffect(() => {
-  //   triggerCalculations(rows);
-  // }, [generalData]);
+  const fetchUserCoinsCalculations = async () => {
+    if (user) {
+      const data = await getUserCoinsCalculations('66699df26afee391d5992d24');
+      setRows(data);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserCoinsCalculations();
+  }, [user]);
 
   const changeGeneralData = (item: string, value: number) => {
     setGeneralData({ ...generalData, [`${item}`]: value });
