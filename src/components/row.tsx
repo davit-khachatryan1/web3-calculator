@@ -133,9 +133,14 @@ export default function Row(props: {
       setInputValues(convertedValues);
       if (document.activeElement === event.target) {
         const newRows = rows.map((row) =>
-          row.id === id ? { ...row, data: convertedValues } : row
-        );
-        onUpdate && onUpdate(convertedValues);
+         {
+          // console.log(row,'????',row.id, id);
+          
+         return row.id === id ? { ...row, data: {...row.data,...convertedValues }, name: coinName } : row
+       } );
+        // console.log(convertedValues, '><<<<<<<<<',newRows);
+        
+        // onUpdate && onUpdate({...convertedValues, ...rows[id].data});
         // console.log(newRows, '>>>>>>>>');        
         triggerCalculations(newRows);
       }

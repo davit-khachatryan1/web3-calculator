@@ -28,7 +28,7 @@ interface CoinsCalculationsContextType {
   addRowInBE: () => void;
   deleteRowInBE: (id: number) => void;
   updateRowInBE: (id: number, updatedData: any) => void;
-  fetchUserCoinsCalculations: () => void;
+  // fetchUserCoinsCalculations: () => void;
 }
 
 const CoinsCalculationsContext = createContext<
@@ -43,16 +43,16 @@ export const CoinsCalculationsProvider = ({
   const { user } = useAuthContext();
   const [rowsInBE, setRowsInBE] = useState<RowData[]>([]);
 
-  const fetchUserCoinsCalculations = async () => {
-    if (user) {
-      const data = await getUserCoinsCalculations('66699df26afee391d5992d24');
-      setRowsInBE(data);
-    }
-  };
+  // const fetchUserCoinsCalculations = async () => {
+  //   if (user) {
+  //     const data = await getUserCoinsCalculations('66699df26afee391d5992d24');
+  //     setRowsInBE(data);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchUserCoinsCalculations();
-  }, [user]);
+  // useEffect(() => {
+  //   fetchUserCoinsCalculations();
+  // }, [user]);
 
   const addRowInBE = async () => {
     if (user) {
@@ -93,7 +93,7 @@ export const CoinsCalculationsProvider = ({
         addRowInBE,
         deleteRowInBE,
         updateRowInBE,
-        fetchUserCoinsCalculations,
+        // fetchUserCoinsCalculations,
       }}
     >
       {children}

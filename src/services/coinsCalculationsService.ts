@@ -13,7 +13,7 @@ export const getUserCoinsCalculations = async (userId: string) => {
 };
 
 export const updateCoinsCalculation = async (userId: string, dataId: number, data: any) => {
-  const response = await axiosInstance.put(`${API_URL}/${userId}/${dataId}`, data);
+  const response = await axiosInstance.put(`${API_URL}/66699df26afee391d5992d24/${dataId}`, data);
   return response.data;
 };
 

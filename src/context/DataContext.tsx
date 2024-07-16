@@ -1,10 +1,13 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from "react";
 import { calculationResult, callAll, data } from "../helpers/clearing";
+import { useAuthContext } from "./AuthContext";
+import { getUserCoinsCalculations } from "../services/coinsCalculationsService";
 
 export type RowData = {
   id: number;
   data: GeneralData;
   results: typeof calculationResult;
+  name: string
 };
 
 export type GeneralData = {
@@ -24,8 +27,9 @@ type DataContextType = {
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
+  const { user } = useAuthContext();
   const [rows, setRows] = useState<RowData[]>([
-    { id: 1, data: data, results: { ...calculationResult } },
+    { id: 1, data: data, results: { ...calculationResult }, name: '' },
   ]);
   const [generalData, setGeneralData] = useState<GeneralData>({
     ...data,
@@ -74,6 +78,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       id: rows.length + 1,
       data: data,
       results: { ...calculationResult },
+      name: ''
     };
     setRows((prevRows) => [...prevRows, newRow]);
     setGeneralData((prevGeneralData) => {
@@ -116,6 +121,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       'CG4': 0,
       'CH4': 0,
     };
+console.log(rows,'karevorrrrrrrrrrr');
 
     let updatedRows:RowData[] =[];
     for (let i = 0; i < rows.length; i++) {
@@ -149,7 +155,9 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const calculateAccumulatedBalance = () => {
-      const aa =  updatedRows[updatedRows.length - 1].data["B242"] >= generalData["D244"]
+      console.log(updatedRows[updatedRows.length - 1], '??????????4444444444');
+      
+      const aa =  updatedRows[updatedRows.length - 1]?.data["B242"] >= generalData["D244"]
       ? generalData["A242"] - updatedRows[updatedRows.length - 1].data["B242"]
       : generalData["A242"] - generalData["D244"];
       return aa
@@ -176,7 +184,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
           },
         });
       }
-
+  
     setGeneralData({
       ...generalData,
       E242: updatedRows.length,
@@ -185,6 +193,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       accumulatedBalance:
         accumulatedBalance || generalData["A242"] - generalData["D244"],
     });
+console.log(newUpdatedRows, 'eslel karevor');
 
     setRows(newUpdatedRows);
   };

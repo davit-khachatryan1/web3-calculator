@@ -68,6 +68,7 @@ const Calculator = () => {
           padding: "10px",
           height: "max-content",
           backgroundColor: "#000000ac",
+          justifyContent: "space-between",
         }}
       >
         <Box
@@ -86,6 +87,7 @@ const Calculator = () => {
               alignItems: "center",
               gap: "20px",
               padding: "20px",
+              justifyContent: "space-between",
             }}
           >
             <TextField
@@ -99,6 +101,9 @@ const Calculator = () => {
               size="small"
               className="balance"
               autoComplete="off"
+              sx={{
+                maxWidth: "150px",
+              }}
             />
             <TextField
               id="C4"
@@ -111,6 +116,9 @@ const Calculator = () => {
               className="balance"
               size="small"
               autoComplete="off"
+              sx={{
+                maxWidth: "150px",
+              }}
             />
             <Typography gutterBottom component="div">
               Accumulated Balance{" "}
