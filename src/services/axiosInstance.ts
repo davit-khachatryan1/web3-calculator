@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getCurrentUser } from './authService';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000', // Base URL for your API
+  baseURL: 'https://nestjs-registration-trading-app-1.onrender.com/', // Base URL for your API
 });
 
 axiosInstance.interceptors.request.use(

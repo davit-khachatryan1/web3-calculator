@@ -28,9 +28,7 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   const { user } = useAuthContext();
-  const [rows, setRows] = useState<RowData[]>([
-    { id: 1, data: data, results: { ...calculationResult }, name: '' },
-  ]);
+  const [rows, setRows] = useState<RowData[]>([]);
   const [generalData, setGeneralData] = useState<GeneralData>({
     ...data,
   });
@@ -69,6 +67,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       data /
       (results.data.D4 +
         results.data.E4);
+
     return price;
   };
 
@@ -96,14 +95,12 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const deleteRow = (id: number) => {
     const newRows = rows.filter((row) => row.id !== id);
     setRows(newRows);
-    setGeneralData((prevGeneralData) => {
-      return { ...prevGeneralData, E242: rows.length - 1 };
-    });
     let longShorts = {
       'CG4': 0,
       'CH4': 0,
     };
 
+    triggerCalculations(newRows)
     for (let i = 0; i < newRows.length; i++) {
       longShorts["CG4"] += newRows[i].data["CG4"];
       longShorts["CH4"] += newRows[i].data["CH4"];
@@ -112,6 +109,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       ...generalData,
       'CG4': longShorts["CG4"],
       'CH4': longShorts["CH4"],
+      E242: rows.length - 1 
     });
   };
 
@@ -131,11 +129,13 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 console.log(rows,'karevorrrrrrrrrrr');
 
     let updatedRows:RowData[] =[];
-    for (let i = 0; i < rows.length; i++) {
+    for (let i = 0; i < rows.length; ++i) {
       const row = rows[i];
+      console.log({ ...row.data, "A242": generalData.A242, "D244": generalData.D244 },'<><><><',generalData);
+      debugger
       const { calculationResults, rowBigData } = callAll(
         row.results,
-        { ...row.data, "A242": generalData["A242"], "D244": generalData["D244"] },
+        { ...row.data, "A242": generalData.A242, "D244": generalData.D244 },
         rows,
         i
       );
@@ -167,6 +167,7 @@ console.log(rows,'karevorrrrrrrrrrr');
       const aa =  updatedRows[updatedRows.length - 1]?.data["B242"] >= generalData["D244"]
       ? generalData["A242"] - updatedRows[updatedRows.length - 1].data["B242"]
       : generalData["A242"] - generalData["D244"];
+      // debugger
       return aa
     };
     const accumulatedBalance = calculateAccumulatedBalance();
