@@ -19,7 +19,6 @@ export const data = {
 
 
 export function calculateFormula(formula, data, allData,id) {
-    console.log(allData,id,data);
     // Define variables based on the data object
     const variables = { ...data };
 
@@ -56,7 +55,7 @@ export function calculateFormula(formula, data, allData,id) {
     variables["W4"] = safeAssign((data["C4"] - data["G4"]) * 100 / data["G4"]); // shorti tokos
     variables["X4"] = safeAssign((data["E4"] * data["G4"] / data["Y4"]) * variables["W4"] * data["Y4"] / 100); // Shorti Pnl
     variables["BE4"] = safeAssign(variables["V4"] + variables["X4"]); // Unreailzed Pnl
-    variables["BE242"] = (function() { let sum = 0; allData.length > 1 && allData.forEach((item, i) => { if(i !== id) {sum += (item.data['BE4'] || 0); console.log(i,'IIIIIIIIII');  }}); console.log(sum, '||||||||||',variables['BE4']);sum+=variables['BE4']; return sum; })();
+    variables["BE242"] = (function() { let sum = 0; allData.length > 1 && allData.forEach((item, i) => { if(i !== id) {sum += (item.data['BE4'] || 0); }}) ;sum+=variables['BE4']; return sum; })();
     variables["B242"] = safeAssign(data["A242"] + variables["BE242"]); // added by me
     variables["C244"] = safeAssign((variables["B242"] > data["D244"]) ? (data["A242"] - variables["B242"]) : (data["A242"] - data["D244"])); // avelcuk
     variables["L6"] = safeAssign(variables["C244"] / data["E242"]);

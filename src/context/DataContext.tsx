@@ -1,10 +1,11 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from "react";
+import { v4 as uuidv4 } from 'uuid';
 import { calculationResult, callAll, data } from "../helpers/clearing";
 import { useAuthContext } from "./AuthContext";
 import { getUserCoinsCalculations } from "../services/coinsCalculationsService";
 
 export type RowData = {
-  id: number;
+  id: string;
   data: GeneralData;
   results: typeof calculationResult;
   name: string
@@ -18,8 +19,8 @@ type DataContextType = {
   rows: RowData[];
   generalData: GeneralData;
   addRow: () => void;
-  deleteRow: (id: number) => void;
-  updateRow: (id: number, updatedData: any) => void;
+  deleteRow: (id: string) => void;
+  updateRow: (id: string, updatedData: any) => void;
   triggerCalculations: (data: RowData[]) => void;
   changeGeneralData: (item: string, value: number) => void;
 };
@@ -81,7 +82,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
   const addRow = () => {
     const newRow = {
-      id: rows.length + 1,
+      id: uuidv4(),
       data: data,
       results: { ...calculationResult },
       name: ''
@@ -92,7 +93,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const deleteRow = (id: number) => {
+  const deleteRow = (id: string) => {
     const newRows = rows.filter((row) => row.id !== id);
     setRows(newRows);
     let longShorts = {
@@ -101,19 +102,19 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     };
 
     triggerCalculations(newRows)
-    for (let i = 0; i < newRows.length; i++) {
-      longShorts["CG4"] += newRows[i].data["CG4"];
-      longShorts["CH4"] += newRows[i].data["CH4"];
-  }
-    setGeneralData({
-      ...generalData,
-      'CG4': longShorts["CG4"],
-      'CH4': longShorts["CH4"],
-      E242: rows.length - 1 
-    });
+  //   for (let i = 0; i < newRows.length; i++) {
+  //     longShorts["CG4"] += newRows[i].data["CG4"];
+  //     longShorts["CH4"] += newRows[i].data["CH4"];
+  // }
+    // setGeneralData({
+    //   ...generalData,
+    //   'CG4': longShorts["CG4"],
+    //   'CH4': longShorts["CH4"],
+    //   E242: rows.length - 1 
+    // });
   };
 
-  const updateRow = (id: number, updatedData: any) => {
+  const updateRow = (id: string, updatedData: any) => {
     setRows((prevRows) =>
       prevRows.map((row) =>
         row.id === id ? { ...row, data: updatedData } : row

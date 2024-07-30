@@ -12,12 +12,12 @@ export const getUserCoinsCalculations = async (userId: string) => {
   return response.data;
 };
 
-export const updateCoinsCalculation = async (userId: string, dataId: number, data: any) => {
+export const updateCoinsCalculation = async (userId: string, dataId: string, data: any) => {
   const response = await axiosInstance.put(`${API_URL}/66699df26afee391d5992d24/${dataId}`, data);
   return response.data;
 };
 
-export const deleteCoinsCalculation = async (userId: string, dataId: number) => {
+export const deleteCoinsCalculation = async (userId: string, dataId: string) => {
   const response = await axiosInstance.delete(`${API_URL}/${userId}/${dataId}`);
   return response.data;
 };

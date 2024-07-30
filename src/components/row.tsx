@@ -39,7 +39,7 @@ export default function Row(props: {
   onDelete?: () => void;
   onUpdate?: (data: any) => void;
   genData: GeneralData;
-  id: number;
+  id: string;
 }) {
   const { onDelete, data, results, onUpdate, genData, id } = props;
   const { changeGeneralData, triggerCalculations, rows } = useDataContext();
@@ -132,7 +132,9 @@ export default function Row(props: {
       const convertedValues = convertValuesToNumbers(inputValues);
       setInputValues(convertedValues);
       if (document.activeElement === event.target) {
-        onUpdate && onUpdate({...convertedValues, ...rows[id-1].data});
+        const result = rows.filter((row) => row.id == id);
+        
+        onUpdate && onUpdate({...convertedValues, ...result[0].data});
         const newRows = rows.map((row) =>
          {
          return row.id === id ? { ...row, data: {...row.data,...convertedValues }, name: coinName } : row

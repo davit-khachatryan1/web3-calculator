@@ -14,9 +14,10 @@ import {
 import { useAuthContext } from "./AuthContext";
 
 export type RowData = {
-  id: number;
+  id: string;
   data: GeneralData;
   results: any;
+  userId: string;
 };
 
 export type GeneralData = {
@@ -26,8 +27,8 @@ export type GeneralData = {
 interface CoinsCalculationsContextType {
   rowsInBE: RowData[];
   addRowInBE: () => void;
-  deleteRowInBE: (id: number) => void;
-  updateRowInBE: (id: number, updatedData: any) => void;
+  deleteRowInBE: (id: string) => void;
+  updateRowInBE: (id: string, updatedData: any) => void;
   // fetchUserCoinsCalculations: () => void;
 }
 
@@ -57,7 +58,7 @@ export const CoinsCalculationsProvider = ({
   const addRowInBE = async () => {
     if (user) {
       const newRow = {
-        id: rowsInBE.length + 1,
+        id: (rowsInBE.length + 1).toString(),
         data: {},
         results: {},
         userId: user.userId,
@@ -67,14 +68,14 @@ export const CoinsCalculationsProvider = ({
     }
   };
 
-  const deleteRowInBE = async (id: number) => {
+  const deleteRowInBE = async (id: string) => {
     if (user) {
       await deleteCoinsCalculation(user.userId, id);
       setRowsInBE((prevRows) => prevRows.filter((row) => row.id !== id));
     }
   };
 
-  const updateRowInBE = async (id: number, updatedData: any) => {
+  const updateRowInBE = async (id: string, updatedData: any) => {
     
     if (user) {
       await updateCoinsCalculation(user.userId, id, updatedData);
