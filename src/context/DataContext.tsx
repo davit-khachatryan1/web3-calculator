@@ -126,18 +126,15 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       'CG4': 0,
       'CH4': 0,
     };
-console.log(rows,'karevorrrrrrrrrrr');
     let updatedRows:RowData[] =[];
     for (let i = 0; i < rows.length; ++i) {
       const row = rows[i];
-      
-      console.log({ ...row.data, "A242": generalData.A242, "D244": generalData.D244 },'<><><><',generalData);
-      debugger
+      const rowData = { ...row.data, "A242": generalData.A242, "D244": generalData.D244 };
       const { calculationResults, rowBigData } = callAll(
         row.results,
-        { ...row.data, "A242": generalData.A242, "D244": generalData.D244 },
+        rowData,
         rows,
-        row.id
+        i
       );
       for (const key in rowBigData) {
         if (typeof rowBigData[key] === 'function') {
@@ -162,8 +159,6 @@ console.log(rows,'karevorrrrrrrrrrr');
     }
 
     const calculateAccumulatedBalance = () => {
-      console.log(updatedRows[updatedRows.length - 1], '??????????4444444444');
-      
       const aa =  updatedRows[updatedRows.length - 1]?.data["B242"] >= generalData["D244"]
       ? generalData["A242"] - updatedRows[updatedRows.length - 1].data["B242"]
       : generalData["A242"] - generalData["D244"];
