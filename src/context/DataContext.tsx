@@ -127,17 +127,17 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       'CH4': 0,
     };
 console.log(rows,'karevorrrrrrrrrrr');
-
     let updatedRows:RowData[] =[];
     for (let i = 0; i < rows.length; ++i) {
       const row = rows[i];
+      
       console.log({ ...row.data, "A242": generalData.A242, "D244": generalData.D244 },'<><><><',generalData);
       debugger
       const { calculationResults, rowBigData } = callAll(
         row.results,
         { ...row.data, "A242": generalData.A242, "D244": generalData.D244 },
         rows,
-        i
+        row.id
       );
       for (const key in rowBigData) {
         if (typeof rowBigData[key] === 'function') {
