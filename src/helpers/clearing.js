@@ -3,7 +3,7 @@ export const data = {
     "Y4": 20, // leverage, should be 10, 20 or 30. By default it is 20
     "A242": 0, // balance
     "D244": 0, // initialBalance
-    "E242": 1, // coinQuantity
+    "E242": 0, // coinQuantity
     "B4": 0, // longEntryPrice
     "C4": 0, // shortEntryPrice
     "D4": 0, // longSize

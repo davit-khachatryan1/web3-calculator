@@ -36,7 +36,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchUserCoinsCalculations = async () => {
     if (user) {
-      const data = await getUserCoinsCalculations('66699df26afee391d5992d24');
+      const data = await getUserCoinsCalculations(user.userId);
       setRows(data);
     }
   };
@@ -102,16 +102,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     };
 
     triggerCalculations(newRows)
-  //   for (let i = 0; i < newRows.length; i++) {
-  //     longShorts["CG4"] += newRows[i].data["CG4"];
-  //     longShorts["CH4"] += newRows[i].data["CH4"];
-  // }
-    // setGeneralData({
-    //   ...generalData,
-    //   'CG4': longShorts["CG4"],
-    //   'CH4': longShorts["CH4"],
-    //   E242: rows.length - 1 
-    // });
   };
 
   const updateRow = (id: string, updatedData: any) => {
@@ -130,7 +120,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     let updatedRows:RowData[] =[];
     for (let i = 0; i < rows.length; ++i) {
       const row = rows[i];
-      const rowData = { ...row.data, "A242": generalData.A242, "D244": generalData.D244 };
+      const rowData = { ...row.data, "A242": generalData.A242, "D244": generalData.D244, 'E242': generalData['E242'] };
       const { calculationResults, rowBigData } = callAll(
         row.results,
         rowData,
