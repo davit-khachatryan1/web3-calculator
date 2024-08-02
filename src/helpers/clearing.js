@@ -90,7 +90,7 @@ export function calculateFormula(formula, data, allData,id) {
     variables["I8"] = safeAssign((variables["BH4"] < variables["BQ4"]) ? (variables["BH4"] / variables["D5"]) : (variables["BQ4"] / variables["E5"]));
     variables["I9"] = safeAssign(variables["K6"] / variables["I8"]);
     //// Calculating Close Short Coefficient
-    variables["J6"] = safeAssign(variables["X4"] / variables["E4"]);
+    variables["J6"] = safeAssign(variables["X4"] / data["E4"]);
     variables["F8"] = safeAssign((variables["L6"] - Math.abs(data["O4"] * variables["J6"])) / (data["D4"] + variables["E5"]));
     variables["F9"] = safeAssign(variables["G6"] / variables["F8"]);
     variables["BJ4"] = safeAssign(data["D4"] * variables["C5"] / data["Y4"] * variables["AC4"] * data["Y4"] / 100);
@@ -104,7 +104,6 @@ export function calculateFormula(formula, data, allData,id) {
     variables["BA4"] = safeAssign(Math.abs((variables["F4"] - variables["AH4"] + data["D4"] * data["G4"] * variables["U4"] / 100) / (data["G4"] * variables["U4"] / 100 - 2 * data["G4"] / data["Y4"])));
     variables["AW4"] = safeAssign(Math.abs((data["E4"] * data["G4"] + data["D4"] * data["G4"] - data["E4"] * data["C4"] * data["Y4"] + data["E4"] * data["G4"] * data["Y4"] - variables["F4"] * data["Y4"]) / (2 * data["G4"] - (data["E4"] - data["D4"]) * data["G4"] / data["E4"] - data["C4"] * data["Y4"] + data["G4"] * data["Y4"])));
     //// bacvogh qanak
-    variables["J6"] = safeAssign(data["D4"] - variables["AY4"]);
     variables["AV4"] = safeAssign(data["D4"] - variables["AU4"] - ((data["D4"] - data["E4"]) - (data["D4"] - data["E4"]) * variables["AU4"] / data["D4"]));
     variables["BB4"] = safeAssign(data["E4"] - variables["BA4"]);
     variables["AX4"] = safeAssign(data["E4"] - variables["AW4"] - ((data["E4"] - data["D4"]) - (data["E4"] - data["D4"]) * variables["AW4"] / data["E4"]));
