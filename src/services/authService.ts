@@ -10,10 +10,23 @@ export const login = async (username: string, password: string) => {
   return response.data;
 };
 
+export const signup = async (username: string, email: string, accessKey: string, password: string) => {
+  const response = await axiosInstance.post(`${API_URL}/signup`, { username, email, accessKey, password });
+  return response.data;
+};
+
 export const logout = () => {
   localStorage.removeItem('user');
 };
 
 export const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem('user') || '{}');
+};
+
+export const setCurrentUser = (user: string) => {
+  localStorage.setItem('currentUser', JSON.stringify(user));
+};
+
+export const removeCurrentUser = () => {
+  localStorage.removeItem('currentUser');
 };

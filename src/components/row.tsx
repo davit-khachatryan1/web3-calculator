@@ -40,10 +40,11 @@ export default function Row(props: {
   onUpdate?: (data: any) => void;
   genData: GeneralData;
   id: string;
+  name: string;
 }) {
-  const { onDelete, data, results, onUpdate, genData, id } = props;
+  const { onDelete, data, results, onUpdate, genData, id, name } = props;
   const { changeGeneralData, triggerCalculations, rows } = useDataContext();
-  const { updateRowInBE } = useCoinsCalculationsContext();
+  const { updateRowInBE, addRowInBE } = useCoinsCalculationsContext();
   const [open, setOpen] = useState(false);
   const [coinName, setCoinName] = useState("");
   const [inputValues, setInputValues] = useState(data);
@@ -133,12 +134,17 @@ export default function Row(props: {
       setInputValues(convertedValues);
       if (document.activeElement === event.target) {
         const result = rows.filter((row) => row.id == id);
-        
-        onUpdate && onUpdate({...convertedValues, ...result[0].data});
-        const newRows = rows.map((row) =>
-         {
-         return row.id === id ? { ...row, data: {...row.data,...convertedValues }, name: coinName } : row
-       } );
+
+        onUpdate && onUpdate({ ...convertedValues, ...result[0].data });
+        const newRows = rows.map((row) => {
+          return row.id === id
+            ? {
+                ...row,
+                data: { ...row.data, ...convertedValues },
+                name: coinName,
+              }
+            : row;
+        });
         triggerCalculations(newRows);
       }
     }
@@ -147,6 +153,16 @@ export default function Row(props: {
   const handleChangeCoinName = (e: any) => {
     setCoinName(e.target.value.toLowerCase().trim());
   };
+
+  const valueChecking = (value: any) => {
+    if (isNaN(value)) {
+        return true;
+    }
+    if (value === null) {
+        return true;
+    }
+    return false;
+};
 
   return (
     <>
@@ -182,9 +198,16 @@ export default function Row(props: {
           <Button
             variant="contained"
             color="secondary"
-            onClick={() => updateRowInBE(id, { data, results })}
+            onClick={() => addRowInBE({ data, results, id, name })}
           >
             Save
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => updateRowInBE(id, { data, results, id, name })}
+          >
+            Update
           </Button>
         </TableCell>
       </TableRow>
@@ -279,12 +302,16 @@ export default function Row(props: {
                     </TableCell>
                     <TableCell colSpan={2}>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_L4) ? 0 : results.result_L4.toFixed(3)}
+                        {valueChecking(results.result_L4)
+                          ? 0
+                          : results.result_L4.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell colSpan={2}>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_L2) ? 0 : results.result_L2.toFixed(3)}
+                        {valueChecking(results.result_L2)
+                          ? 0
+                          : results.result_L2.toFixed(3)}
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -326,27 +353,37 @@ export default function Row(props: {
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_B6) ? '0.000' : results.result_B6.toFixed(3)}
+                        {valueChecking(results.result_B6)
+                          ? "0.000"
+                          : results.result_B6.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_C6) ? '0.000' : results.result_C6.toFixed(3)}
+                        {valueChecking(results.result_C6)
+                          ? "0.000"
+                          : results.result_C6.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_D6) ? 0 : results.result_D6.toFixed(3)}
+                        {valueChecking(results.result_D6)
+                          ? 0
+                          : results.result_D6.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_E6) ? 0 : results.result_E6.toFixed(3)}
+                        {valueChecking(results.result_E6)
+                          ? 0
+                          : results.result_E6.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_M4) ? 0 : results.result_M4.toFixed(3)}
+                        {valueChecking(results.result_M4)
+                          ? 0
+                          : results.result_M4.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -432,47 +469,65 @@ export default function Row(props: {
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_B5) ? 0 : results.result_B5.toFixed(3)}
+                        {valueChecking(results.result_B5)
+                          ? 0
+                          : results.result_B5.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_C5) ? 0 : results.result_C5.toFixed(3)}
+                        {valueChecking(results.result_C5)
+                          ? 0
+                          : results.result_C5.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_D5) ? 0 : results.result_D5.toFixed(3)}
+                        {valueChecking(results.result_D5)
+                          ? 0
+                          : results.result_D5.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_E5) ? 0 : results.result_E5.toFixed(3)}
+                        {valueChecking(results.result_E5)
+                          ? 0
+                          : results.result_E5.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_Q4) ? 0 : results.result_Q4.toFixed(3)}
+                        {valueChecking(results.result_Q4)
+                          ? 0
+                          : results.result_Q4.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_H3) ? 0 : results.result_H3.toFixed(3)}
+                        {valueChecking(results.result_H3)
+                          ? 0
+                          : results.result_H3.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_I3) ? 0 : results.result_I3.toFixed(3)}
+                        {valueChecking(results.result_I3)
+                          ? 0
+                          : results.result_I3.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_J3) ? 0 : results.result_J3.toFixed(3)}
+                        {valueChecking(results.result_J3)
+                          ? 0
+                          : results.result_J3.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_K3) ? 0 : results.result_K3.toFixed(3)}
+                        {valueChecking(results.result_K3)
+                          ? 0
+                          : results.result_K3.toFixed(3)}
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -489,27 +544,37 @@ export default function Row(props: {
                   <TableRow>
                     <TableCell component="th" scope="row">
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_F4) ? 0 : results.result_F4.toFixed(3)}
+                        {valueChecking(results.result_F4)
+                          ? 0
+                          : results.result_F4.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.averagedRationalTradingMargin) ? 0 : results.averagedRationalTradingMargin.toFixed(3)}
+                        {valueChecking(results.averagedRationalTradingMargin)
+                          ? 0
+                          : results.averagedRationalTradingMargin.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.accumulatedBalanceForPosition) ? 0 : results.accumulatedBalanceForPosition.toFixed(3)}
+                        {valueChecking(results.accumulatedBalanceForPosition)
+                          ? 0
+                          : results.accumulatedBalanceForPosition.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.priceAccordingAccumulatedBalance) ? '0.000' : results.priceAccordingAccumulatedBalance.toFixed(3)}
+                        {valueChecking(results.priceAccordingAccumulatedBalance)
+                          ? "0.000"
+                          : results.priceAccordingAccumulatedBalance.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
-                      {isNaN(results.result_T4) ? 0 : results.result_T4.toFixed(3)}
+                        {valueChecking(results.result_T4)
+                          ? 0
+                          : results.result_T4.toFixed(3)}
                       </Typography>
                     </TableCell>
                     <TableCell>

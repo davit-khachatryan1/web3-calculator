@@ -2,18 +2,23 @@ import axiosInstance from './axiosInstance';
 
 const API_URL = '/coins-calculations';
 
-export const addCoinsCalculation = async (data: any) => {
-  const response = await axiosInstance.post(API_URL, data);
+export const addCoinsCalculation = async (data: any, userId: string) => {
+  const response = await axiosInstance.post(API_URL, {
+    ...data,
+    userId,  // Include the userId in the payload
+  });
+  
   return response.data;
 };
 
 export const getUserCoinsCalculations = async (userId: string) => {
   const response = await axiosInstance.get(`${API_URL}/${userId}`);
   return response.data;
+  return []
 };
 
 export const updateCoinsCalculation = async (userId: string, dataId: string, data: any) => {
-  const response = await axiosInstance.put(`${API_URL}/66699df26afee391d5992d24/${dataId}`, data);
+  const response = await axiosInstance.put(`${API_URL}/${userId}/${dataId}`, data);
   return response.data;
 };
 

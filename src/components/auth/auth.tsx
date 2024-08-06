@@ -8,8 +8,8 @@ import {
   Typography,
   styled,
 } from "@mui/material";
+import { login, signup } from "../../services/authService";
 
-// Define a custom interface for components that require the 'checked' prop
 interface CheckedProps {
   checked: boolean;
 }
@@ -23,7 +23,6 @@ const Container = styled(Box)(({ theme }) => ({
   backgroundSize: '100% 100%', /* This ensures the image covers the entire div */
   backgroundPosition: 'center', /* This centers the image */
   backgroundRepeat: 'no-repeat', /* This prevents the image from repeating */
-  // background: "linear-gradient(to bottom, #0f0c29, #302b63, #24243e)",
   backgroundImage:
     "url(https://blog.coinranking.com/blog/wp-content/uploads/2023/12/Web3-Agency.png)",
 }));
@@ -115,6 +114,43 @@ function Auth() {
     setChecked(!checked);
   };
 
+  const handleSignup = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const username = formData.get("username") as string;
+    const email = formData.get("email") as string;
+    const accesskey = formData.get("accesskey") as string;
+    const password = formData.get("password") as string;
+
+    try {
+      const response = await signup(username, email, accesskey, password);
+      localStorage.setItem('access_token', response.access_token);
+      localStorage.setItem('userId', response.userId);
+      window.location.href = '/'; // Navigate to the general page
+      // You can add further logic here after a successful signup
+    } catch (error) {
+      console.error("Signup error: ", error);
+    }
+  };
+
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const username = formData.get("username") as string;
+    const password = formData.get("password") as string;
+
+    try {
+      const response = await login(username, password);
+      console.log(response);
+      localStorage.setItem('access_token', response.access_token);
+      localStorage.setItem('userId', response.userId);
+      window.location.href = '/'; // Navigate to the general page
+      // You can add further logic here after a successful login
+    } catch (error) {
+      console.error("Login error: ", error);
+    }
+  };
+
   return (
     <Container>
       <Main>
@@ -125,58 +161,70 @@ function Auth() {
           sx={{ display: "none" }}
         />
         <Signup checked={checked}>
-          <StyledForm>
+          <StyledForm onSubmit={handleSignup}>
             <Typography component="label" htmlFor="chk">
               Sign up
             </Typography>
             <FormControl style={{ width: "100%" }}>
-              <StyledInput
-                type="text"
-                name="username"
-                placeholder="User name"
-                required
-              />
-              <StyledInput
-                type="email"
-                name="email"
-                placeholder="Email"
-                required
-              />
-              <StyledInput
-                type="text"
-                name="accesskey"
-                placeholder="Access key"
-                required
-              />
-              <StyledInput
-                type="password"
-                name="password"
-                placeholder="Password"
-                required
-              />
+              <FormControl style={{ width: "100%" }}>
+                <StyledInput
+                  type="text"
+                  name="username"
+                  placeholder="User name"
+                  required
+                />
+              </FormControl>
+              <FormControl style={{ width: "100%" }}>
+                <StyledInput
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  required
+                />
+              </FormControl>
+              <FormControl style={{ width: "100%" }}>
+                <StyledInput
+                  type="text"
+                  name="accesskey"
+                  placeholder="Access key"
+                  required
+                />
+              </FormControl>
+              <FormControl style={{ width: "100%" }}>
+                <StyledInput
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                />
+              </FormControl>
             </FormControl>
             <StyledButton type="submit">Sign up</StyledButton>
           </StyledForm>
         </Signup>
 
         <Login checked={checked}>
-          <StyledForm>
+          <StyledForm onSubmit={handleLogin}>
             <Typography component="label" htmlFor="chk">
               Login
             </Typography>
             <FormControl style={{ width: "100%", marginTop: "100px" }}>
-              <StyledInput
-                type="text"
-                name="username"
-                placeholder="User Name"
-                required
-              />
-              <StyledInput
-                type="password"
-                name="password"
-                placeholder="Password"
-                required
-              />
+              <FormControl style={{ width: "100%" }}>
+                <StyledInput
+                  type="text"
+                  name="username"
+                  placeholder="User Name"
+                  required
+                />
+              </FormControl>
+              <FormControl style={{ width: "100%" }}>
+                <StyledInput
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                />
+              </FormControl>
             </FormControl>
             <StyledButton type="submit">Login</StyledButton>
           </StyledForm>

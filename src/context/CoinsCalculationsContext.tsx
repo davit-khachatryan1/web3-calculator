@@ -17,7 +17,6 @@ export type RowData = {
   id: string;
   data: GeneralData;
   results: any;
-  userId: string;
 };
 
 export type GeneralData = {
@@ -26,10 +25,9 @@ export type GeneralData = {
 
 interface CoinsCalculationsContextType {
   rowsInBE: RowData[];
-  addRowInBE: () => void;
+  addRowInBE: (updatedData: any) => void;
   deleteRowInBE: (id: string) => void;
   updateRowInBE: (id: string, updatedData: any) => void;
-  // fetchUserCoinsCalculations: () => void;
 }
 
 const CoinsCalculationsContext = createContext<
@@ -44,27 +42,10 @@ export const CoinsCalculationsProvider = ({
   const { user } = useAuthContext();
   const [rowsInBE, setRowsInBE] = useState<RowData[]>([]);
 
-  // const fetchUserCoinsCalculations = async () => {
-  //   if (user) {
-  //     const data = await getUserCoinsCalculations('66699df26afee391d5992d24');
-  //     setRowsInBE(data);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchUserCoinsCalculations();
-  // }, [user]);
-
-  const addRowInBE = async () => {
+  const addRowInBE = async (updatedData: any) => {
     if (user) {
-      const newRow = {
-        id: (rowsInBE.length + 1).toString(),
-        data: {},
-        results: {},
-        userId: user.userId,
-      };
-      await addCoinsCalculation(newRow);
-      setRowsInBE((prevRows) => [...prevRows, newRow]);
+      await addCoinsCalculation(updatedData, user.userId);
+      setRowsInBE((prevRows) => [...prevRows, updatedData]);
     }
   };
 
@@ -76,7 +57,6 @@ export const CoinsCalculationsProvider = ({
   };
 
   const updateRowInBE = async (id: string, updatedData: any) => {
-    
     if (user) {
       await updateCoinsCalculation(user.userId, id, updatedData);
       setRowsInBE((prevRows) =>
@@ -94,7 +74,6 @@ export const CoinsCalculationsProvider = ({
         addRowInBE,
         deleteRowInBE,
         updateRowInBE,
-        // fetchUserCoinsCalculations,
       }}
     >
       {children}

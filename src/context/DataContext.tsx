@@ -35,7 +35,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const fetchUserCoinsCalculations = async () => {
-    if (user) {
+    if (user && Object.keys(user).length !== 0) {
       const data = await getUserCoinsCalculations(user.userId);
       setRows(data);
     }

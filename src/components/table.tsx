@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { useDataContext } from "../context/DataContext";
 import Row from "./row";
+import { useAuthContext } from "../context/AuthContext";
 
 const Calculator = () => {
   const {
@@ -22,6 +23,8 @@ const Calculator = () => {
     triggerCalculations,
     changeGeneralData,
   } = useDataContext();
+
+  const { user } = useAuthContext();
 
   const handleKeyPress = (event: any) => {
     if (event.key === "Enter") {
@@ -56,7 +59,7 @@ const Calculator = () => {
           backgroundColor: "#000000ac",
         }}
       >
-        NIckName
+        {user.name}
       </Box>{" "}
       <Box
         sx={{
@@ -163,6 +166,7 @@ const Calculator = () => {
                 onUpdate={(updatedData) => updateRow(row.id, updatedData)}
                 genData={generalData}
                 id={row.id}
+                name={row.name}
               />
             ))}
           </TableBody>

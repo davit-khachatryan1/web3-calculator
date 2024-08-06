@@ -9,11 +9,9 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { user } = useAuthContext();
 
-  // if (!user || JSON.stringify(user) === '{}') {
-  //   console.log('sssssssss');
-    
-  //   return <Navigate to="/login" replace />;
-  // }
+  if (!user || JSON.stringify(user) === "{}") {
+    return <Navigate to="/login" replace />;
+  }
 
   return <>{children}</>;
 };
