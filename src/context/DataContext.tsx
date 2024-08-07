@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { calculationResult, callAll, data } from "../helpers/clearing";
 import { useAuthContext } from "./AuthContext";
 import { getUserCoinsCalculations } from "../services/coinsCalculationsService";
+import { useCoinsCalculationsContext } from "./CoinsCalculationsContext";
 
 export type RowData = {
   id: string;
@@ -28,6 +29,7 @@ type DataContextType = {
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
+  const { deleteRowInBE } = useCoinsCalculationsContext();
   const { user } = useAuthContext();
   const [rows, setRows] = useState<RowData[]>([]);
   const [generalData, setGeneralData] = useState<GeneralData>({
@@ -37,6 +39,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const fetchUserCoinsCalculations = async () => {
     if (user && Object.keys(user).length !== 0) {
       const data = await getUserCoinsCalculations(user.userId);
+      console.log(data);
+      triggerCalculations(data)
       setRows(data);
     }
   };
@@ -94,14 +98,10 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const deleteRow = (id: string) => {
+    deleteRowInBE(id)
     const newRows = rows.filter((row) => row.id !== id);
     setRows(newRows);
-    let longShorts = {
-      'CG4': 0,
-      'CH4': 0,
-    };
-
-    triggerCalculations(newRows)
+    triggerCalculations(newRows);
   };
 
   const updateRow = (id: string, updatedData: any) => {

@@ -6,9 +6,7 @@ import React, {
   useEffect,
 } from "react";
 import {
-  addCoinsCalculation,
-  getUserCoinsCalculations,
-  updateCoinsCalculation,
+  saveCoinsCalculation,
   deleteCoinsCalculation,
 } from "../services/coinsCalculationsService";
 import { useAuthContext } from "./AuthContext";
@@ -25,9 +23,8 @@ export type GeneralData = {
 
 interface CoinsCalculationsContextType {
   rowsInBE: RowData[];
-  addRowInBE: (updatedData: any) => void;
+  saveRowInBE: (updatedData: any) => void;
   deleteRowInBE: (id: string) => void;
-  updateRowInBE: (id: string, updatedData: any) => void;
 }
 
 const CoinsCalculationsContext = createContext<
@@ -42,10 +39,19 @@ export const CoinsCalculationsProvider = ({
   const { user } = useAuthContext();
   const [rowsInBE, setRowsInBE] = useState<RowData[]>([]);
 
-  const addRowInBE = async (updatedData: any) => {
+  const saveRowInBE = async (updatedData: any) => {
     if (user) {
-      await addCoinsCalculation(updatedData, user.userId);
-      setRowsInBE((prevRows) => [...prevRows, updatedData]);
+      const savedData = await saveCoinsCalculation(updatedData, user.userId);
+      setRowsInBE((prevRows) => {
+        const existingIndex = prevRows.findIndex(row => row.id === savedData.id);
+        if (existingIndex >= 0) {
+          const updatedRows = [...prevRows];
+          updatedRows[existingIndex] = savedData;
+          return updatedRows;
+        } else {
+          return [...prevRows, savedData];
+        }
+      });
     }
   };
 
@@ -56,24 +62,12 @@ export const CoinsCalculationsProvider = ({
     }
   };
 
-  const updateRowInBE = async (id: string, updatedData: any) => {
-    if (user) {
-      await updateCoinsCalculation(user.userId, id, updatedData);
-      setRowsInBE((prevRows) =>
-        prevRows.map((row) =>
-          row.id === id ? { ...row, data: updatedData } : row
-        )
-      );
-    }
-  };
-
   return (
     <CoinsCalculationsContext.Provider
       value={{
         rowsInBE,
-        addRowInBE,
+        saveRowInBE,
         deleteRowInBE,
-        updateRowInBE,
       }}
     >
       {children}

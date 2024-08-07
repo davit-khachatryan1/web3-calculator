@@ -9,6 +9,7 @@ axiosInstance.interceptors.request.use(
   async (config) => {
     const user = getCurrentUser();
     if (user && user.access_token) {
+      console.log('Sending Access Token:', user.access_token);  // Debug
       config.headers['Authorization'] = `Bearer ${user.access_token}`;
     }
     return config;
@@ -33,6 +34,9 @@ axiosInstance.interceptors.response.use(
             refresh_token: user.refresh_token,
           });
           const newAccessToken = response.data.access_token;
+
+          console.log('New Access Token:', newAccessToken);  // Debug
+
           setCurrentUser({
             ...user,
             access_token: newAccessToken,

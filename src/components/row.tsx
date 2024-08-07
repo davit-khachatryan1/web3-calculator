@@ -44,9 +44,9 @@ export default function Row(props: {
 }) {
   const { onDelete, data, results, onUpdate, genData, id, name } = props;
   const { changeGeneralData, triggerCalculations, rows } = useDataContext();
-  const { updateRowInBE, addRowInBE } = useCoinsCalculationsContext();
+  const { saveRowInBE } = useCoinsCalculationsContext();
   const [open, setOpen] = useState(false);
-  const [coinName, setCoinName] = useState("");
+  const [coinName, setCoinName] = useState(name);
   const [inputValues, setInputValues] = useState(data);
   const [errorStates, setErrorStates] = useState<ErrorStates>({});
 
@@ -54,35 +54,35 @@ export default function Row(props: {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchCoinData = async () => {
-    setLoading(true);
-    setError(null);
-    setCoinData(null);
+  // const fetchCoinData = async () => {
+  //   setLoading(true);
+  //   setError(null);
+  //   setCoinData(null);
 
-    try {
-      const response = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/markets`,
-        {
-          params: {
-            ids: coinName,
-            vs_currency: "usd",
-          },
-        }
-      );
-      setCoinData(response.data[coinName]);
-      setLoading(false);
-    } catch (err: any) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
+  //   try {
+  //     const response = await axios.get(
+  //       `https://api.coingecko.com/api/v3/coins/markets`,
+  //       {
+  //         params: {
+  //           ids: coinName,
+  //           vs_currency: "usd",
+  //         },
+  //       }
+  //     );
+  //     setCoinData(response.data[coinName]);
+  //     setLoading(false);
+  //   } catch (err: any) {
+  //     setError(err.message);
+  //     setLoading(false);
+  //   }
+  // };
 
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
-    if (coinName) {
-      fetchCoinData();
-    }
-  };
+  // const handleSubmit = (event: any) => {
+  //   event.preventDefault();
+  //   if (coinName) {
+  //     fetchCoinData();
+  //   }
+  // };
 
   const handleChange =
     (name: string) => (event: { target: { value: string } }) => {
@@ -164,6 +164,16 @@ export default function Row(props: {
     return false;
 };
 
+const handleSave = async () => {
+  const updatedData = {
+    data: inputValues,
+    results,
+    id,
+    name: coinName,
+  };
+  await saveRowInBE(updatedData);
+};
+
   return (
     <>
       {loading && <div>Loading</div>}
@@ -192,22 +202,11 @@ export default function Row(props: {
           <Button variant="contained" color="secondary" onClick={onDelete}>
             Delete
           </Button>
-          <Button variant="contained" color="secondary" onClick={handleSubmit}>
+          {/* <Button variant="contained" color="secondary" onClick={handleSubmit}>
             Get Data
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => addRowInBE({ data, results, id, name })}
-          >
+          </Button> */}
+          <Button variant="contained" color="secondary" onClick={handleSave}>
             Save
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => updateRowInBE(id, { data, results, id, name })}
-          >
-            Update
           </Button>
         </TableCell>
       </TableRow>
