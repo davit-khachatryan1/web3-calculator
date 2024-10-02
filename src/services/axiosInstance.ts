@@ -1,16 +1,20 @@
-import axios from 'axios';
-import { getCurrentUser, setCurrentUser, removeCurrentUser } from './authService';
+import axios from "axios";
+import {
+  getCurrentUser,
+  setCurrentUser,
+  removeCurrentUser,
+} from "./authService";
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: "http://34.31.13.36",
 });
 
 axiosInstance.interceptors.request.use(
   async (config) => {
     const user = getCurrentUser();
     if (user && user.access_token) {
-      console.log('Sending Access Token:', user.access_token);  // Debug
-      config.headers['Authorization'] = `Bearer ${user.access_token}`;
+      console.log("Sending Access Token:", user.access_token); // Debug
+      config.headers["Authorization"] = `Bearer ${user.access_token}`;
     }
     return config;
   },
@@ -30,21 +34,30 @@ axiosInstance.interceptors.response.use(
       const user = getCurrentUser();
       if (user && user.refresh_token) {
         try {
-          const response = await axios.post('http://localhost:3000/auth/refresh', {
-            refresh_token: user.refresh_token,
-          });
+          const response = await axios.post(
+            "http://34.31.13.36/auth/refresh",
+            {
+              refresh_token: user.refresh_token,
+            }
+          );
           const newAccessToken = response.data.access_token;
+          const newRefreshToken = response.data.refresh_token;
 
-          console.log('New Access Token:', newAccessToken);  // Debug
+          console.log("New Access Token:", newAccessToken); // Debug
 
           setCurrentUser({
             ...user,
             access_token: newAccessToken,
+            refresh_token: newRefreshToken,
           });
-          axios.defaults.headers.common['Authorization'] = 'Bearer ' + newAccessToken;
+          axios.defaults.headers.common["Authorization"] =
+            "Bearer " + newAccessToken;
+          console.log(newAccessToken);
+
+          originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
           return axiosInstance(originalRequest);
         } catch (refreshError) {
-          console.error('Refresh token expired:', refreshError);
+          console.error("Refresh token expired:", refreshError);
           removeCurrentUser();
           // Optionally redirect to login page
           // window.location.href = '/login';

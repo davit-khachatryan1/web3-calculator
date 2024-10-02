@@ -24,9 +24,9 @@ export const getCurrentUser = () => {
 };
 
 export const setCurrentUser = (user: string) => {
-  localStorage.setItem('currentUser', JSON.stringify(user));
+  localStorage.setItem('user', JSON.stringify(user));
 };
 
 export const removeCurrentUser = () => {
-  localStorage.removeItem('currentUser');
+  localStorage.removeItem('user');
 };
