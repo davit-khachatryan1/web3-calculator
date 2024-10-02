@@ -29,17 +29,14 @@ axiosInstance.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error?.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const user = getCurrentUser();
       if (user && user.refresh_token) {
         try {
-          const response = await axios.post(
-            "http://34.31.13.36/auth/refresh",
-            {
-              refresh_token: user.refresh_token,
-            }
-          );
+          const response = await axios.post("http://34.31.13.36/auth/refresh", {
+            refresh_token: user.refresh_token,
+          });
           const newAccessToken = response.data.access_token;
           const newRefreshToken = response.data.refresh_token;
 
