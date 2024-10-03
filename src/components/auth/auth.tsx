@@ -20,9 +20,10 @@ const Container = styled(Box)(({ theme }) => ({
   alignItems: "center",
   minHeight: "100vh",
   fontFamily: '"Jost", sans-serif',
-  backgroundSize: '100% 100%', /* This ensures the image covers the entire div */
-  backgroundPosition: 'center', /* This centers the image */
-  backgroundRepeat: 'no-repeat', /* This prevents the image from repeating */
+  backgroundSize:
+    "100% 100%" /* This ensures the image covers the entire div */,
+  backgroundPosition: "center" /* This centers the image */,
+  backgroundRepeat: "no-repeat" /* This prevents the image from repeating */,
   backgroundImage:
     "url(https://blog.coinranking.com/blog/wp-content/uploads/2023/12/Web3-Agency.png)",
 }));
@@ -124,11 +125,13 @@ function Auth() {
 
     try {
       const response = await signup(username, email, accesskey, password);
-      localStorage.setItem('access_token', response.access_token);
-      localStorage.setItem('userId', response.userId);
-      window.location.href = '/'; // Navigate to the general page
-      // You can add further logic here after a successful signup
+      console.log(response, ">>>>>>>>");
+      localStorage.setItem("access_token", response.access_token);
+      localStorage.setItem("userId", response.userId);
+      window.location.href = "/"; // Navigate to the general page
     } catch (error) {
+      console.log(error);
+
       console.error("Signup error: ", error);
     }
   };
@@ -142,9 +145,9 @@ function Auth() {
     try {
       const response = await login(username, password);
       console.log(response);
-      localStorage.setItem('access_token', response.access_token);
-      localStorage.setItem('userId', response.userId);
-      window.location.href = '/'; // Navigate to the general page
+      localStorage.setItem("access_token", response.access_token);
+      localStorage.setItem("userId", response.userId);
+      window.location.href = "/"; // Navigate to the general page
       // You can add further logic here after a successful login
     } catch (error) {
       console.error("Login error: ", error);
