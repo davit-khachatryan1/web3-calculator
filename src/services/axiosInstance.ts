@@ -6,7 +6,7 @@ import {
 } from "./authService";
 
 const axiosInstance = axios.create({
-  baseURL: "www.clcweb.pro",
+  baseURL: "https://www.clcweb.pro",
   timeout: 5000,
 });
 
