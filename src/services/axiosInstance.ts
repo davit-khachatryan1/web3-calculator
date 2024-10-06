@@ -39,7 +39,7 @@ axiosInstance.interceptors.response.use(
       const user = getCurrentUser();
       if (user && user.refresh_token) {
         try {
-          const response = await axios.post("http://34.31.13.36/auth/refresh", {
+          const response = await axios.post("www.clcweb.pro/auth/refresh", {
             refresh_token: user.refresh_token,
           });
           const newAccessToken = response.data.access_token;
