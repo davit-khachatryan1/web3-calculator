@@ -146,6 +146,7 @@ export default function Row(props: {
             : row;
         });
         triggerCalculations(newRows);
+        handleSave();
       }
     }
   };
