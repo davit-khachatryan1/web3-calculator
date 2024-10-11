@@ -104,10 +104,10 @@ export function calculateFormula(formula, data, allData,id) {
     variables["BA4"] = safeAssign(Math.abs((variables["F4"] - variables["AH4"] + data["D4"] * data["G4"] * variables["U4"] / 100) / (data["G4"] * variables["U4"] / 100 - 2 * data["G4"] / data["Y4"])));
     variables["AW4"] = safeAssign(Math.abs((data["E4"] * data["G4"] + data["D4"] * data["G4"] - data["E4"] * data["C4"] * data["Y4"] + data["E4"] * data["G4"] * data["Y4"] - variables["F4"] * data["Y4"]) / (2 * data["G4"] - (data["E4"] - data["D4"]) * data["G4"] / data["E4"] - data["C4"] * data["Y4"] + data["G4"] * data["Y4"])));
     //// bacvogh qanak
-    variables["AV4"] = safeAssign(data["D4"] - variables["AU4"] - ((data["D4"] - data["E4"]) - (data["D4"] - data["E4"]) * variables["AU4"] / data["D4"]));
-    variables["BB4"] = safeAssign(data["E4"] - variables["BA4"]);
-    variables["AX4"] = safeAssign(data["E4"] - variables["AW4"] - ((data["E4"] - data["D4"]) - (data["E4"] - data["D4"]) * variables["AW4"] / data["E4"]));
-    variables["AZ4"] = safeAssign(data["D4"] - variables["AY4"]);
+    variables["AV4"] = safeAssign((data["D4"] - variables["AU4"]) * 0.6);
+    variables["BB4"] = safeAssign((data["D4"] - variables["BA4"]) * 1.1111);
+    variables["AX4"] = safeAssign((data["E4"] - variables["AW4"]) * 0.65);
+    variables["AZ4"] = safeAssign((data["E4"] - variables["AY4"]) * 1.1111);
 
 
     try {

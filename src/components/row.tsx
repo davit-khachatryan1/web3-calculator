@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -53,6 +53,7 @@ export default function Row(props: {
   const [coinData, setCoinData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  let isMoreThanZiro: boolean;
 
   // const fetchCoinData = async () => {
   //   setLoading(true);
@@ -146,11 +147,100 @@ export default function Row(props: {
             : row;
         });
         triggerCalculations(newRows);
-        handleSave();
+        isMoreThanZiro = results.result_L2 > 0;
+        if (inputValues.G4 < inputValues.B4 && inputValues.G4 > inputValues.C4) {
+          setFinalBalance();
+        }
+        // handleSave();
       }
     }
   };
 
+  const autoCount = () => {
+    const convertedValues = convertValuesToNumbers(inputValues);
+    setInputValues(convertedValues);
+    const result = rows.filter((row) => row.id == id);
+    onUpdate && onUpdate({ ...convertedValues, ...result[0].data });
+    const newRows = rows.map((row) => {
+      return row.id === id
+        ? {
+            ...row,
+            data: { ...row.data, ...convertedValues },
+            name: coinName,
+          }
+        : row;
+    });
+    triggerCalculations(newRows);
+    setFinalBalance();
+  };
+
+  const setFinalBalance = () => {
+    const inp = inputValues;
+    if (+inp.D4 > +inp.E4) {
+      if (isMoreThanZiro) {
+        if (inp.N4 === 0) {
+          inp.N4 = results.result_L2;
+        } else {
+          inp.N4 = +inp.N4 + results.result_L2;
+        }
+        if (inp.P5 === 0) {
+          inp.P5 = results.result_L4;
+        } else {
+          inp.P5 = +inp.P5 + results.result_L4;
+        }
+      } else {
+        if (inp.O4 === 0) {
+          inp.O4 = Math.abs(results.result_L2);
+        } else {
+          inp.O4 = +inp.O4 + Math.abs(+results.result_L2);
+        }
+
+        if (inp.P4 === 0) {
+          inp.P4 = Math.abs(results.result_L4);
+        } else {
+          inp.P4 = +inp.P4 + Math.abs(results.result_L4);
+        }
+      }
+    } else {
+      if (isMoreThanZiro) {
+        if (inp.O4 === 0) {
+          inp.O4 = results.result_L2;
+        } else {
+          inp.O4 = +inp.O4 + results.result_L2;
+        }
+        if (inp.P4 === 0) {
+          inp.P4 = results.result_L4;
+        } else {
+          inp.P4 = +inp.P4 + results.result_L4;
+        }
+      } else {
+        if (inp.N4 === 0) {
+          inp.N4 = Math.abs(results.result_L2);
+        } else {
+          inp.N4 = +inp.N4 + Math.abs(+results.result_L2);
+        }
+
+        if (inp.P5 === 0) {
+          inp.P5 = Math.abs(results.result_L4);
+        } else {
+          inp.P5 = +inp.P5 + Math.abs(results.result_L4);
+        }
+      }
+    }
+    
+
+    setInputValues(inp);
+    if (
+      Math.abs(results.result_L4) < 0.0001 &&
+      Math.abs(results.result_L2) < 0.0001
+    ) {
+      return;
+    }
+    autoCount();
+  };
+  useEffect(() => {
+    setInputValues({ ...inputValues, P4: 0, P5: 0, N4: 0, O4: 0 });
+  }, [inputValues]);
   const handleChangeCoinName = (e: any) => {
     setCoinName(e.target.value.toLowerCase().trim());
   };
@@ -390,7 +480,7 @@ const handleSave = async () => {
                       <TextField
                         id="P4"
                         onChange={handleChange("P4")}
-                        value={inputValues.P4 || null}
+                        value={inputValues.P4}
                         size="small"
                         error={errorStates.P4}
                         helperText={errorStates.P4 ? "Invalid input" : ""}
@@ -402,7 +492,7 @@ const handleSave = async () => {
                       <TextField
                         id="openShortInCorridor"
                         onChange={handleChange("P5")}
-                        value={inputValues.P5 || null}
+                        value={inputValues.P5}
                         size="small"
                         error={errorStates.P5}
                         helperText={errorStates.P5 ? "Invalid input" : ""}
@@ -414,7 +504,7 @@ const handleSave = async () => {
                       <TextField
                         id="N4"
                         onChange={handleChange("N4")}
-                        value={inputValues.N4 || null}
+                        value={inputValues.N4}
                         size="small"
                         error={errorStates.N4}
                         helperText={errorStates.N4 ? "Invalid input" : ""}
@@ -426,7 +516,7 @@ const handleSave = async () => {
                       <TextField
                         id="O4"
                         onChange={handleChange("O4")}
-                        value={inputValues.O4 || null}
+                        value={inputValues.O4}
                         size="small"
                         error={errorStates.O4}
                         helperText={errorStates.O4 ? "Invalid input" : ""}

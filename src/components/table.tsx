@@ -12,6 +12,7 @@ import {
 import { useDataContext } from "../context/DataContext";
 import Row from "./row";
 import { useAuthContext } from "../context/AuthContext";
+import BackgroundImage from "../assets/Background.png";
 
 const Calculator = () => {
   const {
@@ -38,12 +39,12 @@ const Calculator = () => {
         padding: "10px",
         height: "100vh",
         display: "flex",
-        backgroundColor: "#282c34",
+        backgroundColor: "#1f1f1f",
         flexDirection: "column",
-        backgroundImage:
-          "url(https://as1.ftcdn.net/v2/jpg/05/74/79/80/1000_F_574798026_iEIdURVR3yieUYcn2tQYakrSYB999s5k.jpg)",
-        backgroundSize: "cover",
+        backgroundImage: `url(${BackgroundImage})`,
+        backgroundSize: "220px 200px",
         backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
       <Box
@@ -151,7 +152,7 @@ const Calculator = () => {
           onClick={addRow}
           style={{ maxHeight: "50px" }}
         >
-          Add Row
+          Add Coin
         </Button>
       </Box>
       <TableContainer component={Paper} sx={{ marginTop: "10px" }}>
