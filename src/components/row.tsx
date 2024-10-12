@@ -149,7 +149,10 @@ export default function Row(props: {
         });
         triggerCalculations(newRows);
         isMoreThanZiro = results.result_L2 > 0;
-        if (inputValues.G4 < inputValues.B4 && inputValues.G4 > inputValues.C4) {
+        if (
+          inputValues.G4 < inputValues.B4 &&
+          inputValues.G4 > inputValues.C4
+        ) {
           setFinalBalance();
         }
         // handleSave();
@@ -249,23 +252,23 @@ export default function Row(props: {
 
   const valueChecking = (value: any) => {
     if (isNaN(value)) {
-        return true;
+      return true;
     }
     if (value === null) {
-        return true;
+      return true;
     }
     return false;
-};
-
-const handleSave = async () => {
-  const updatedData = {
-    data: inputValues,
-    results,
-    id,
-    name: coinName,
   };
-  await saveRowInBE(updatedData);
-};
+
+  const handleSave = async () => {
+    const updatedData = {
+      data: inputValues,
+      results,
+      id,
+      name: coinName,
+    };
+    await saveRowInBE(updatedData);
+  };
 
   return (
     <>
