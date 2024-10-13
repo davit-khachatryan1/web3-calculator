@@ -10,6 +10,7 @@ import {
   deleteCoinsCalculation,
 } from "../services/coinsCalculationsService";
 import { useAuthContext } from "./AuthContext";
+import { updateGeneralData } from "../services/generalData";
 
 export type RowData = {
   id: string;
@@ -42,8 +43,11 @@ export const CoinsCalculationsProvider = ({
   const saveRowInBE = async (updatedData: any) => {
     if (user) {
       const savedData = await saveCoinsCalculation(updatedData, user.userId);
+      // await updateGeneralData(user.userId, updatedData);
       setRowsInBE((prevRows) => {
-        const existingIndex = prevRows.findIndex(row => row.id === savedData.id);
+        const existingIndex = prevRows.findIndex(
+          (row) => row.id === savedData.id
+        );
         if (existingIndex >= 0) {
           const updatedRows = [...prevRows];
           updatedRows[existingIndex] = savedData;
