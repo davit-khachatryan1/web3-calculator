@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import {
   Box,
   Button,
@@ -97,7 +96,7 @@ const Calculator = () => {
             <TextField
               id="C4"
               label="Balance"
-              value={generalData["A242"]}
+              value={generalData.balance}
               onChange={(e) =>
                 changeGeneralData("A242", Number(e.target.value))
               }
@@ -112,7 +111,7 @@ const Calculator = () => {
             <TextField
               id="C4"
               label="Initial Balance"
-              value={generalData["D244"]}
+              value={generalData.initialBalance}
               onChange={(e) =>
                 changeGeneralData("D244", Number(e.target.value))
               }
@@ -176,5 +175,5 @@ const Calculator = () => {
     </Box>
   );
 };
- 
+
 export default Calculator;

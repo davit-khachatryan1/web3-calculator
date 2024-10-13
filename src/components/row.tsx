@@ -16,10 +16,11 @@ import {
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import axios from "axios";
 import "./table.css";
 import { GeneralData, useDataContext } from "../context/DataContext";
 import { useCoinsCalculationsContext } from "../context/CoinsCalculationsContext";
+import { updateGeneralData } from "../services/generalData";
+import { useAuthContext } from "../context/AuthContext";
 
 type ErrorStates = {
   B4?: boolean;
@@ -43,7 +44,9 @@ export default function Row(props: {
   name: string;
 }) {
   const { onDelete, data, results, onUpdate, genData, id, name } = props;
-  const { changeGeneralData, triggerCalculations, rows } = useDataContext();
+  const { changeGeneralData, triggerCalculations, rows, generalData } =
+    useDataContext();
+  const { user } = useAuthContext();
   const { saveRowInBE } = useCoinsCalculationsContext();
   const [open, setOpen] = useState(false);
   const [coinName, setCoinName] = useState(name);
@@ -267,7 +270,23 @@ export default function Row(props: {
       id,
       name: coinName,
     };
-    await saveRowInBE(updatedData);
+
+    try {
+      await saveRowInBE(updatedData);
+      await updateGeneralData(user.userId, {
+        balance: generalData["A242"],
+        initialBalance: generalData["D244"],
+        accumulatedBalance: generalData.accumulatedBalance,
+        numberOfLongs: generalData["CG4"],
+        numberOfShorts: generalData["CH4"],
+        coinQuantity: generalData["E242"],
+      });
+
+      console.log("Data saved successfully");
+    } catch (error) {
+      console.error("Error saving data:", error);
+      return;
+    }
   };
 
   return (

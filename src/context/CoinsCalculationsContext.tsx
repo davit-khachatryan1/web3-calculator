@@ -1,16 +1,11 @@
-import React, {
-  createContext,
-  useState,
-  useContext,
-  ReactNode,
-  useEffect,
-} from "react";
+import React, { createContext, useState, useContext, ReactNode } from "react";
 import {
   saveCoinsCalculation,
   deleteCoinsCalculation,
 } from "../services/coinsCalculationsService";
 import { useAuthContext } from "./AuthContext";
 import { updateGeneralData } from "../services/generalData";
+// import { useDataContext } from "./DataContext";
 
 export type RowData = {
   id: string;
@@ -38,12 +33,12 @@ export const CoinsCalculationsProvider = ({
   children: ReactNode;
 }) => {
   const { user } = useAuthContext();
+
   const [rowsInBE, setRowsInBE] = useState<RowData[]>([]);
 
   const saveRowInBE = async (updatedData: any) => {
     if (user) {
       const savedData = await saveCoinsCalculation(updatedData, user.userId);
-      // await updateGeneralData(user.userId, updatedData);
       setRowsInBE((prevRows) => {
         const existingIndex = prevRows.findIndex(
           (row) => row.id === savedData.id
