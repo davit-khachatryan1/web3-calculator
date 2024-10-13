@@ -3,25 +3,15 @@ import axiosInstance from "./axiosInstance";
 const API_URL = "/general-data";
 
 // Create general data for a user (POST)
-export const createGeneralData = async (data: any) => {
-  try {
-    const response = await axiosInstance.post(API_URL, data);
-    return response.data;
-  } catch (error) {
-    console.error("Error creating general data:", error);
-    throw error;
-  }
+export const createGeneralData = async (data: any, userId: string) => {
+  const response = await axiosInstance.post(`/general-data/${userId}`, data);
+  return response.data;
 };
 
 // Fetch general data for a specific user (GET)
-export const getUserGeneralData = async (userId: string) => {
-  try {
-    const response = await axiosInstance.get(`${API_URL}/${userId}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching general data:", error);
-    throw error;
-  }
+export const getGeneralDataByUserId = async (userId: string) => {
+  const response = await axiosInstance.get(`/general-data/${userId}`);
+  return response.data;
 };
 
 // Update general data for a user (PATCH)

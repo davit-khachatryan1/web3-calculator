@@ -9,6 +9,7 @@ import {
   styled,
 } from "@mui/material";
 import { login, signup } from "../../services/authService";
+import { createGeneralData } from "../../services/generalData";
 
 interface CheckedProps {
   checked: boolean;
@@ -125,6 +126,17 @@ function Auth() {
 
     try {
       const response = await signup(username, email, accesskey, password);
+      await createGeneralData(
+        {
+          balance: 0,
+          initialBalance: 0,
+          accumulatedBalance: 0,
+          numberOfLongs: 0,
+          numberOfShorts: 0,
+          coinQuantity: 0,
+        },
+        response.data.userId
+      );
       console.log(response, ">>>>>>>>");
       localStorage.setItem("access_token", response.access_token);
       localStorage.setItem("userId", response.userId);
