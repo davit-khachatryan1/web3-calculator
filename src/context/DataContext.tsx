@@ -59,8 +59,10 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    fetchGeneralData();
-    fetchUserCoinsCalculations();
+    if (user.userId) {
+      fetchGeneralData();
+      fetchUserCoinsCalculations();
+    }
   }, [user]);
 
   const changeGeneralData = (item: string, value: number) => {
