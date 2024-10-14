@@ -153,8 +153,8 @@ export default function Row(props: {
         triggerCalculations(newRows);
         isMoreThanZiro = results.result_L2 > 0;
         if (
-          inputValues.G4 < inputValues.B4 &&
-          inputValues.G4 > inputValues.C4
+          inputValues.G4 <= inputValues.B4 &&
+          inputValues.G4 >= inputValues.C4
         ) {
           setFinalBalance();
         }
