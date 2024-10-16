@@ -133,6 +133,7 @@ export default function Row(props: {
   };
 
   const handleKeyPress = (event: any) => {
+    console.log(results, 'results');
     setInputValues({ ...inputValues, P4: 0, P5: 0, N4: 0, O4: 0 });
     if (event.key === "Enter") {
       const convertedValues = convertValuesToNumbers(inputValues);
@@ -243,11 +244,6 @@ export default function Row(props: {
     }
     autoCount();
   };
-
-  // useEffect(() => {
-  //   console.log("inputValues", inputValues);
-  //   setInputValues({ ...inputValues, P4: 0, P5: 0, N4: 0, O4: 0 });
-  // }, [inputValues]);
 
   const handleChangeCoinName = (e: any) => {
     setCoinName(e.target.value.toLowerCase().trim());
@@ -693,9 +689,12 @@ export default function Row(props: {
                     </TableCell>
                     <TableCell>
                       <Select
-                        value={genData["Y4"]}
+                        value={inputValues["Y4"]}
                         onChange={(e) =>
-                          changeGeneralData("Y4", Number(e.target.value))
+                          setInputValues({
+                            ...inputValues,
+                            Y4: Number(e.target.value),
+                          })
                         }
                       >
                         <MenuItem value={10}>10</MenuItem>

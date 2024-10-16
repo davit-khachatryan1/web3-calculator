@@ -175,7 +175,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
           ? generalData["A242"] -
             updatedRows[updatedRows.length - 1].data["B242"]
           : generalData["A242"] - generalData["D244"];
-      // debugger
       return aa;
     };
 
