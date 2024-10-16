@@ -133,8 +133,7 @@ export default function Row(props: {
   };
 
   const handleKeyPress = (event: any) => {
-    console.log(results, 'results');
-    setInputValues({ ...inputValues, P4: 0, P5: 0, N4: 0, O4: 0 });
+    // setInputValues({ ...inputValues, P4: 0, P5: 0, N4: 0, O4: 0 });
     if (event.key === "Enter") {
       const convertedValues = convertValuesToNumbers(inputValues);
       setInputValues(convertedValues);
@@ -244,6 +243,9 @@ export default function Row(props: {
     }
     autoCount();
   };
+  useEffect(() => {
+    setInputValues({ ...inputValues, P4: 0, P5: 0, N4: 0, O4: 0 });
+  }, [inputValues]);
 
   const handleChangeCoinName = (e: any) => {
     setCoinName(e.target.value.toLowerCase().trim());
