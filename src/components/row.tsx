@@ -245,7 +245,7 @@ export default function Row(props: {
   };
   useEffect(() => {
     setInputValues({ ...inputValues, P4: 0, P5: 0, N4: 0, O4: 0 });
-  }, [inputValues]);
+  }, [inputValues.G4, inputValues.B4, inputValues.C4, inputValues.D4, inputValues.E4]);
 
   const handleChangeCoinName = (e: any) => {
     setCoinName(e.target.value.toLowerCase().trim());
