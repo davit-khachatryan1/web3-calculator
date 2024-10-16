@@ -502,7 +502,7 @@ export default function Row(props: {
                       <TextField
                         id="P4"
                         onChange={handleChange("P4")}
-                        value={inputValues.P4}
+                        value={inputValues.P4.toFixed(3)}
                         size="small"
                         error={errorStates.P4}
                         helperText={errorStates.P4 ? "Invalid input" : ""}
@@ -514,7 +514,7 @@ export default function Row(props: {
                       <TextField
                         id="openShortInCorridor"
                         onChange={handleChange("P5")}
-                        value={inputValues.P5}
+                        value={inputValues.P5.toFixed(3)}
                         size="small"
                         error={errorStates.P5}
                         helperText={errorStates.P5 ? "Invalid input" : ""}
@@ -526,7 +526,7 @@ export default function Row(props: {
                       <TextField
                         id="N4"
                         onChange={handleChange("N4")}
-                        value={inputValues.N4}
+                        value={inputValues.N4.toFixed(3)}
                         size="small"
                         error={errorStates.N4}
                         helperText={errorStates.N4 ? "Invalid input" : ""}
@@ -538,7 +538,7 @@ export default function Row(props: {
                       <TextField
                         id="O4"
                         onChange={handleChange("O4")}
-                        value={inputValues.O4}
+                        value={inputValues.O4.toFixed(3)}
                         size="small"
                         error={errorStates.O4}
                         helperText={errorStates.O4 ? "Invalid input" : ""}
@@ -679,7 +679,7 @@ export default function Row(props: {
                       <Typography gutterBottom component="div">
                         {valueChecking(results.priceAccordingAccumulatedBalance)
                           ? "0.000"
-                          : results.priceAccordingAccumulatedBalance.toFixed(3)}
+                          : results.priceAccordingAccumulatedBalance.toFixed(6)}
                       </Typography>
                     </TableCell>
                     <TableCell>
