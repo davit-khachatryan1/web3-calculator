@@ -133,7 +133,7 @@ export default function Row(props: {
   };
 
   const handleKeyPress = (event: any) => {
-    // setInputValues({ ...inputValues, P4: 0, P5: 0, N4: 0, O4: 0 });
+    setInputValues({ ...inputValues, P4: 0, P5: 0, N4: 0, O4: 0 });
     if (event.key === "Enter") {
       const convertedValues = convertValuesToNumbers(inputValues);
       setInputValues(convertedValues);
