@@ -30,7 +30,7 @@ type DataContextType = {
   deleteRow: (id: string) => void;
   updateRow: (id: string, updatedData: any) => void;
   triggerCalculations: (data: RowData[]) => void;
-  changeGeneralData: (item: string, value: number) => void;
+  changeGeneralData: (item: GeneralData) => void;
 };
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -65,8 +65,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [user]);
 
-  const changeGeneralData = (item: string, value: number) => {
-    setGeneralData({ ...generalData, [`${item}`]: value });
+  const changeGeneralData = (item: any) => {
+    setGeneralData({ ...generalData, ...item});
   };
 
   const calculateAveragedRationalTradingMargin = (results: any) => {

@@ -97,9 +97,13 @@ const Calculator = () => {
               id="C4"
               label="Balance"
               value={generalData.balance}
-              onChange={(e) =>
-                changeGeneralData("A242", Number(e.target.value))
-              }
+              onChange={(e) => {
+                const a = e.target.value;
+                changeGeneralData({
+                  A242: Number(a),
+                  balance: Number(a),
+                });
+              }}
               onKeyPress={(event) => handleKeyPress(event)}
               size="small"
               className="balance"
@@ -112,9 +116,13 @@ const Calculator = () => {
               id="C4"
               label="Initial Balance"
               value={generalData.initialBalance}
-              onChange={(e) =>
-                changeGeneralData("D244", Number(e.target.value))
-              }
+              onChange={(e) => {
+                const a = e.target.value;
+                changeGeneralData({
+                  D244: Number(a),
+                  initialBalance: Number(a),
+                });
+              }}
               onKeyPress={(event) => handleKeyPress(event)}
               className="balance"
               size="small"
