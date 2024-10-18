@@ -96,7 +96,7 @@ const Calculator = () => {
             <TextField
               id="C4"
               label="Balance"
-              value={generalData.balance}
+              value={generalData.A242}
               onChange={(e) => {
                 const a = e.target.value;
                 changeGeneralData({
@@ -115,7 +115,7 @@ const Calculator = () => {
             <TextField
               id="C4"
               label="Initial Balance"
-              value={generalData.initialBalance}
+              value={generalData.D244}
               onChange={(e) => {
                 const a = e.target.value;
                 changeGeneralData({
