@@ -43,9 +43,8 @@ export default function Row(props: {
   id: string;
   name: string;
 }) {
-  const { onDelete, data, results, onUpdate, genData, id, name } = props;
-  const { changeGeneralData, triggerCalculations, rows, generalData } =
-    useDataContext();
+  const { onDelete, data, results, onUpdate, id, name } = props;
+  const { triggerCalculations, rows, generalData } = useDataContext();
   const { user } = useAuthContext();
   const { saveRowInBE } = useCoinsCalculationsContext();
   const [open, setOpen] = useState(false);
@@ -53,40 +52,7 @@ export default function Row(props: {
   const [inputValues, setInputValues] = useState(data);
   const [errorStates, setErrorStates] = useState<ErrorStates>({});
 
-  const [coinData, setCoinData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   let isMoreThanZiro: boolean;
-
-  // const fetchCoinData = async () => {
-  //   setLoading(true);
-  //   setError(null);
-  //   setCoinData(null);
-
-  //   try {
-  //     const response = await axios.get(
-  //       `https://api.coingecko.com/api/v3/coins/markets`,
-  //       {
-  //         params: {
-  //           ids: coinName,
-  //           vs_currency: "usd",
-  //         },
-  //       }
-  //     );
-  //     setCoinData(response.data[coinName]);
-  //     setLoading(false);
-  //   } catch (err: any) {
-  //     setError(err.message);
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const handleSubmit = (event: any) => {
-  //   event.preventDefault();
-  //   if (coinName) {
-  //     fetchCoinData();
-  //   }
-  // };
 
   const handleChange =
     (name: string) => (event: { target: { value: string } }) => {
@@ -245,7 +211,13 @@ export default function Row(props: {
   };
   useEffect(() => {
     setInputValues({ ...inputValues, P4: 0, P5: 0, N4: 0, O4: 0 });
-  }, [inputValues.G4, inputValues.B4, inputValues.C4, inputValues.D4, inputValues.E4]);
+  }, [
+    inputValues.G4,
+    inputValues.B4,
+    inputValues.C4,
+    inputValues.D4,
+    inputValues.E4,
+  ]);
 
   const handleChangeCoinName = (e: any) => {
     setCoinName(e.target.value.toLowerCase().trim());
@@ -272,12 +244,12 @@ export default function Row(props: {
     try {
       await saveRowInBE(updatedData);
       await updateGeneralData(user.userId, {
-        balance: generalData["A242"],
-        initialBalance: generalData["D244"],
+        A242: generalData["A242"],
+        D244: generalData["D244"],
         accumulatedBalance: generalData.accumulatedBalance,
-        numberOfLongs: generalData["CG4"],
-        numberOfShorts: generalData["CH4"],
-        coinQuantity: generalData["E242"],
+        CG4: generalData["CG4"],
+        CH4: generalData["CH4"],
+        E242: generalData["E242"],
       });
 
       console.log("Data saved successfully");
@@ -289,7 +261,6 @@ export default function Row(props: {
 
   return (
     <>
-      {loading && <div>Loading</div>}
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell sx={{ width: "5%" }}>
           <IconButton

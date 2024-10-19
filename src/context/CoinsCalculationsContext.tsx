@@ -4,8 +4,6 @@ import {
   deleteCoinsCalculation,
 } from "../services/coinsCalculationsService";
 import { useAuthContext } from "./AuthContext";
-import { updateGeneralData } from "../services/generalData";
-// import { useDataContext } from "./DataContext";
 
 export type RowData = {
   id: string;

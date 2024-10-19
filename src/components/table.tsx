@@ -101,7 +101,6 @@ const Calculator = () => {
                 const a = e.target.value;
                 changeGeneralData({
                   A242: Number(a),
-                  balance: Number(a),
                 });
               }}
               onKeyPress={(event) => handleKeyPress(event)}
@@ -120,7 +119,6 @@ const Calculator = () => {
                 const a = e.target.value;
                 changeGeneralData({
                   D244: Number(a),
-                  initialBalance: Number(a),
                 });
               }}
               onKeyPress={(event) => handleKeyPress(event)}
