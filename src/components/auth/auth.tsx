@@ -128,12 +128,12 @@ function Auth() {
       const response = await signup(username, email, accesskey, password);
       const data = await createGeneralData(
         {
-          balance: 0,
-          initialBalance: 0,
+          A242: 0,
+          D244: 0,
           accumulatedBalance: 0,
-          numberOfLongs: 0,
-          numberOfShorts: 0,
-          coinQuantity: 0,
+          CG4: 0,
+          CH4: 0,
+          E242: 0,
         },
         response.userId
       );
