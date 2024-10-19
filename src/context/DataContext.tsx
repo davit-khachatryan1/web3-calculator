@@ -87,7 +87,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
     return price;
   };
-
   const calculateAccumulatedBalanceForPosition = (
     results: any,
     accumulatedBalance: any
@@ -168,6 +167,9 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         row.data["B242"] = updatedRows[updatedRows.length - 1].data["B242"];
       }
     }
+    const calculateMarginEQ = (updatedRows: RowData[]) => {
+      return updatedRows.reduce((sum: number, row: RowData) => sum + row.results.result_T4, 0);
+    };
 
     const calculateAccumulatedBalance = () => {
       const aa =
@@ -179,6 +181,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const accumulatedBalance = calculateAccumulatedBalance();
+    const fullMarginEq = calculateMarginEQ(updatedRows);
     const averagedRationalTradingMargin =
       calculateAveragedRationalTradingMargin(
         updatedRows.map((row) => row.results)
@@ -213,8 +216,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       CH4: longShorts["CH4"],
       accumulatedBalance:
         accumulatedBalance || generalData["A242"] - generalData["D244"],
+      fullMarginEq
     });
-    console.log(newUpdatedRows, "eslel karevor");
 
     setRows(newUpdatedRows);
   };

@@ -56,7 +56,7 @@ const Calculator = () => {
           gap: "10px",
           padding: "10px",
           height: "max-content",
-          backgroundColor: "#000000ac",
+          backgroundColor: "#000000",
         }}
       >
         {user.name}
@@ -64,14 +64,14 @@ const Calculator = () => {
       <Box
         sx={{
           display: "flex",
-          flexWrap: "nowrap",
+          flexWrap: "wrap",
           color: "white",
           alignItems: "center",
           gap: "10px",
           padding: "10px",
           height: "max-content",
-          backgroundColor: "#000000ac",
-          justifyContent: "space-between",
+          backgroundColor: "#000000",
+          justifyContent: "center",
         }}
       >
         <Box
@@ -135,6 +135,12 @@ const Calculator = () => {
               Accumulated Balance{" "}
               <Button size="small">
                 {(generalData.accumulatedBalance || 0).toFixed(3)}
+              </Button>
+            </Typography>
+            <Typography gutterBottom component="div">
+              Margin Equity{" "}
+              <Button size="small">
+                {(generalData.fullMarginEq || 0).toFixed(3)}
               </Button>
             </Typography>
             <Typography gutterBottom component="div" style={{ color: "green" }}>
