@@ -116,7 +116,7 @@ export default function Row(props: {
               }
             : row;
         });
-        triggerCalculations(newRows);
+        triggerCalculations(newRows, generalData);
         isMoreThanZiro = results.result_L2 > 0;
         if (
           inputValues.G4 <= inputValues.B4 &&
@@ -143,7 +143,7 @@ export default function Row(props: {
           }
         : row;
     });
-    triggerCalculations(newRows);
+    triggerCalculations(newRows, generalData);
     setFinalBalance();
   };
 

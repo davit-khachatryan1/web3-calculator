@@ -29,7 +29,7 @@ type DataContextType = {
   addRow: () => void;
   deleteRow: (id: string) => void;
   updateRow: (id: string, updatedData: any) => void;
-  triggerCalculations: (data: RowData[]) => void;
+  triggerCalculations: (data: RowData[], generalData: GeneralData) => void;
   changeGeneralData: (item: GeneralData) => void;
 };
 
@@ -39,34 +39,34 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const { deleteRowInBE } = useCoinsCalculationsContext();
   const { user } = useAuthContext();
   const [rows, setRows] = useState<RowData[]>([]);
-  const [generalData, setGeneralData] = useState<GeneralData>({
-    ...data,
-  });
+  const [generalData, setGeneralData] = useState<GeneralData>({});
+  // console.log(generalData, "LLLLLLLL");
 
-  const fetchUserCoinsCalculations = async () => {
+  const fetchUserCoinsCalculations = async (generalData: GeneralData) => {
     if (user && Object.keys(user).length !== 0) {
       const data = await getUserCoinsCalculations(user.userId);
-      console.log(data);
-      triggerCalculations(data);
+      // console.log(data, "99999");
+      triggerCalculations(data, generalData);
       setRows(data);
     }
   };
 
   const fetchGeneralData = async () => {
     const dataDB = await getGeneralDataByUserId(user.userId);
-    setGeneralData({ ...dataDB, ...data });
-    return dataDB;
+    // console.log(dataDB, ">>>>>>>>>>>oo", { ...data, ...dataDB });
+
+    setGeneralData({ ...data, ...dataDB });
+    fetchUserCoinsCalculations({ ...data, ...dataDB });
   };
 
   useEffect(() => {
     if (user.userId) {
       fetchGeneralData();
-      fetchUserCoinsCalculations();
     }
   }, [user]);
 
   const changeGeneralData = (item: any) => {
-    setGeneralData({ ...generalData, ...item});
+    setGeneralData({ ...generalData, ...item });
   };
 
   const calculateAveragedRationalTradingMargin = (results: any) => {
@@ -111,7 +111,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     deleteRowInBE(id);
     const newRows = rows.filter((row) => row.id !== id);
     setRows(newRows);
-    triggerCalculations(newRows);
+    triggerCalculations(newRows, generalData);
   };
 
   const updateRow = (id: string, updatedData: any) => {
@@ -122,7 +122,10 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
-  const triggerCalculations = (rows: RowData[]): void => {
+  const triggerCalculations = (
+    rows: RowData[],
+    generalData: GeneralData
+  ): void => {
     let longShorts = {
       CG4: 0,
       CH4: 0,
@@ -168,7 +171,10 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       }
     }
     const calculateMarginEQ = (updatedRows: RowData[]) => {
-      return updatedRows.reduce((sum: number, row: RowData) => sum + row.results.result_T4, 0);
+      return updatedRows.reduce(
+        (sum: number, row: RowData) => sum + row.results.result_T4,
+        0
+      );
     };
 
     const calculateAccumulatedBalance = () => {
@@ -208,6 +214,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         },
       });
     }
+    console.log(generalData, "genarallllllllll");
 
     setGeneralData({
       ...generalData,
@@ -216,7 +223,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       CH4: longShorts["CH4"],
       accumulatedBalance:
         accumulatedBalance || generalData["A242"] - generalData["D244"],
-      fullMarginEq
+      fullMarginEq,
     });
 
     setRows(newUpdatedRows);

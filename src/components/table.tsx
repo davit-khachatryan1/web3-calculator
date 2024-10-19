@@ -28,7 +28,7 @@ const Calculator = () => {
 
   const handleKeyPress = (event: any) => {
     if (event.key === "Enter") {
-      triggerCalculations(rows);
+      triggerCalculations(rows, generalData);
     }
   };
 
