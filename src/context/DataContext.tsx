@@ -40,20 +40,17 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const { user } = useAuthContext();
   const [rows, setRows] = useState<RowData[]>([]);
   const [generalData, setGeneralData] = useState<GeneralData>({});
-  // console.log(generalData, "LLLLLLLL");
 
   const fetchUserCoinsCalculations = async (generalData: GeneralData) => {
     if (user && Object.keys(user).length !== 0) {
       const data = await getUserCoinsCalculations(user.userId);
-      // console.log(data, "99999");
-      triggerCalculations(data, generalData);
+      // triggerCalculations(data, generalData);
       setRows(data);
     }
   };
 
   const fetchGeneralData = async () => {
     const dataDB = await getGeneralDataByUserId(user.userId);
-    // console.log(dataDB, ">>>>>>>>>>>oo", { ...data, ...dataDB });
 
     setGeneralData({ ...data, ...dataDB });
     fetchUserCoinsCalculations({ ...data, ...dataDB });
@@ -183,6 +180,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
           ? generalData["A242"] -
             updatedRows[updatedRows.length - 1].data["B242"]
           : generalData["A242"] - generalData["D244"];
+
       return aa;
     };
 
@@ -214,7 +212,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         },
       });
     }
-    console.log(generalData, "genarallllllllll");
 
     setGeneralData({
       ...generalData,
