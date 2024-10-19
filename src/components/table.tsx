@@ -110,6 +110,7 @@ const Calculator = () => {
               sx={{
                 maxWidth: "150px",
               }}
+              focused
             />
             <TextField
               id="C4"
@@ -128,6 +129,7 @@ const Calculator = () => {
               sx={{
                 maxWidth: "150px",
               }}
+              focused
             />
             <Typography gutterBottom component="div">
               Accumulated Balance{" "}
