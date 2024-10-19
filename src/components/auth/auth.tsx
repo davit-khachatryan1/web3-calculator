@@ -126,7 +126,7 @@ function Auth() {
 
     try {
       const response = await signup(username, email, accesskey, password);
-      await createGeneralData(
+      const data = await createGeneralData(
         {
           balance: 0,
           initialBalance: 0,
@@ -135,9 +135,9 @@ function Auth() {
           numberOfShorts: 0,
           coinQuantity: 0,
         },
-        response.data.userId
+        response.userId
       );
-      console.log(response, ">>>>>>>>");
+      console.log(response, ">>>>>>>>", data);
       localStorage.setItem("access_token", response.access_token);
       localStorage.setItem("userId", response.userId);
       window.location.href = "/"; // Navigate to the general page
