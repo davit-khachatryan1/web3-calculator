@@ -438,14 +438,14 @@ export default function Row(props: {
                       <Typography gutterBottom component="div">
                         {valueChecking(results.result_B6)
                           ? "0.000"
-                          : results.result_B6.toFixed(3)}
+                          : results.result_B6.toFixed(7)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
                         {valueChecking(results.result_C6)
                           ? "0.000"
-                          : results.result_C6.toFixed(3)}
+                          : results.result_C6.toFixed(7)}
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -554,14 +554,14 @@ export default function Row(props: {
                       <Typography gutterBottom component="div">
                         {valueChecking(results.result_B5)
                           ? 0
-                          : results.result_B5.toFixed(3)}
+                          : results.result_B5.toFixed(7)}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Typography gutterBottom component="div">
                         {valueChecking(results.result_C5)
                           ? 0
-                          : results.result_C5.toFixed(3)}
+                          : results.result_C5.toFixed(7)}
                       </Typography>
                     </TableCell>
                     <TableCell>
