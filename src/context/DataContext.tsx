@@ -174,11 +174,18 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       );
     };
 
+    const calculateB242 = (updatedRows: RowData[], generalData: GeneralData) => {
+      return updatedRows.reduce(
+        (sum: number, row: RowData) => sum + row.results.result_BE4,
+        generalData["A242"]
+      );
+    }
+
     const calculateAccumulatedBalance = () => {
+      const B242 = calculateB242(updatedRows, generalData);
       const aa =
-        updatedRows[updatedRows.length - 1]?.data["B242"] >= generalData["D244"]
-          ? generalData["A242"] -
-            updatedRows[updatedRows.length - 1].data["B242"]
+      B242 >= generalData["D244"]
+          ? generalData["A242"] - B242
           : generalData["A242"] - generalData["D244"];
 
       return aa;
