@@ -12,6 +12,7 @@ import { useDataContext } from "../context/DataContext";
 import Row from "./row";
 import { useAuthContext } from "../context/AuthContext";
 import BackgroundImage from "../assets/Background.png";
+import { updateGeneralData } from "../services/generalData";
 
 const Calculator = () => {
   const {
@@ -29,6 +30,26 @@ const Calculator = () => {
   const handleKeyPress = (event: any) => {
     if (event.key === "Enter") {
       triggerCalculations(rows, generalData);
+      handleSaveGeneralData();
+    }
+  };
+
+  const handleSaveGeneralData = async () => {
+    try {
+      await updateGeneralData(user.userId, {
+        A242: generalData["A242"],
+        D244: generalData["D244"],
+        accumulatedBalance: generalData.accumulatedBalance,
+        fullMarginEq: generalData.fullMarginEq,
+        CG4: generalData["CG4"],
+        CH4: generalData["CH4"],
+        E242: generalData["E242"],
+      });
+
+      console.log("Data saved successfully");
+    } catch (error) {
+      console.error("Error saving data:", error);
+      return;
     }
   };
 

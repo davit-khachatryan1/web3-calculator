@@ -124,7 +124,7 @@ export default function Row(props: {
         ) {
           setFinalBalance();
         }
-        // handleSave();
+        handleSave();
       }
     }
   };
