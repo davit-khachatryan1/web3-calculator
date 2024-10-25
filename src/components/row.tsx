@@ -289,9 +289,9 @@ export default function Row(props: {
           {/* <Button variant="contained" color="secondary" onClick={handleSubmit}>
             Get Data
           </Button> */}
-          <Button variant="contained" color="secondary" onClick={handleSave}>
+          {/* <Button variant="contained" color="secondary" onClick={handleSave}>
             Save
-          </Button>
+          </Button> */}
         </TableCell>
       </TableRow>
       <TableRow>
