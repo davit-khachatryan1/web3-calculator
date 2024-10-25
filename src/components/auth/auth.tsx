@@ -25,8 +25,7 @@ const Container = styled(Box)(({ theme }) => ({
     "100% 100%" /* This ensures the image covers the entire div */,
   backgroundPosition: "center" /* This centers the image */,
   backgroundRepeat: "no-repeat" /* This prevents the image from repeating */,
-  backgroundImage:
-    "url(https://blog.coinranking.com/blog/wp-content/uploads/2023/12/Web3-Agency.png)",
+  backgroundColor: "#1f1f1f",
 }));
 
 const Main = styled(Box)(({ theme }) => ({
@@ -137,7 +136,6 @@ function Auth() {
         },
         response.userId
       );
-      console.log(response, ">>>>>>>>", data);
       localStorage.setItem("access_token", response.access_token);
       localStorage.setItem("userId", response.userId);
       window.location.href = "/"; // Navigate to the general page
@@ -156,7 +154,6 @@ function Auth() {
 
     try {
       const response = await login(username, password);
-      console.log(response);
       localStorage.setItem("access_token", response.access_token);
       localStorage.setItem("userId", response.userId);
       window.location.href = "/"; // Navigate to the general page

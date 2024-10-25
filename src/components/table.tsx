@@ -70,7 +70,7 @@ const Calculator = () => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "end",
           flexWrap: "nowrap",
           color: "white",
           alignItems: "center",
