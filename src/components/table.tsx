@@ -119,7 +119,7 @@ const Calculator = () => {
               label="Balance"
               value={generalData.A242}
               onChange={(e) => {
-                const a = e.target.value;
+                const a = e.target.value.replace(/,/g, '');
                 changeGeneralData({
                   A242: Number(a),
                 });
@@ -138,7 +138,7 @@ const Calculator = () => {
               label="Initial Balance"
               value={generalData.D244}
               onChange={(e) => {
-                const a = e.target.value;
+                const a = e.target.value.replace(/,/g, '');
                 changeGeneralData({
                   D244: Number(a),
                 });

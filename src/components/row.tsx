@@ -56,7 +56,7 @@ export default function Row(props: {
 
   const handleChange =
     (name: string) => (event: { target: { value: string } }) => {
-      const value = event.target.value;
+      const value = event.target.value.replace(/,/g,'');
       function isValidNumberWithSingleDot(str: string) {
         const trimmedStr = str.trim();
         const pattern = /^[0-9]+(\.[0-9]*)?$/;
